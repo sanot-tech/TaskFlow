@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%; /* Dark background */
-    --foreground: 210 40% 98%; /* Light text */
+    --background: 0 0% 100%; /* Pure white background */
+    --foreground: 222.2 84% 4.9%; /* Dark text */
 
-    --card: 217.2 32.6% 17.5%; /* Slightly lighter than background */
-    --card-foreground: 210 40% 98%; /* Light text */
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 222.2 84% 4.9%; /* Dark text on cards */
 
-    --popover: 217.2 32.6% 17.5%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 40% 98%; /* Light primary color */
-    --primary-foreground: 222.2 47.4% 11.2%; /* Dark text on light */
+    --primary: 222.2 47.4% 11.2%; /* Dark primary color */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
 
-    --secondary: 215 20.2% 65.1%; /* Medium gray */
-    --secondary-foreground: 222.2 47.4% 11.2%; /* Dark text */
+    --secondary: 210 40% 96.1%; /* Light gray */
+    --secondary-foreground: 222.2 84% 4.9%; /* Dark text on secondary */
 
-    --muted: 215 20.2% 65.1%;
-    --muted-foreground: 217.2 32.6% 17.5%; /* Darker muted text */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray text */
 
-    --accent: 215 20.2% 65.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 84% 4.9%;
 
-    --destructive: 0 62.8% 30.6%; /* Red */
-    --destructive-foreground: 210 40% 98%; /* Light text on red */
+    --destructive: 0 84.2% 60.2%; /* Bright red */
+    --destructive-foreground: 0 0% 100%; /* White text on destructive */
 
-    --border: 215 20.2% 65.1%; /* Medium gray border */
-    --input: 215 20.2% 65.1%; /* Medium gray input */
-    --ring: 212.7 26.8% 83.9%; /* Light ring */
+    --border: 214.3 31.8% 91.4%; /* Light gray border */
+    --input: 214.3 31.8% 91.4%; /* Light gray input */
+    --ring: 222.2 47.4% 11.2%; /* Dark ring */
 
     --radius: 0.5rem;
   }
@@ -75,7 +75,7 @@
     @apply bg-background text-foreground;
   }
 
-  /* Custom styles for better contrast */
+  /* Custom button styles */
   .btn-primary {
     @apply bg-primary text-primary-foreground hover:bg-primary/90;
   }
@@ -91,5 +91,36 @@
   /* Card description text */
   .card-description {
     color: var(--muted-foreground);
+  }
+
+  /* Improved typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  h4 {
+    @apply text-lg;
+  }
+
+  /* Better spacing */
+  .section-spacing {
+    @apply py-8;
+  }
+
+  /* Improved card styling */
+  .custom-card {
+    @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
 }
