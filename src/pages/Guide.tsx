@@ -198,76 +198,67 @@ const Guide = () => {
             </div>
           </section>
 
-          {/* Collaboration Section */}
+          {/* Working with Others Section - Simplified */}
           <section className="section-spacing">
             <div className="border-l-4 border-blue-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <UsersIcon className="h-8 w-8 mr-3 text-blue-500" />
-                Working with Others
+                Working with Family and Friends
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Learn how to share tasks with family or friends.
+                Learn how to use TodoList 2025 together with others for shared tasks.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="border-2 border-blue-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-bold">Sharing Tasks</CardTitle>
+                  <CardTitle className="text-lg font-bold">Shared Shopping Lists</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <p className="text-muted-foreground text-sm">
-                    Share tasks with family members or friends.
+                    Create shared shopping lists with your family so everyone can add items they need.
                   </p>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="outline" size="sm" className="w-full">
-                          <Share2 className="h-4 w-4 mr-2" />
-                          Share Task
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Click to share this task</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <ul className="text-sm text-muted-foreground space-y-1 pl-4 mt-2">
+                    <li>• Milk</li>
+                    <li>• Bread</li>
+                    <li>• Eggs</li>
+                    <li>• Fruits</li>
+                  </ul>
                 </CardContent>
               </Card>
 
               <Card className="border-2 border-purple-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-bold">Stay Updated</CardTitle>
+                  <CardTitle className="text-lg font-bold">Household Chores</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <p className="text-muted-foreground text-sm">
-                    See changes as they happen when working with others.
+                    Divide household chores among family members and track who does what.
                   </p>
-                  <Alert variant="default" className="border-l-4 border-purple-500">
-                    <Info className="h-4 w-4" />
-                    <AlertTitle>Sync Status</AlertTitle>
-                    <AlertDescription>
-                      All changes are updated in real-time.
-                    </AlertDescription>
-                  </Alert>
+                  <ul className="text-sm text-muted-foreground space-y-1 pl-4 mt-2">
+                    <li>• Cleaning</li>
+                    <li>• Cooking</li>
+                    <li>• Laundry</li>
+                    <li>• Taking out trash</li>
+                  </ul>
                 </CardContent>
               </Card>
 
               <Card className="border-2 border-indigo-500/20">
                 <CardHeader>
-                  <CardTitle className="text-lg font-bold">Team Progress</CardTitle>
+                  <CardTitle className="text-lg font-bold">Family Events</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <p className="text-muted-foreground text-sm">
-                    Track how you and your team are doing.
+                    Plan family events together and assign responsibilities.
                   </p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Tasks Completed</span>
-                      <span className="font-bold">42/50</span>
-                    </div>
-                    <Progress value={84} className="h-1" />
-                  </div>
+                  <ul className="text-sm text-muted-foreground space-y-1 pl-4 mt-2">
+                    <li>• Birthdays</li>
+                    <li>• Holidays</li>
+                    <li>• Family trips</li>
+                    <li>• Special occasions</li>
+                  </ul>
                 </CardContent>
               </Card>
             </div>
