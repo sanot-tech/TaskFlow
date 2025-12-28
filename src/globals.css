@@ -123,4 +123,14 @@
   .custom-card {
     @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
+
+  /* Input focus styling */
+  input:focus, textarea:focus, select:focus {
+    @apply ring-1 ring-primary/30;
+  }
+
+  /* Input placeholder styling */
+  input::placeholder, textarea::placeholder {
+    @apply text-muted-foreground/80;
+  }
 }
