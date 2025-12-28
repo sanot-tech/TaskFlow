@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { showSuccess, showError } from "@/utils/toast";
-import { MadeWithDyad } from "@/components/made-with-dyad";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -368,7 +367,6 @@ const Index = () => {
             </Card>
           ))}
         </div>
-        <MadeWithDyad />
       </div>
     </div>
   );
