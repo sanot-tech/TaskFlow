@@ -39,7 +39,7 @@ const Index = () => {
   const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -202,7 +202,7 @@ const Index = () => {
   };
 
   return (
-    <div className={cn("min-h-screen p-4", darkMode ? "dark" : "")}>
+    <div className={cn("min-h-screen p-4", darkMode ? "dark" : "light")}>
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center space-x-4">
