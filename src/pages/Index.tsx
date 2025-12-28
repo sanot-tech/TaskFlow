@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import GuideModal from "@/components/GuideModal";
 
 interface Task {
   id: string;
@@ -179,7 +180,10 @@ const Index = () => {
   return (
     <div className={cn("min-h-screen p-4", darkMode ? "dark" : "")}>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">TodoList 2025</h1>
+        <div className="flex items-center">
+          <h1 className="text-2xl font-bold">TodoList 2025</h1>
+          <GuideModal />
+        </div>
         <div className="flex items-center space-x-2">
           <Label htmlFor="dark-mode">Dark Mode</Label>
           <Switch id="dark-mode" checked={darkMode} onCheckedChange={toggleDarkMode} />
