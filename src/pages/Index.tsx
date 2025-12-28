@@ -11,7 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import GuideModal from "@/components/GuideModal";
+import { BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Task {
   id: string;
@@ -38,7 +39,7 @@ const Index = () => {
   const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -182,7 +183,12 @@ const Index = () => {
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center">
           <h1 className="text-2xl font-bold">TodoList 2025</h1>
-          <GuideModal />
+          <Link to="/guide" className="ml-4">
+            <Button variant="outline" size="sm">
+              <BookOpen className="h-4 w-4 mr-2" />
+              Guide
+            </Button>
+          </Link>
         </div>
         <div className="flex items-center space-x-2">
           <Label htmlFor="dark-mode">Dark Mode</Label>
