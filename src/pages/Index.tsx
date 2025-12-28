@@ -184,7 +184,7 @@ const Index = () => {
         <div className="flex items-center">
           <h1 className="text-2xl font-bold">TodoList 2025</h1>
           <Link to="/guide" className="ml-4">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="text-foreground hover:text-foreground">
               <BookOpen className="h-4 w-4 mr-2" />
               Guide
             </Button>
