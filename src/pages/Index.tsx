@@ -184,7 +184,7 @@ const Index = () => {
         <div className="flex items-center">
           <h1 className="text-2xl font-bold">TodoList 2025</h1>
           <Link to="/guide" className="ml-4">
-            <Button variant="outline" size="sm" className="text-foreground hover:text-foreground">
+            <Button variant="outline" size="sm" className="btn-outline">
               <BookOpen className="h-4 w-4 mr-2" />
               Guide
             </Button>
@@ -239,7 +239,7 @@ const Index = () => {
                 onChange={(e) => setNewTag(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && addTag()}
               />
-              <Button onClick={addTag}>Add Tag</Button>
+              <Button onClick={addTag} className="btn-secondary">Add Tag</Button>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
               {taskTags.map((tag) => (
@@ -250,7 +250,7 @@ const Index = () => {
               ))}
             </div>
           </div>
-          <Button onClick={addTask} className="w-full">
+          <Button onClick={addTask} className="btn-primary w-full">
             Add Task
           </Button>
         </CardContent>
