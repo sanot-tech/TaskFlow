@@ -274,7 +274,7 @@ const Index = () => {
               </Button>
             </CardHeader>
             <CardContent>
-              <CardDescription className="mb-4">{task.description}</CardDescription>
+              <CardDescription className="mb-4 card-description">{task.description}</CardDescription>
               <div className="flex items-center space-x-2 mb-4">
                 <span className="font-medium">Priority:</span>
                 <Badge variant={task.priority === "high" ? "destructive" : task.priority === "medium" ? "default" : "secondary"}>
