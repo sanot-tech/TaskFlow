@@ -111,7 +111,6 @@ const Index = () => {
         showError("Failed to load tasks.");
       }
     };
-
     loadTasks();
   }, []);
 
@@ -246,8 +245,7 @@ const Index = () => {
             <h1 className="text-3xl font-bold text-primary">TodoList 2025</h1>
             <Link to="/guide">
               <Button variant="outline" size="sm" className="btn-outline">
-                <BookOpen className="h-4 w-4 mr-2" />
-                Guide
+                <BookOpen className="h-4 w-4 mr-2" /> Guide
               </Button>
             </Link>
           </div>
@@ -271,6 +269,7 @@ const Index = () => {
                 className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </div>
+
             <div className="space-y-2">
               <Label className="font-medium">Description</Label>
               <Input
@@ -280,6 +279,7 @@ const Index = () => {
                 className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </div>
+
             <div className="space-y-2">
               <Label className="font-medium">Priority</Label>
               <div className="space-y-3">
@@ -321,7 +321,7 @@ const Index = () => {
                   <Select
                     value={customPriority || taskPriority}
                     onValueChange={(value) => {
-                      const selected = standardPriorities.find(p => p.value === value);
+                      const selected = standardPriorities.find((p) => p.value === value);
                       if (selected) {
                         handleStandardPrioritySelect(selected.value, selected.color);
                       } else {
@@ -330,7 +330,9 @@ const Index = () => {
                     }}
                   >
                     <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
-                      <SelectValue placeholder={customPriority || taskPriority || "Select priority"} />
+                      <SelectValue placeholder={customPriority || taskPriority || "Select priority"}>
+                        {customPriority || taskPriority}
+                      </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {standardPriorities.map((priority) => (
@@ -346,6 +348,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
+
             <div className="space-y-2">
               <Label className="font-medium">Due Date</Label>
               <Popover>
@@ -371,6 +374,7 @@ const Index = () => {
                 </PopoverContent>
               </Popover>
             </div>
+
             <div className="space-y-2">
               <Label className="font-medium">Tags</Label>
               <div className="flex space-x-2">
@@ -378,26 +382,31 @@ const Index = () => {
                   placeholder="Add Tag"
                   value={newTag}
                   onChange={(e) => setNewTag(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                  onKeyPress={(e) => e.key === "Enter" && addTag()}
                   className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
                 <Button onClick={addTag} className="btn-secondary">
-                  <Tag className="h-4 w-4 mr-2" />
-                  Add Tag
+                  <Tag className="h-4 w-4 mr-2" /> Add Tag
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 {taskTags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="flex items-center gap-1 bg-secondary text-secondary-foreground">
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="flex items-center gap-1 bg-secondary text-secondary-foreground"
+                  >
                     {tag}
-                    <button onClick={() => removeTag(tag)} className="text-xs hover:text-red-500">×</button>
+                    <button onClick={() => removeTag(tag)} className="text-xs hover:text-red-500">
+                      ×
+                    </button>
                   </Badge>
                 ))}
               </div>
             </div>
+
             <Button onClick={addTask} className="btn-primary w-full text-lg font-medium">
-              <Plus className="h-5 w-5 mr-2" />
-              Add Task
+              <Plus className="h-5 w-5 mr-2" /> Add Task
             </Button>
           </CardContent>
         </Card>
@@ -413,7 +422,9 @@ const Index = () => {
                     className="mt-1"
                   />
                   <div className="flex-1">
-                    <CardTitle className={cn("text-lg font-bold", task.completed && "line-through text-gray-400")}>
+                    <CardTitle
+                      className={cn("text-lg font-bold", task.completed && "line-through text-gray-400")}
+                    >
                       {task.title}
                     </CardTitle>
                     {task.description && (
@@ -429,8 +440,7 @@ const Index = () => {
                   onClick={() => deleteTask(task.id)}
                   className="flex-shrink-0"
                 >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  Delete
+                  <Trash2 className="h-4 w-4 mr-1" /> Delete
                 </Button>
               </CardHeader>
               <CardContent className="pt-4">
@@ -461,8 +471,7 @@ const Index = () => {
                 {task.subtasks.length > 0 && (
                   <div className="space-y-3 mt-4 pt-4 border-t border-blue-500/20">
                     <h4 className="font-bold flex items-center">
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                      Subtasks:
+                      <CheckCircle className="h-4 w-4 mr-2" /> Subtasks:
                     </h4>
                     <div className="space-y-2 ml-6">
                       {task.subtasks.map((subtask) => (
@@ -471,7 +480,9 @@ const Index = () => {
                             checked={subtask.completed}
                             onCheckedChange={() => toggleSubtaskCompletion(task.id, subtask.id)}
                           />
-                          <span className={cn("text-sm", subtask.completed && "line-through text-gray-400")}>
+                          <span
+                            className={cn("text-sm", subtask.completed && "line-through text-gray-400")}
+                          >
                             {subtask.title}
                           </span>
                         </div>
