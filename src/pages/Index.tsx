@@ -12,6 +12,9 @@ import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
 
 interface Task {
   id: string;
@@ -257,6 +260,31 @@ const Index = () => {
               </Select>
             </div>
             <div className="space-y-2">
+              <Label className="font-medium">Due Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20",
+                      !taskDueDate && "text-muted-foreground"
+                    )}
+                  >
+                    <Calendar className="mr-2 h-4 w-4" />
+                    {taskDueDate ? format(taskDueDate, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <CalendarComponent
+                    mode="single"
+                    selected={taskDueDate}
+                    onSelect={setTaskDueDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="space-y-2">
               <Label className="font-medium">Tags</Label>
               <div className="flex space-x-2">
                 <Input
@@ -331,12 +359,12 @@ const Index = () => {
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4" />
                       <span className="text-sm text-muted-foreground">
-                        Due: {task.dueDate.toLocaleDateString()}
+                        Due: {format(task.dueDate, "PPP")}
                       </span>
                     </div>
                   )}
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-green-500/20">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {task.tags.map((tag) => (
                     <Badge key={tag} variant="outline" className="bg-secondary text-secondary-foreground">
                       {tag}
