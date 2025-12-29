@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
+import WebFont from "webfontloader";
 
 interface Task {
   id: string;
@@ -48,6 +49,20 @@ const customPriorityColors = [
   { color: "bg-blue-500" },
 ];
 
+// List of 50 Google Fonts
+const fontList = [
+  "Roboto", "Open Sans", "Lato", "Montserrat", "Oswald",
+  "Raleway", "Poppins", "Merriweather", "Playfair Display", "Nunito",
+  "Ubuntu", "Source Sans Pro", "Muli", "Fira Sans", "Rubik",
+  "Work Sans", "Quicksand", "Inconsolata", "PT Sans", "PT Serif",
+  "Cabin", "Arvo", "Josefin Sans", "Libre Baskerville", "Arimo",
+  "Karla", "Lora", "Cormorant Garamond", "Bitter", "Asap",
+  "Anton", "Abril Fatface", "Lobster", "Pacifico", "Dancing Script",
+  "Shadows Into Light", "Indie Flower", "Amatic SC", "Courgette", "Sacramento",
+  "Kaushan Script", "Great Vibes", "Cookie", "Satisfy", "Tangerine",
+  "Caveat", "Handlee", "Allura", "Parisienne", "Dawning of a New Day"
+];
+
 const Index = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskTitle, setTaskTitle] = useState("");
@@ -59,7 +74,36 @@ const Index = () => {
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const { toast } = useToast();
+
+  // Initialize fonts for each letter in "TodoList"
+  useEffect(() => {
+    const initialFonts = "TodoList".split("").map(() => 
+      fontList[Math.floor(Math.random() * fontList.length)]
+    );
+    setLetterFonts(initialFonts);
+  }, []);
+
+  // Change fonts every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLetterFonts("TodoList".split("").map(() => 
+        fontList[Math.floor(Math.random() * fontList.length)]
+      ));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Load fonts using WebFontLoader
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: fontList
+      }
+    });
+  }, []);
 
   useEffect(() => {
     // Load tasks from local storage or API
@@ -236,7 +280,17 @@ const Index = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center space-x-4">
-            <h1 className="text-3xl font-bold text-primary">TodoList 2025</h1>
+            <h1 className="text-3xl font-bold text-primary flex">
+              {"TodoList".split("").map((letter, index) => (
+                <span 
+                  key={index} 
+                  style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
+                  className="transition-all duration-500 ease-in-out"
+                >
+                  {letter}
+                </span>
+              ))}
+            </h1>
             <Link to="/guide">
               <Button 
                 variant="outline" 
