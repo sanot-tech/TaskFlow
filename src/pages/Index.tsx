@@ -49,18 +49,18 @@ const customPriorityColors = [
   { color: "bg-blue-500" },
 ];
 
-// List of 50 Google Fonts
+// List of beautiful, similar fonts (modern sans-serif)
 const fontList = [
-  "Roboto", "Open Sans", "Lato", "Montserrat", "Oswald",
-  "Raleway", "Poppins", "Merriweather", "Playfair Display", "Nunito",
-  "Ubuntu", "Source Sans Pro", "Muli", "Fira Sans", "Rubik",
-  "Work Sans", "Quicksand", "Inconsolata", "PT Sans", "PT Serif",
-  "Cabin", "Arvo", "Josefin Sans", "Libre Baskerville", "Arimo",
-  "Karla", "Lora", "Cormorant Garamond", "Bitter", "Asap",
-  "Anton", "Abril Fatface", "Lobster", "Pacifico", "Dancing Script",
-  "Shadows Into Light", "Indie Flower", "Amatic SC", "Courgette", "Sacramento",
-  "Kaushan Script", "Great Vibes", "Cookie", "Satisfy", "Tangerine",
-  "Caveat", "Handlee", "Allura", "Parisienne", "Dawning of a New Day"
+  "Poppins", "Montserrat", "Open Sans", "Lato", "Roboto", 
+  "Source Sans Pro", "Nunito", "Raleway", "Quicksand", "Work Sans",
+  "Rubik", "Muli", "Fira Sans", "Ubuntu", "Merriweather Sans",
+  "Cabin", "Oxygen", "PT Sans", "Dosis", "Karla",
+  "Asap", "Cantarell", "Exo", "Varela Round", "Titillium Web",
+  "Signika", "Yanone Kaffeesatz", "Abel", "Anton", "Arimo",
+  "Bitter", "Cairo", "Catamaran", "Droid Sans", "Encode Sans",
+  "Francois One", "Hind", "Josefin Sans", "Kanit", "Maven Pro",
+  "Noto Sans", "Orbitron", "Oswald", "Play", "Prompt",
+  "Questrial", "Rajdhani", "Sora", "Telex", "Zilla Slab"
 ];
 
 const Index = () => {

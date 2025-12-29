@@ -10,9 +10,53 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import WebFont from "webfontloader";
+
+// List of beautiful, similar fonts (modern sans-serif)
+const fontList = [
+  "Poppins", "Montserrat", "Open Sans", "Lato", "Roboto", 
+  "Source Sans Pro", "Nunito", "Raleway", "Quicksand", "Work Sans",
+  "Rubik", "Muli", "Fira Sans", "Ubuntu", "Merriweather Sans",
+  "Cabin", "Oxygen", "PT Sans", "Dosis", "Karla",
+  "Asap", "Cantarell", "Exo", "Varela Round", "Titillium Web",
+  "Signika", "Yanone Kaffeesatz", "Abel", "Anton", "Arimo",
+  "Bitter", "Cairo", "Catamaran", "Droid Sans", "Encode Sans",
+  "Francois One", "Hind", "Josefin Sans", "Kanit", "Maven Pro",
+  "Noto Sans", "Orbitron", "Oswald", "Play", "Prompt",
+  "Questrial", "Rajdhani", "Sora", "Telex", "Zilla Slab"
+];
 
 const Guide = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [letterFonts, setLetterFonts] = useState<string[]>([]);
+
+  // Initialize fonts for each letter in "TodoList"
+  useEffect(() => {
+    const initialFonts = "TodoList".split("").map(() => 
+      fontList[Math.floor(Math.random() * fontList.length)]
+    );
+    setLetterFonts(initialFonts);
+  }, []);
+
+  // Change fonts every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLetterFonts("TodoList".split("").map(() => 
+        fontList[Math.floor(Math.random() * fontList.length)]
+      ));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Load fonts using WebFontLoader
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: fontList
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,15 +80,25 @@ const Guide = () => {
           </Button>
         </Link>
       </div>
-
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8 mt-16">
           <div className="flex items-center space-x-3">
             <BookOpen className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold text-primary">Simple Guide for TodoList 2025</h1>
+            <h1 className="text-3xl font-bold text-primary flex">
+              Simple Guide for&nbsp;
+              {"TodoList".split("").map((letter, index) => (
+                <span 
+                  key={index} 
+                  style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
+                  className="transition-all duration-500 ease-in-out"
+                >
+                  {letter}
+                </span>
+              ))}
+              &nbsp;2025
+            </h1>
           </div>
         </div>
-
         <div className="space-y-12">
           {/* Getting Started Section */}
           <section className="section-spacing">
@@ -56,7 +110,6 @@ const Guide = () => {
                 Learn the basics of TodoList 2025 in simple steps.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="hover:shadow-lg transition-shadow duration-300 border-2 border-primary/20">
                 <CardHeader>
@@ -75,7 +128,6 @@ const Guide = () => {
                   </Alert>
                 </CardContent>
               </Card>
-
               <Card className="hover:shadow-lg transition-shadow duration-300 border-2 border-yellow-500/20">
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl font-bold">
@@ -91,7 +143,6 @@ const Guide = () => {
                   </div>
                 </CardContent>
               </Card>
-
               <Card className="hover:shadow-lg transition-shadow duration-300 border-2 border-green-500/20">
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl font-bold">
@@ -109,7 +160,6 @@ const Guide = () => {
               </Card>
             </div>
           </section>
-
           {/* Priority Colors Section */}
           <section className="section-spacing">
             <div className="border-l-4 border-red-500 pl-6 mb-8">
@@ -120,7 +170,6 @@ const Guide = () => {
                 Learn how to use colors to organize your tasks by importance.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-2 border-red-500/20">
                 <CardHeader>
@@ -152,7 +201,6 @@ const Guide = () => {
                   </div>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-purple-500/20">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold">Custom Priorities</CardTitle>
@@ -186,7 +234,6 @@ const Guide = () => {
               </Card>
             </div>
           </section>
-
           {/* Calendar Section */}
           <section className="section-spacing">
             <div className="border-l-4 border-blue-500 pl-6 mb-8">
@@ -197,7 +244,6 @@ const Guide = () => {
                 Plan your tasks with due dates to stay organized.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-2 border-blue-500/20">
                 <CardHeader>
@@ -209,21 +255,17 @@ const Guide = () => {
                   </p>
                   <ul className="text-sm text-muted-foreground space-y-2 pl-4">
                     <li className="flex items-start">
-                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" />
-                      Click the "Pick a date" button when creating a task
+                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" /> Click the "Pick a date" button when creating a task
                     </li>
                     <li className="flex items-start">
-                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" />
-                      Select a date from the calendar popup
+                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" /> Select a date from the calendar popup
                     </li>
                     <li className="flex items-start">
-                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" />
-                      The due date will appear on your task card
+                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" /> The due date will appear on your task card
                     </li>
                   </ul>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-teal-500/20">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold">Benefits of Due Dates</CardTitle>
@@ -256,7 +298,6 @@ const Guide = () => {
               </Card>
             </div>
           </section>
-
           {/* Simple Tips Section */}
           <section className="section-spacing">
             <div className="border-l-4 border-yellow-500 pl-6 mb-8">
@@ -267,7 +308,6 @@ const Guide = () => {
                 Easy ways to manage your tasks better.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-2 border-yellow-500/20">
                 <CardHeader>
@@ -305,7 +345,6 @@ const Guide = () => {
                   </Accordion>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-green-500/20">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold">Setting Simple Goals</CardTitle>
@@ -335,7 +374,6 @@ const Guide = () => {
               </Card>
             </div>
           </section>
-
           {/* Working with Others Section - Simplified */}
           <section className="section-spacing">
             <div className="border-l-4 border-blue-500 pl-6 mb-8">
@@ -346,7 +384,6 @@ const Guide = () => {
                 Learn how to use TodoList 2025 together with others for shared tasks.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="border-2 border-blue-500/20">
                 <CardHeader>
@@ -364,7 +401,6 @@ const Guide = () => {
                   </ul>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-purple-500/20">
                 <CardHeader>
                   <CardTitle className="text-lg font-bold">Household Chores</CardTitle>
@@ -381,7 +417,6 @@ const Guide = () => {
                   </ul>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-indigo-500/20">
                 <CardHeader>
                   <CardTitle className="text-lg font-bold">Family Events</CardTitle>
@@ -400,7 +435,6 @@ const Guide = () => {
               </Card>
             </div>
           </section>
-
           {/* Simple Examples Section */}
           <section className="section-spacing">
             <div className="border-l-4 border-green-500 pl-6 mb-8">
@@ -411,7 +445,6 @@ const Guide = () => {
                 How to use TodoList 2025 for common daily tasks.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-2 border-green-500/20">
                 <CardHeader>
@@ -461,7 +494,6 @@ const Guide = () => {
                   </Accordion>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-teal-500/20">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold">Work Tasks</CardTitle>
@@ -493,7 +525,6 @@ const Guide = () => {
               </Card>
             </div>
           </section>
-
           {/* Simple Advice Section */}
           <section className="section-spacing">
             <div className="border-l-4 border-purple-500 pl-6 mb-8">
@@ -504,7 +535,6 @@ const Guide = () => {
                 Easy tips to help you stay organized.
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-2 border-purple-500/20">
                 <CardHeader>
@@ -534,7 +564,6 @@ const Guide = () => {
                   </div>
                 </CardContent>
               </Card>
-
               <Card className="border-2 border-orange-500/20">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold">Quick Tips</CardTitle>
@@ -584,7 +613,6 @@ const Guide = () => {
           </section>
         </div>
       </div>
-
       {/* Back to Top Button */}
       {showBackToTop && (
         <Button
