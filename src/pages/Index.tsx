@@ -38,7 +38,6 @@ const standardPriorities = [
   { name: "High", color: "bg-red-500", value: "high" },
   { name: "Medium", color: "bg-yellow-500", value: "medium" },
   { name: "Low", color: "bg-green-500", value: "low" },
-  { name: "Urgent", color: "bg-orange-500", value: "urgent" },
 ];
 
 const customPriorityColors = [
