@@ -15,7 +15,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import WebFont from "webfontloader";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Task {
   id: string;
@@ -326,6 +326,7 @@ const Index = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <Link to="/guide">
                 <Button 
@@ -481,6 +482,7 @@ const Index = () => {
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     <Button onClick={addTag} className="btn-secondary">
                       <Tag className="h-4 w-4 mr-2" /> Add Tag
@@ -495,6 +497,8 @@ const Index = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       transition={{ duration: 0.2 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <Badge
                         variant="secondary"
@@ -516,6 +520,7 @@ const Index = () => {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <Button onClick={addTask} className="btn-primary w-full text-lg font-medium">
                   <Plus className="h-5 w-5 mr-2" /> Add Task
@@ -526,155 +531,164 @@ const Index = () => {
         </motion.div>
 
         <div className="space-y-6">
-          {tasks.map((task) => (
-            <motion.div
-              key={task.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Card 
-                className={cn(
-                  "custom-card",
-                  task.subtasks.length > 0 
-                    ? "border-2 border-blue-500/20" 
-                    : "border-2 border-yellow-500/20"
-                )}
+          <AnimatePresence>
+            {tasks.map((task) => (
+              <motion.div
+                key={task.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.3 }}
               >
-                <CardHeader className="flex-row justify-between items-start pb-4">
-                  <div className="flex items-start space-x-3">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Checkbox
-                        checked={task.completed}
-                        onCheckedChange={() => toggleTaskCompletion(task.id)}
-                        className="mt-1"
-                      />
-                    </motion.div>
-                    <div className="flex-1">
-                      <CardTitle
-                        className={cn("text-lg font-bold", task.completed && "line-through text-gray-400")}
-                      >
-                        {task.title}
-                      </CardTitle>
-                      {task.description && (
-                        <CardDescription className="mt-2 card-description">
-                          {task.description}
-                        </CardDescription>
-                      )}
-                    </div>
-                  </div>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => deleteTask(task.id)}
-                      className="flex-shrink-0"
-                    >
-                      <Trash2 className="h-4 w-4 mr-1" /> Delete
-                    </Button>
-                  </motion.div>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b border-primary/20">
-                    <div className="flex items-center space-x-2">
-                      <AlertCircle className="h-4 w-4" />
-                      <span className="font-medium">Priority:</span>
-                      <Badge className={cn("text-white", task.priorityColor)}>
-                        {task.priority}
-                      </Badge>
-                    </div>
-                    {task.dueDate && (
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4" />
-                        <span className="text-sm text-muted-foreground">
-                          {format(task.dueDate, "PPP")}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {task.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="bg-secondary text-secondary-foreground">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  {task.subtasks.length > 0 && (
-                    <div className="space-y-3 mt-4 pt-4 border-t border-blue-500/20">
-                      <h4 className="font-bold flex items-center">
-                        <CheckCircle className="h-4 w-4 mr-2" /> Subtasks:
-                      </h4>
-                      <div className="space-y-2 ml-6">
-                        {task.subtasks.map((subtask) => (
-                          <motion.div
-                            key={subtask.id}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 20 }}
-                            transition={{ duration: 0.2 }}
-                            className="flex items-center space-x-3"
-                          >
-                            <motion.div
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <Checkbox
-                                checked={subtask.completed}
-                                onCheckedChange={() => toggleSubtaskCompletion(task.id, subtask.id)}
-                              />
-                            </motion.div>
-                            <span
-                              className={cn("text-sm", subtask.completed && "line-through text-gray-400")}
-                            >
-                              {subtask.title}
-                            </span>
-                            <motion.div
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <button 
-                                onClick={() => deleteSubtask(task.id, subtask.id)}
-                                className="text-red-500 hover:text-red-700"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            </motion.div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
+                <Card 
+                  className={cn(
+                    "custom-card",
+                    task.subtasks.length > 0 
+                      ? "border-2 border-blue-500/20" 
+                      : "border-2 border-yellow-500/20"
                   )}
-                  <div className="mt-4 flex space-x-2">
-                    <Input
-                      placeholder="Add subtask"
-                      value={newSubtask[task.id] || ""}
-                      onChange={(e) => handleNewSubtaskChange(task.id, e.target.value)}
-                      onKeyPress={(e) => handleAddSubtaskKeyPress(task.id, e)}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1"
-                    />
+                >
+                  <CardHeader className="flex-row justify-between items-start pb-4">
+                    <div className="flex items-start space-x-3">
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      >
+                        <Checkbox
+                          checked={task.completed}
+                          onCheckedChange={() => toggleTaskCompletion(task.id)}
+                          className="mt-1"
+                        />
+                      </motion.div>
+                      <div className="flex-1">
+                        <CardTitle
+                          className={cn("text-lg font-bold", task.completed && "line-through text-gray-400")}
+                        >
+                          {task.title}
+                        </CardTitle>
+                        {task.description && (
+                          <CardDescription className="mt-2 card-description">
+                            {task.description}
+                          </CardDescription>
+                        )}
+                      </div>
+                    </div>
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                      <Button 
-                        onClick={() => addSubtask(task.id)}
-                        className="btn-secondary"
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => deleteTask(task.id)}
+                        className="flex-shrink-0"
                       >
-                        <Plus className="h-4 w-4 mr-1" /> Add
+                        <Trash2 className="h-4 w-4 mr-1" /> Delete
                       </Button>
                     </motion.div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  </CardHeader>
+                  <CardContent className="pt-4">
+                    <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b border-primary/20">
+                      <div className="flex items-center space-x-2">
+                        <AlertCircle className="h-4 w-4" />
+                        <span className="font-medium">Priority:</span>
+                        <Badge className={cn("text-white", task.priorityColor)}>
+                          {task.priority}
+                        </Badge>
+                      </div>
+                      {task.dueDate && (
+                        <div className="flex items-center space-x-2">
+                          <Calendar className="h-4 w-4" />
+                          <span className="text-sm text-muted-foreground">
+                            {format(task.dueDate, "PPP")}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {task.tags.map((tag) => (
+                        <Badge key={tag} variant="outline" className="bg-secondary text-secondary-foreground">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    {task.subtasks.length > 0 && (
+                      <div className="space-y-3 mt-4 pt-4 border-t border-blue-500/20">
+                        <h4 className="font-bold flex items-center">
+                          <CheckCircle className="h-4 w-4 mr-2" /> Subtasks:
+                        </h4>
+                        <div className="space-y-2 ml-6">
+                          <AnimatePresence>
+                            {task.subtasks.map((subtask) => (
+                              <motion.div
+                                key={subtask.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 20 }}
+                                transition={{ duration: 0.2 }}
+                                className="flex items-center space-x-3"
+                              >
+                                <motion.div
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                >
+                                  <Checkbox
+                                    checked={subtask.completed}
+                                    onCheckedChange={() => toggleSubtaskCompletion(task.id, subtask.id)}
+                                  />
+                                </motion.div>
+                                <span
+                                  className={cn("text-sm", subtask.completed && "line-through text-gray-400")}
+                                >
+                                  {subtask.title}
+                                </span>
+                                <motion.div
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                >
+                                  <button 
+                                    onClick={() => deleteSubtask(task.id, subtask.id)}
+                                    className="text-red-500 hover:text-red-700"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </button>
+                                </motion.div>
+                              </motion.div>
+                            ))}
+                          </AnimatePresence>
+                        </div>
+                      </div>
+                    )}
+                    <div className="mt-4 flex space-x-2">
+                      <Input
+                        placeholder="Add subtask"
+                        value={newSubtask[task.id] || ""}
+                        onChange={(e) => handleNewSubtaskChange(task.id, e.target.value)}
+                        onKeyPress={(e) => handleAddSubtaskKeyPress(task.id, e)}
+                        className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1"
+                      />
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      >
+                        <Button 
+                          onClick={() => addSubtask(task.id)}
+                          className="btn-secondary"
+                        >
+                          <Plus className="h-4 w-4 mr-1" /> Add
+                        </Button>
+                      </motion.div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </div>
