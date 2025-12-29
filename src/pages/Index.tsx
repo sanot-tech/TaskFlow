@@ -238,8 +238,15 @@ const Index = () => {
           <div className="flex items-center space-x-4">
             <h1 className="text-3xl font-bold text-primary">TodoList 2025</h1>
             <Link to="/guide">
-              <Button variant="outline" size="sm" className="btn-outline">
-                <BookOpen className="h-4 w-4 mr-2" /> Guide
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="btn-outline relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center">
+                  <BookOpen className="h-4 w-4 mr-2" /> Guide
+                </span>
+                <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></span>
               </Button>
             </Link>
           </div>
