@@ -39,8 +39,6 @@ const priorityColors = [
   { name: "Medium", color: "bg-yellow-500", value: "medium" },
   { name: "Low", color: "bg-green-500", value: "low" },
   { name: "Urgent", color: "bg-orange-500", value: "urgent" },
-  { name: "Important", color: "bg-purple-500", value: "important" },
-  { name: "Optional", color: "bg-blue-500", value: "optional" },
 ];
 
 const Index = () => {
@@ -54,6 +52,7 @@ const Index = () => {
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [darkMode, setDarkMode] = useState(true);
+  const [showColorPicker, setShowColorPicker] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -215,6 +214,14 @@ const Index = () => {
     setCustomPriority("");
   };
 
+  const handleCustomPriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomPriority(e.target.value);
+    if (!e.target.value.trim()) {
+      setTaskPriority("medium");
+      setTaskPriorityColor("bg-yellow-500");
+    }
+  };
+
   return (
     <div className={cn("min-h-screen p-4", darkMode ? "dark" : "light")}>
       <div className="max-w-6xl mx-auto">
@@ -263,23 +270,59 @@ const Index = () => {
                 <Input
                   placeholder="Custom priority text (optional)"
                   value={customPriority}
-                  onChange={(e) => setCustomPriority(e.target.value)}
+                  onChange={handleCustomPriorityChange}
                   className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
-                <div className="grid grid-cols-3 gap-2">
-                  {priorityColors.map((priority) => (
-                    <Button
-                      key={priority.value}
-                      onClick={() => handlePrioritySelect(priority.value, priority.color)}
-                      className={cn(
-                        "h-12 flex flex-col items-center justify-center p-2",
-                        taskPriority === priority.value ? "ring-2 ring-primary" : ""
-                      )}
-                    >
-                      <div className={cn("w-6 h-6 rounded-sm mb-1", priority.color)}></div>
-                      <span className="text-xs">{priority.name}</span>
-                    </Button>
-                  ))}
+                <div className="flex items-center space-x-2">
+                  <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-10 h-10 p-0 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      >
+                        <div className={cn("w-6 h-6 rounded-sm mx-auto", taskPriorityColor)}></div>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-2" align="start">
+                      <div className="grid grid-cols-2 gap-2">
+                        {priorityColors.map((priority) => (
+                          <Button
+                            key={priority.value}
+                            onClick={() => {
+                              handlePrioritySelect(priority.value, priority.color);
+                              setShowColorPicker(false);
+                            }}
+                            className={cn(
+                              "w-8 h-8 p-1",
+                              taskPriority === priority.value ? "ring-2 ring-primary" : ""
+                            )}
+                          >
+                            <div className={cn("w-full h-full rounded-sm", priority.color)}></div>
+                          </Button>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  <Select value={taskPriority} onValueChange={(value) => {
+                    const selected = priorityColors.find(p => p.value === value);
+                    if (selected) {
+                      handlePrioritySelect(selected.value, selected.color);
+                    }
+                  }}>
+                    <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
+                      <SelectValue placeholder="Select priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {priorityColors.map((priority) => (
+                        <SelectItem key={priority.value} value={priority.value}>
+                          <div className="flex items-center space-x-2">
+                            <div className={cn("w-4 h-4 rounded-sm", priority.color)}></div>
+                            <span>{priority.name}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
