@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -59,7 +58,6 @@ const Index = () => {
   const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
-  const [darkMode, setDarkMode] = useState(true);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const { toast } = useToast();
 
@@ -211,10 +209,6 @@ const Index = () => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   const handleStandardPrioritySelect = (priority: string, color: string) => {
     setTaskPriority(priority);
     setTaskPriorityColor(color);
@@ -238,7 +232,7 @@ const Index = () => {
   };
 
   return (
-    <div className={cn("min-h-screen p-4", darkMode ? "dark" : "light")}>
+    <div className="min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center space-x-4">
@@ -248,10 +242,6 @@ const Index = () => {
                 <BookOpen className="h-4 w-4 mr-2" /> Guide
               </Button>
             </Link>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="dark-mode">Dark Mode</Label>
-            <Switch id="dark-mode" checked={darkMode} onCheckedChange={toggleDarkMode} />
           </div>
         </div>
 
