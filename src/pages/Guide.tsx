@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Lightbulb, HelpCircle, Library, Users, Settings, ChevronRight, Clock, Target, Zap, GitBranch, Database, Code, Palette, Layout, BarChart2, PieChart, LineChart, User, Users as UsersIcon, MessageSquare, Share2, Lock, Unlock, Eye, EyeOff, Sun, Moon, Laptop, Smartphone, Tablet, Monitor, Wifi, Battery, Cpu, MemoryStick, HardDrive, GitCommit, GitMerge, GitPullRequest, GitCompare, Terminal, Codepen, Figma, Framer, ChevronDown, ChevronUp, AlertCircle, Info, CheckCircle2, XCircle, PlusCircle, MinusCircle, Tag, Calendar } from "lucide-react";
+import { BookOpen, Lightbulb, HelpCircle, Library, Users, Settings, ChevronRight, Clock, Target, Zap, GitBranch, Database, Code, Palette, Layout, BarChart2, PieChart, LineChart, User, Users as UsersIcon, MessageSquare, Share2, Lock, Unlock, Eye, EyeOff, Sun, Moon, Laptop, Smartphone, Tablet, Monitor, Wifi, Battery, Cpu, MemoryStick, HardDrive, GitCommit, GitMerge, GitPullRequest, GitCompare, Terminal, Codepen, Figma, Framer, ChevronDown, ChevronUp, AlertCircle, Info, CheckCircle2, XCircle, PlusCircle, MinusCircle, Tag, Calendar, Palette as PaletteIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -18,7 +18,6 @@ const Guide = () => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 300);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -33,8 +32,7 @@ const Guide = () => {
       <div className="fixed top-4 right-4 z-50">
         <Link to="/">
           <Button className="btn-primary shadow-lg">
-            <ChevronRight className="h-4 w-4 mr-2" />
-            Back to Tasks
+            <ChevronRight className="h-4 w-4 mr-2" /> Back to Tasks
           </Button>
         </Link>
       </div>
@@ -52,8 +50,7 @@ const Guide = () => {
           <section className="section-spacing">
             <div className="border-l-4 border-primary pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
-                <BookOpen className="h-8 w-8 mr-3 text-primary" />
-                How to Start
+                <BookOpen className="h-8 w-8 mr-3 text-primary" /> How to Start
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Learn the basics of TodoList 2025 in simple steps.
@@ -64,8 +61,7 @@ const Guide = () => {
               <Card className="hover:shadow-lg transition-shadow duration-300 border-2 border-primary/20">
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl font-bold">
-                    <PlusCircle className="h-5 w-5 mr-2 text-primary" />
-                    Creating Your First Task
+                    <PlusCircle className="h-5 w-5 mr-2 text-primary" /> Creating Your First Task
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -83,8 +79,7 @@ const Guide = () => {
               <Card className="hover:shadow-lg transition-shadow duration-300 border-2 border-yellow-500/20">
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl font-bold">
-                    <Target className="h-5 w-5 mr-2 text-yellow-500" />
-                    Setting Priorities
+                    <Target className="h-5 w-5 mr-2 text-yellow-500" /> Setting Priorities
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -100,8 +95,7 @@ const Guide = () => {
               <Card className="hover:shadow-lg transition-shadow duration-300 border-2 border-green-500/20">
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl font-bold">
-                    <Tag className="h-5 w-5 mr-2 text-green-500" />
-                    Using Categories
+                    <Tag className="h-5 w-5 mr-2 text-green-500" /> Using Categories
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -116,12 +110,158 @@ const Guide = () => {
             </div>
           </section>
 
+          {/* Priority Colors Section */}
+          <section className="section-spacing">
+            <div className="border-l-4 border-red-500 pl-6 mb-8">
+              <h2 className="text-3xl font-bold mb-4 flex items-center">
+                <PaletteIcon className="h-8 w-8 mr-3 text-red-500" /> Understanding Priority Colors
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Learn how to use colors to organize your tasks by importance.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="border-2 border-red-500/20">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold">Priority Levels</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-4 h-4 rounded-sm bg-red-500"></div>
+                      <div>
+                        <h4 className="font-bold">High Priority</h4>
+                        <p className="text-sm text-muted-foreground">Urgent tasks that need immediate attention</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-4 h-4 rounded-sm bg-yellow-500"></div>
+                      <div>
+                        <h4 className="font-bold">Medium Priority</h4>
+                        <p className="text-sm text-muted-foreground">Important tasks for the near future</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-4 h-4 rounded-sm bg-green-500"></div>
+                      <div>
+                        <h4 className="font-bold">Low Priority</h4>
+                        <p className="text-sm text-muted-foreground">Tasks that can be done when you have time</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-purple-500/20">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold">Custom Priorities</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Create your own priority levels with custom names and colors.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 rounded-sm bg-orange-500"></div>
+                      <span className="text-sm">Personal</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 rounded-sm bg-blue-500"></div>
+                      <span className="text-sm">Work</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 rounded-sm bg-purple-500"></div>
+                      <span className="text-sm">Family</span>
+                    </div>
+                  </div>
+                  <Alert variant="default" className="border-l-4 border-purple-500 mt-4">
+                    <Info className="h-4 w-4" />
+                    <AlertTitle>Tip</AlertTitle>
+                    <AlertDescription>
+                      Use colors that make sense to you. Red for urgent, green for easy tasks.
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
+          {/* Calendar Section */}
+          <section className="section-spacing">
+            <div className="border-l-4 border-blue-500 pl-6 mb-8">
+              <h2 className="text-3xl font-bold mb-4 flex items-center">
+                <Calendar className="h-8 w-8 mr-3 text-blue-500" /> Using the Calendar
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Plan your tasks with due dates to stay organized.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="border-2 border-blue-500/20">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold">Setting Due Dates</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Assign due dates to your tasks to keep track of deadlines.
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-2 pl-4">
+                    <li className="flex items-start">
+                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" />
+                      Click the "Pick a date" button when creating a task
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" />
+                      Select a date from the calendar popup
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle2 className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0 text-green-500" />
+                      The due date will appear on your task card
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-teal-500/20">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold">Benefits of Due Dates</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-3">
+                      <Target className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-bold">Stay Organized</h4>
+                        <p className="text-sm text-muted-foreground">Never miss an important deadline again</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <Clock className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-bold">Time Management</h4>
+                        <p className="text-sm text-muted-foreground">Plan your tasks in advance</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <BarChart2 className="h-5 w-5 text-purple-500 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-bold">Visual Planning</h4>
+                        <p className="text-sm text-muted-foreground">See all your upcoming tasks at a glance</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
           {/* Simple Tips Section */}
           <section className="section-spacing">
             <div className="border-l-4 border-yellow-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
-                <Lightbulb className="h-8 w-8 mr-3 text-yellow-500" />
-                Simple Tips for Better Organization
+                <Lightbulb className="h-8 w-8 mr-3 text-yellow-500" /> Simple Tips for Better Organization
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Easy ways to manage your tasks better.
@@ -149,7 +289,6 @@ const Guide = () => {
                         <Progress value={75} className="h-1 mt-2" />
                       </AccordionContent>
                     </AccordionItem>
-
                     <AccordionItem value="time-blocking">
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center">
@@ -182,7 +321,6 @@ const Guide = () => {
                         </p>
                       </div>
                     </div>
-
                     <div className="flex items-start space-x-3">
                       <Target className="h-5 w-5 text-blue-500 flex-shrink-0 mt-1" />
                       <div>
@@ -202,8 +340,7 @@ const Guide = () => {
           <section className="section-spacing">
             <div className="border-l-4 border-blue-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
-                <UsersIcon className="h-8 w-8 mr-3 text-blue-500" />
-                Working with Family and Friends
+                <UsersIcon className="h-8 w-8 mr-3 text-blue-500" /> Working with Family and Friends
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Learn how to use TodoList 2025 together with others for shared tasks.
@@ -268,8 +405,7 @@ const Guide = () => {
           <section className="section-spacing">
             <div className="border-l-4 border-green-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
-                <HelpCircle className="h-8 w-8 mr-3 text-green-500" />
-                Everyday Examples
+                <HelpCircle className="h-8 w-8 mr-3 text-green-500" /> Everyday Examples
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 How to use TodoList 2025 for common daily tasks.
@@ -302,7 +438,6 @@ const Guide = () => {
                         </ul>
                       </AccordionContent>
                     </AccordionItem>
-
                     <AccordionItem value="shopping">
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center">
@@ -337,7 +472,6 @@ const Guide = () => {
                       <TabsTrigger value="office">Office</TabsTrigger>
                       <TabsTrigger value="remote">Remote</TabsTrigger>
                     </TabsList>
-
                     <TabsContent value="office">
                       <ul className="text-sm text-muted-foreground space-y-2 pl-4 mt-2">
                         <li>• Meetings</li>
@@ -346,7 +480,6 @@ const Guide = () => {
                         <li>• Presentations</li>
                       </ul>
                     </TabsContent>
-
                     <TabsContent value="remote">
                       <ul className="text-sm text-muted-foreground space-y-2 pl-4 mt-2">
                         <li>• Video calls</li>
@@ -365,8 +498,7 @@ const Guide = () => {
           <section className="section-spacing">
             <div className="border-l-4 border-purple-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
-                <Lightbulb className="h-8 w-8 mr-3 text-purple-500" />
-                Simple Advice
+                <Lightbulb className="h-8 w-8 mr-3 text-purple-500" /> Simple Advice
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Easy tips to help you stay organized.
@@ -386,7 +518,6 @@ const Guide = () => {
                       Start your day by doing the most important task first.
                     </AlertDescription>
                   </Alert>
-
                   <div className="space-y-3">
                     <div>
                       <h3 className="font-bold mb-2">Weekly Review</h3>
@@ -394,7 +525,6 @@ const Guide = () => {
                         At the end of each week, look at what you've done and plan for the next week.
                       </p>
                     </div>
-
                     <div>
                       <h3 className="font-bold mb-2">Set Simple Goals</h3>
                       <p className="text-sm text-muted-foreground">
@@ -420,7 +550,6 @@ const Guide = () => {
                         </p>
                       </div>
                     </div>
-
                     <div className="flex items-start space-x-2">
                       <Target className="h-4 w-4 mt-1 text-red-500 flex-shrink-0" />
                       <div>
@@ -430,7 +559,6 @@ const Guide = () => {
                         </p>
                       </div>
                     </div>
-
                     <div className="flex items-start space-x-2">
                       <Clock className="h-4 w-4 mt-1 text-blue-500 flex-shrink-0" />
                       <div>
@@ -440,7 +568,6 @@ const Guide = () => {
                         </p>
                       </div>
                     </div>
-
                     <div className="flex items-start space-x-2">
                       <GitBranch className="h-4 w-4 mt-1 text-green-500 flex-shrink-0" />
                       <div>
