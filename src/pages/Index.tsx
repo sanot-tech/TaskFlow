@@ -21,7 +21,8 @@ interface Task {
   title: string;
   description: string;
   completed: boolean;
-  priority: "low" | "medium" | "high";
+  priority: string;
+  priorityColor: string;
   dueDate?: Date;
   tags: string[];
   subtasks: Subtask[];
@@ -33,11 +34,22 @@ interface Subtask {
   completed: boolean;
 }
 
+const priorityColors = [
+  { name: "High", color: "bg-red-500", value: "high" },
+  { name: "Medium", color: "bg-yellow-500", value: "medium" },
+  { name: "Low", color: "bg-green-500", value: "low" },
+  { name: "Urgent", color: "bg-orange-500", value: "urgent" },
+  { name: "Important", color: "bg-purple-500", value: "important" },
+  { name: "Optional", color: "bg-blue-500", value: "optional" },
+];
+
 const Index = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [taskPriority, setTaskPriority] = useState<"low" | "medium" | "high">("medium");
+  const [taskPriority, setTaskPriority] = useState("medium");
+  const [taskPriorityColor, setTaskPriorityColor] = useState("bg-yellow-500");
+  const [customPriority, setCustomPriority] = useState("");
   const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
@@ -56,6 +68,7 @@ const Index = () => {
             description: "Finish the React Native project with all required features",
             completed: false,
             priority: "high",
+            priorityColor: "bg-red-500",
             dueDate: new Date("2025-12-31"),
             tags: ["work", "urgent"],
             subtasks: [
@@ -70,6 +83,7 @@ const Index = () => {
             description: "Milk, eggs, bread, fruits and vegetables",
             completed: false,
             priority: "medium",
+            priorityColor: "bg-yellow-500",
             tags: ["personal", "shopping"],
             subtasks: [],
           },
@@ -79,6 +93,7 @@ const Index = () => {
             description: "30 minutes of cardio and strength training",
             completed: false,
             priority: "low",
+            priorityColor: "bg-green-500",
             tags: ["health", "fitness"],
             subtasks: [],
           },
@@ -104,7 +119,8 @@ const Index = () => {
       title: taskTitle,
       description: taskDescription,
       completed: false,
-      priority: taskPriority,
+      priority: customPriority || taskPriority,
+      priorityColor: taskPriorityColor,
       dueDate: taskDueDate,
       tags: taskTags,
       subtasks: [],
@@ -115,6 +131,8 @@ const Index = () => {
     setTaskTitle("");
     setTaskDescription("");
     setTaskPriority("medium");
+    setTaskPriorityColor("bg-yellow-500");
+    setCustomPriority("");
     setTaskDueDate(undefined);
     setTaskTags([]);
     showSuccess("Task added successfully!");
@@ -191,17 +209,10 @@ const Index = () => {
     setDarkMode(!darkMode);
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "high":
-        return "bg-red-500";
-      case "medium":
-        return "bg-yellow-500";
-      case "low":
-        return "bg-green-500";
-      default:
-        return "bg-gray-500";
-    }
+  const handlePrioritySelect = (priority: string, color: string) => {
+    setTaskPriority(priority);
+    setTaskPriorityColor(color);
+    setCustomPriority("");
   };
 
   return (
@@ -248,16 +259,29 @@ const Index = () => {
             </div>
             <div className="space-y-2">
               <Label className="font-medium">Priority</Label>
-              <Select value={taskPriority} onValueChange={(value: "low" | "medium" | "high") => setTaskPriority(value)}>
-                <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
-                  <SelectValue placeholder="Select priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="space-y-3">
+                <Input
+                  placeholder="Custom priority text (optional)"
+                  value={customPriority}
+                  onChange={(e) => setCustomPriority(e.target.value)}
+                  className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                />
+                <div className="grid grid-cols-3 gap-2">
+                  {priorityColors.map((priority) => (
+                    <Button
+                      key={priority.value}
+                      onClick={() => handlePrioritySelect(priority.value, priority.color)}
+                      className={cn(
+                        "h-12 flex flex-col items-center justify-center p-2",
+                        taskPriority === priority.value ? "ring-2 ring-primary" : ""
+                      )}
+                    >
+                      <div className={cn("w-6 h-6 rounded-sm mb-1", priority.color)}></div>
+                      <span className="text-xs">{priority.name}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="space-y-2">
               <Label className="font-medium">Due Date</Label>
@@ -351,7 +375,7 @@ const Index = () => {
                   <div className="flex items-center space-x-2">
                     <AlertCircle className="h-4 w-4" />
                     <span className="font-medium">Priority:</span>
-                    <Badge className={cn("text-white", getPriorityColor(task.priority))}>
+                    <Badge className={cn("text-white", task.priorityColor)}>
                       {task.priority}
                     </Badge>
                   </div>
