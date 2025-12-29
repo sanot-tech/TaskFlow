@@ -290,7 +290,7 @@ const Index = () => {
         <div className="space-y-6">
           {tasks.map((task) => (
             <Card key={task.id} className="custom-card">
-              <CardHeader className="flex-row justify-between items-start pb-4 border-b border-border/50">
+              <CardHeader className="flex-row justify-between items-start pb-4 border-b border-primary/20">
                 <div className="flex items-start space-x-3">
                   <Checkbox
                     checked={task.completed}
@@ -319,7 +319,7 @@ const Index = () => {
                 </Button>
               </CardHeader>
               <CardContent className="pt-4">
-                <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b border-border/30">
+                <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b border-yellow-500/20">
                   <div className="flex items-center space-x-2">
                     <AlertCircle className="h-4 w-4" />
                     <span className="font-medium">Priority:</span>
@@ -336,7 +336,7 @@ const Index = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-border/30">
+                <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-green-500/20">
                   {task.tags.map((tag) => (
                     <Badge key={tag} variant="outline" className="bg-secondary text-secondary-foreground">
                       {tag}
@@ -344,7 +344,7 @@ const Index = () => {
                   ))}
                 </div>
                 {task.subtasks.length > 0 && (
-                  <div className="space-y-3 mt-4 pt-4 border-t border-border/50">
+                  <div className="space-y-3 mt-4 pt-4 border-t border-blue-500/20">
                     <h4 className="font-bold flex items-center">
                       <CheckCircle className="h-4 w-4 mr-2" />
                       Subtasks:
