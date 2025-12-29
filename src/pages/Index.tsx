@@ -330,7 +330,7 @@ const Index = () => {
                     }}
                   >
                     <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
-                      <SelectValue placeholder="Select priority" />
+                      <SelectValue placeholder={customPriority || "Select priority"} />
                     </SelectTrigger>
                     <SelectContent>
                       {standardPriorities.map((priority) => (
