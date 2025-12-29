@@ -456,7 +456,7 @@ const Index = () => {
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4" />
                       <span className="text-sm text-muted-foreground">
-                        Due: {format(task.dueDate, "PPP")}
+                        {format(task.dueDate, "PPP")}
                       </span>
                     </div>
                   )}
