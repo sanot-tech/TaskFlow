@@ -107,7 +107,8 @@ const Index = () => {
       subtasks: [],
     };
 
-    setTasks([...tasks, newTask]);
+    // Add new task at the top
+    setTasks([newTask, ...tasks]);
     setTaskTitle("");
     setTaskDescription("");
     setTaskPriority("medium");
