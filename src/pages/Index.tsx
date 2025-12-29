@@ -318,12 +318,17 @@ const Index = () => {
                       </PopoverContent>
                     </Popover>
                   )}
-                  <Select value={taskPriority} onValueChange={(value) => {
-                    const selected = standardPriorities.find(p => p.value === value);
-                    if (selected) {
-                      handleStandardPrioritySelect(selected.value, selected.color);
-                    }
-                  }}>
+                  <Select
+                    value={customPriority || taskPriority}
+                    onValueChange={(value) => {
+                      const selected = standardPriorities.find(p => p.value === value);
+                      if (selected) {
+                        handleStandardPrioritySelect(selected.value, selected.color);
+                      } else {
+                        setTaskPriority(value);
+                      }
+                    }}
+                  >
                     <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
                       <SelectValue placeholder="Select priority" />
                     </SelectTrigger>
@@ -447,7 +452,7 @@ const Index = () => {
                   )}
                 </div>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {task.tags.map((tag) => (
+                  {taskTags.map((tag) => (
                     <Badge key={tag} variant="outline" className="bg-secondary text-secondary-foreground">
                       {tag}
                     </Badge>
