@@ -223,8 +223,11 @@ const Index = () => {
   };
 
   const handleCustomPriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomPriority(e.target.value);
-    if (!e.target.value.trim()) {
+    const value = e.target.value;
+    setCustomPriority(value);
+    if (value.trim()) {
+      setTaskPriority(value);
+    } else {
       setTaskPriority("medium");
       setTaskPriorityColor("bg-yellow-500");
     }
