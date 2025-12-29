@@ -34,11 +34,20 @@ interface Subtask {
   completed: boolean;
 }
 
-const priorityColors = [
+const standardPriorities = [
   { name: "High", color: "bg-red-500", value: "high" },
   { name: "Medium", color: "bg-yellow-500", value: "medium" },
   { name: "Low", color: "bg-green-500", value: "low" },
   { name: "Urgent", color: "bg-orange-500", value: "urgent" },
+];
+
+const customPriorityColors = [
+  { color: "bg-red-500" },
+  { color: "bg-yellow-500" },
+  { color: "bg-green-500" },
+  { color: "bg-orange-500" },
+  { color: "bg-purple-500" },
+  { color: "bg-blue-500" },
 ];
 
 const Index = () => {
@@ -208,7 +217,7 @@ const Index = () => {
     setDarkMode(!darkMode);
   };
 
-  const handlePrioritySelect = (priority: string, color: string) => {
+  const handleStandardPrioritySelect = (priority: string, color: string) => {
     setTaskPriority(priority);
     setTaskPriorityColor(color);
     setCustomPriority("");
@@ -220,6 +229,11 @@ const Index = () => {
       setTaskPriority("medium");
       setTaskPriorityColor("bg-yellow-500");
     }
+  };
+
+  const handleCustomColorSelect = (color: string) => {
+    setTaskPriorityColor(color);
+    setShowColorPicker(false);
   };
 
   return (
@@ -274,46 +288,45 @@ const Index = () => {
                   className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
                 <div className="flex items-center space-x-2">
-                  <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-10 h-10 p-0 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
-                      >
-                        <div className={cn("w-6 h-6 rounded-sm mx-auto", taskPriorityColor)}></div>
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-2" align="start">
-                      <div className="grid grid-cols-2 gap-2">
-                        {priorityColors.map((priority) => (
-                          <Button
-                            key={priority.value}
-                            onClick={() => {
-                              handlePrioritySelect(priority.value, priority.color);
-                              setShowColorPicker(false);
-                            }}
-                            className={cn(
-                              "w-8 h-8 p-1",
-                              taskPriority === priority.value ? "ring-2 ring-primary" : ""
-                            )}
-                          >
-                            <div className={cn("w-full h-full rounded-sm", priority.color)}></div>
-                          </Button>
-                        ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+                  {customPriority && (
+                    <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-10 h-10 p-0 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        >
+                          <div className={cn("w-6 h-6 rounded-sm mx-auto", taskPriorityColor)}></div>
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-2" align="start">
+                        <div className="grid grid-cols-3 gap-2">
+                          {customPriorityColors.map((color, index) => (
+                            <Button
+                              key={index}
+                              onClick={() => handleCustomColorSelect(color.color)}
+                              className={cn(
+                                "w-8 h-8 p-1",
+                                taskPriorityColor === color.color ? "ring-2 ring-primary" : ""
+                              )}
+                            >
+                              <div className={cn("w-full h-full rounded-sm", color.color)}></div>
+                            </Button>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
                   <Select value={taskPriority} onValueChange={(value) => {
-                    const selected = priorityColors.find(p => p.value === value);
+                    const selected = standardPriorities.find(p => p.value === value);
                     if (selected) {
-                      handlePrioritySelect(selected.value, selected.color);
+                      handleStandardPrioritySelect(selected.value, selected.color);
                     }
                   }}>
                     <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
                       <SelectValue placeholder="Select priority" />
                     </SelectTrigger>
                     <SelectContent>
-                      {priorityColors.map((priority) => (
+                      {standardPriorities.map((priority) => (
                         <SelectItem key={priority.value} value={priority.value}>
                           <div className="flex items-center space-x-2">
                             <div className={cn("w-4 h-4 rounded-sm", priority.color)}></div>
