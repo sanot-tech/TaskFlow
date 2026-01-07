@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { Settings, RefreshCw, User, Save, Palette, Type, Shirt, Glasses, Sparkles } from "lucide-react";
+import { RefreshCw, User, Save, Palette, Type, Shirt, Glasses, Sparkles, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -129,6 +129,84 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     setSeed(`constructor_${Date.now()}`);
   };
 
+  // НОВАЯ ФУНКЦИЯ: Создание кастомного инпута с выбором
+  const CustomSelect = ({ 
+    label, 
+    icon, 
+    options, 
+    value, 
+    onChange 
+  }: { 
+    label: string, 
+    icon: React.ReactNode, 
+    options: { value: string, label: string }[], 
+    value: string, 
+    onChange: (val: string) => void 
+  }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const selectedOption = options.find(opt => opt.value === value);
+
+    return (
+      <div className="space-y-1 relative">
+        <Label className="text-xs font-bold flex items-center gap-1">
+          {icon} {label}
+        </Label>
+        <div className="relative">
+          <Input
+            readOnly
+            value={selectedOption?.label || "Select..."}
+            onClick={() => setIsOpen(!isOpen)}
+            className="cursor-pointer h-8 text-xs pr-8 bg-white hover:bg-gray-50 transition-colors"
+          />
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+            {isOpen ? <X className="h-3 w-3" /> : <Check className="h-3 w-3" />}
+          </div>
+        </div>
+        
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="absolute z-50 w-full bg-white border-2 border-gray-200 rounded-lg shadow-xl overflow-hidden mt-1"
+            >
+              <div className="max-h-48 overflow-y-auto">
+                {options.map((option) => (
+                  <motion.div
+                    key={option.value}
+                    whileHover={{ backgroundColor: "#f3f4f6" }}
+                    whileTap={{ scale: 0.98 }}
+                    className={cn(
+                      "px-3 py-2 cursor-pointer flex items-center justify-between text-xs transition-colors",
+                      value === option.value ? "bg-blue-50 text-blue-600 font-bold" : "hover:bg-gray-50"
+                    )}
+                    onClick={() => {
+                      onChange(option.value);
+                      setIsOpen(false);
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      {option.value === value && <Check className="h-3 w-3" />}
+                      {option.label}
+                    </div>
+                    {/* Цветной индикатор для цветов */}
+                    {option.value.startsWith("#") || option.value.length === 6 ? (
+                      <div 
+                        className="w-4 h-4 rounded-sm border border-gray-300" 
+                        style={{ backgroundColor: `#${option.value}` }}
+                      />
+                    ) : null}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
   return (
     <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg">
       <CardHeader className="pb-3">
@@ -176,173 +254,63 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
           </motion.div>
         </div>
 
-        {/* Сетка параметров */}
+        {/* Сетка параметров - НОВЫЕ ИНПУТЫ */}
         <div className="grid grid-cols-2 gap-3">
-          {/* Background Color */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Palette className="h-3 w-3" /> Background
-            </Label>
-            <Select
-              value={params.backgroundColor}
-              onValueChange={(value) => setParams({ ...params, backgroundColor: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Background" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.backgroundColors.map((color) => (
-                  <SelectItem key={color.value} value={color.value}>
-                    <div className="flex items-center gap-2">
-                      <div className={cn("w-4 h-4 rounded-sm", `bg-[#${color.value}]`)} style={{ backgroundColor: `#${color.value}` }}></div>
-                      {color.label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Background"
+            icon={<Palette className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.backgroundColors}
+            value={params.backgroundColor}
+            onChange={(val) => setParams({ ...params, backgroundColor: val })}
+          />
 
-          {/* Skin Color */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <User className="h-3 w-3" /> Skin
-            </Label>
-            <Select
-              value={params.skinColor}
-              onValueChange={(value) => setParams({ ...params, skinColor: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Skin" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.skinColors.map((color) => (
-                  <SelectItem key={color.value} value={color.value}>
-                    <div className="flex items-center gap-2">
-                      <div className={cn("w-4 h-4 rounded-sm", `bg-[#${color.value}]`)} style={{ backgroundColor: `#${color.value}` }}></div>
-                      {color.label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Skin"
+            icon={<User className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.skinColors}
+            value={params.skinColor}
+            onChange={(val) => setParams({ ...params, skinColor: val })}
+          />
 
-          {/* Hair Type */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Type className="h-3 w-3" /> Hair Style
-            </Label>
-            <Select
-              value={params.topType}
-              onValueChange={(value) => setParams({ ...params, topType: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Hair" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.topTypes.map((style) => (
-                  <SelectItem key={style.value} value={style.value}>
-                    {style.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Hair Style"
+            icon={<Type className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.topTypes}
+            value={params.topType}
+            onChange={(val) => setParams({ ...params, topType: val })}
+          />
 
-          {/* Hair Color */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Palette className="h-3 w-3" /> Hair Color
-            </Label>
-            <Select
-              value={params.hairColor}
-              onValueChange={(value) => setParams({ ...params, hairColor: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Hair Color" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.hairColors.map((color) => (
-                  <SelectItem key={color.value} value={color.value}>
-                    <div className="flex items-center gap-2">
-                      <div className={cn("w-4 h-4 rounded-sm", `bg-[#${color.value}]`)} style={{ backgroundColor: `#${color.value}` }}></div>
-                      {color.label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Hair Color"
+            icon={<Palette className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.hairColors}
+            value={params.hairColor}
+            onChange={(val) => setParams({ ...params, hairColor: val })}
+          />
 
-          {/* Clothing Type */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Shirt className="h-3 w-3" /> Clothes
-            </Label>
-            <Select
-              value={params.clothingType}
-              onValueChange={(value) => setParams({ ...params, clothingType: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Clothes" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.clothingTypes.map((style) => (
-                  <SelectItem key={style.value} value={style.value}>
-                    {style.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Clothes"
+            icon={<Shirt className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.clothingTypes}
+            value={params.clothingType}
+            onChange={(val) => setParams({ ...params, clothingType: val })}
+          />
 
-          {/* Clothing Color */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Palette className="h-3 w-3" /> Clothes Color
-            </Label>
-            <Select
-              value={params.clothingColor}
-              onValueChange={(value) => setParams({ ...params, clothingColor: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Clothes Color" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.clothingColors.map((color) => (
-                  <SelectItem key={color.value} value={color.value}>
-                    <div className="flex items-center gap-2">
-                      <div className={cn("w-4 h-4 rounded-sm", `bg-[#${color.value}]`)} style={{ backgroundColor: `#${color.value}` }}></div>
-                      {color.label}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Clothes Color"
+            icon={<Palette className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.clothingColors}
+            value={params.clothingColor}
+            onChange={(val) => setParams({ ...params, clothingColor: val })}
+          />
 
-          {/* Accessories */}
-          <div className="space-y-1">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Glasses className="h-3 w-3" /> Glasses
-            </Label>
-            <Select
-              value={params.accessories}
-              onValueChange={(value) => setParams({ ...params, accessories: value })}
-            >
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Glasses" />
-              </SelectTrigger>
-              <SelectContent>
-                {CONSTRUCTOR_PARAMS.accessories.map((style) => (
-                  <SelectItem key={style.value} value={style.value}>
-                    {style.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <CustomSelect
+            label="Glasses"
+            icon={<Glasses className="h-3 w-3" />}
+            options={CONSTRUCTOR_PARAMS.accessories}
+            value={params.accessories}
+            onChange={(val) => setParams({ ...params, accessories: val })}
+          />
 
           {/* Radius Slider */}
           <div className="space-y-1 col-span-2">
