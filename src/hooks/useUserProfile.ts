@@ -20,21 +20,20 @@ const generateUserId = () => {
   return `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-// НОВАЯ: Используем готовую библиотеку с красивыми аватарками
-// Все аватарки гарантированно радостные и стильные
+// НОВАЯ: Гарантированно радостные аватарки с УЛЫБКОЙ
 const HAPPY_AVATARS = [
   "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=2c1b18&facialHairType=blank&clothingType=blazerShirt&clothingColor=25557c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Luna&backgroundColor=c0aede&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=4a312c&facialHairType=blank&clothingType=blazerSweater&clothingColor=ff69b4&eyeType=close&mouthType=laughing&eyebrowType=natural",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Luna&backgroundColor=c0aede&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=4a312c&facialHairType=blank&clothingType=blazerSweater&clothingColor=ff69b4&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
   "https://api.dicebear.com/7.x/avataaars/svg?seed=Max&backgroundColor=d1d4f9&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=6b4f4f&facialHairType=blank&clothingType=collarSweater&clothingColor=ffd700&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Bella&backgroundColor=f0e68c&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=854d4e&facialHairType=blank&clothingType=graphicShirt&clothingColor=a8e6cf&eyeType=happy&mouthType=laughing&eyebrowType=raisedExcited",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie&backgroundColor=ffd700&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=b5651d&facialHairType=blank&clothingType=blazerShirt&clothingColor=2c2c2c&eyeType=close&mouthType=smile&eyebrowType=natural",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Daisy&backgroundColor=ff69b4&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=2c1b18&facialHairType=blank&clothingType=blazerSweater&clothingColor=7f4e1e&eyeType=happy&mouthType=laughing&eyebrowType=raisedExcited",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Bella&backgroundColor=f0e68c&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=854d4e&facialHairType=blank&clothingType=graphicShirt&clothingColor=a8e6cf&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie&backgroundColor=ffd700&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=b5651d&facialHairType=blank&clothingType=blazerShirt&clothingColor=2c2c2c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Daisy&backgroundColor=ff69b4&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=2c1b18&facialHairType=blank&clothingType=blazerSweater&clothingColor=7f4e1e&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
   "https://api.dicebear.com/7.x/avataaars/svg?seed=Rocky&backgroundColor=a8e6cf&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=4a312c&facialHairType=blank&clothingType=collarSweater&clothingColor=25557c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Zoe&backgroundColor=b6e3f4&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=6b4f4f&facialHairType=blank&clothingType=graphicShirt&clothingColor=ff69b4&eyeType=close&mouthType=laughing&eyebrowType=natural",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Zoe&backgroundColor=b6e3f4&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=6b4f4f&facialHairType=blank&clothingType=graphicShirt&clothingColor=ff69b4&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
   "https://api.dicebear.com/7.x/avataaars/svg?seed=Oscar&backgroundColor=c0aede&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=854d4e&facialHairType=blank&clothingType=blazerShirt&clothingColor=ffd700&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Milo&backgroundColor=d1d4f9&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=b5651d&facialHairType=blank&clothingType=blazerSweater&clothingColor=2c2c2c&eyeType=happy&mouthType=laughing&eyebrowType=raisedExcited",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Ruby&backgroundColor=f0e68c&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=2c1b18&facialHairType=blank&clothingType=collarSweater&clothingColor=7f4e1e&eyeType=close&mouthType=smile&eyebrowType=natural",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Jasper&backgroundColor=ffd700&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=4a312c&facialHairType=blank&clothingType=graphicShirt&clothingColor=a8e6cf&eyeType=happy&mouthType=laughing&eyebrowType=raisedExcited",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Milo&backgroundColor=d1d4f9&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=b5651d&facialHairType=blank&clothingType=blazerSweater&clothingColor=2c2c2c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Ruby&backgroundColor=f0e68c&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=2c1b18&facialHairType=blank&clothingType=collarSweater&clothingColor=7f4e1e&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=Jasper&backgroundColor=ffd700&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=4a312c&facialHairType=blank&clothingType=graphicShirt&clothingColor=a8e6cf&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited",
 ];
 
 const getRandomUsername = () => {
@@ -62,7 +61,6 @@ export const useUserProfile = () => {
 
       const userId = generateUserId();
       const username = getRandomUsername();
-      // Выбираем случайную готовую радостную аватарку
       const randomAvatar = HAPPY_AVATARS[Math.floor(Math.random() * HAPPY_AVATARS.length)];
       
       const newProfile: UserProfile = {
@@ -109,7 +107,6 @@ export const useUserProfile = () => {
 
   const regenerateAvatar = () => {
     if (profile) {
-      // Выбираем другую случайную аватарку из готового списка
       const newAvatar = HAPPY_AVATARS[Math.floor(Math.random() * HAPPY_AVATARS.length)];
       updateProfile({ avatar: newAvatar });
     }
