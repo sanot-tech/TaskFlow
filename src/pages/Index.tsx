@@ -351,7 +351,7 @@ const Index = () => {
 
   return (
     // Добавляем user-select-none для всего приложения
-    <div className="min-h-screen p-4 select-none touch-pan-y">
+    <div className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable">
       <ScrollNav />
       <div className="max-w-6xl mx-auto">
         {/* Header Section - Perfectly Centered */}

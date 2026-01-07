@@ -71,7 +71,8 @@ const Guide = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-4 dark">
+    // Добавляем классы для эффекта нажатого скролла
+    <div className="min-h-screen bg-background text-foreground p-4 dark smooth-scroll scrollable">
       {/* Fixed Back to Tasks button */}
       <div className="fixed top-4 right-4 z-50">
         <Link to="/">
