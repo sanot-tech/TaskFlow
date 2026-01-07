@@ -9,7 +9,7 @@ interface AlarmTimer {
   remainingTime: number;
 }
 
-// Список звуков будильника (можно добавить свои URL с samplefocus.com)
+// Прямые URL с Mixkit (безопасные и работающие)
 const ALARM_SOUNDS = [
   { id: 'bell', name: '🔔 Восход', url: 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3' },
   { id: 'chime', name: '✨ Мелодия', url: 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3' },
@@ -67,21 +67,37 @@ export const useAlarmTimer = () => {
   // Проигрывание звука
   const playSound = () => {
     const sound = ALARM_SOUNDS.find(s => s.id === selectedSound);
-    if (!sound) return;
+    if (!sound) {
+      console.error("Sound not found:", selectedSound);
+      return;
+    }
 
+    console.log("Playing sound:", sound.name, sound.url);
+
+    // Останавливаем предыдущий звук
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      audioRef.current = null;
     }
 
-    audioRef.current = new Audio(sound.url);
-    audioRef.current.loop = true; // Повторять пока не остановят
-    audioRef.current.volume = 1.0;
-    
-    // Попытка проиграть (может быть заблокировано браузером)
-    audioRef.current.play().catch(() => {
-      console.log('Автовоспроизведение заблокировано');
-    });
+    try {
+      audioRef.current = new Audio(sound.url);
+      audioRef.current.loop = true;
+      audioRef.current.volume = 1.0;
+      
+      // Пробуем проиграть
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.error("Audio play error:", error);
+          showError("Не удалось проиграть звук. Попробуйте другой.");
+        });
+      }
+    } catch (error) {
+      console.error("Audio creation error:", error);
+      showError("Ошибка аудио: " + error);
+    }
   };
 
   const stopSound = () => {
@@ -103,7 +119,7 @@ export const useAlarmTimer = () => {
         new Notification("⏰ Будильник сработал!", {
           body: `Задача "${alarm.taskTitle}" требует внимания!`,
           icon: "/favicon.ico",
-          tag: alarm.taskId, // Чтобы не дублировать
+          tag: alarm.taskId,
         });
       } else if (Notification.permission !== "denied") {
         Notification.requestPermission().then(permission => {

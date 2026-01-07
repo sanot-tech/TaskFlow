@@ -2,12 +2,11 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, BellOff, Clock, X, Zap, Activity, Music, Volume2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Bell, BellOff, Clock, X, Zap, Activity, Volume2, Play } from "lucide-react";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const AlarmControl: React.FC = () => {
   const {
@@ -21,22 +20,32 @@ export const AlarmControl: React.FC = () => {
     ALARM_SOUNDS,
   } = useAlarmTimer();
 
+  // Тест звука
+  const testSound = (soundId: string) => {
+    const sound = ALARM_SOUNDS.find(s => s.id === soundId);
+    if (sound) {
+      const audio = new Audio(sound.url);
+      audio.volume = 0.5;
+      audio.play().catch(() => {});
+    }
+  };
+
   return (
     <div className="space-y-3">
-      {/* Компактная панель управления */}
+      {/* Главная кнопка + статус */}
       <div className="flex items-center gap-3">
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           className="flex-1"
         >
           <Button
             onClick={toggleAlarmSystem}
             className={cn(
-              "w-full py-5 font-semibold transition-all duration-300 rounded-xl",
+              "w-full py-5 font-semibold transition-all duration-300 rounded-xl shadow-lg",
               isAlarmEnabled 
-                ? "bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-lg shadow-red-500/20" 
-                : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg shadow-green-500/20"
+                ? "bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-red-500/25" 
+                : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-green-500/25"
             )}
           >
             {isAlarmEnabled ? (
@@ -55,7 +64,7 @@ export const AlarmControl: React.FC = () => {
 
         {/* Статус-бадж */}
         <div className={cn(
-          "px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1",
+          "px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1 min-w-[60px] justify-center",
           isAlarmEnabled 
             ? "bg-green-500/20 text-green-600 border border-green-500/30" 
             : "bg-gray-500/20 text-gray-500 border border-gray-500/30"
@@ -65,7 +74,7 @@ export const AlarmControl: React.FC = () => {
         </div>
       </div>
 
-      {/* Выбор звука */}
+      {/* Панель выбора звука (компактная) */}
       {isAlarmEnabled && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -75,26 +84,55 @@ export const AlarmControl: React.FC = () => {
         >
           <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-md">
             <CardContent className="p-3">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-bold text-purple-700 flex items-center gap-1">
-                  <Music className="h-3 w-3" /> Звук будильника
+                  <Volume2 className="h-3 w-3" /> Выберите звук
                 </span>
-                <span className="text-xs text-purple-600 flex items-center gap-1">
-                  <Volume2 className="h-3 w-3" /> {ALARM_SOUNDS.find(s => s.id === selectedSound)?.name}
+                <span className="text-xs text-purple-600">
+                  {ALARM_SOUNDS.find(s => s.id === selectedSound)?.name}
                 </span>
               </div>
-              <Select value={selectedSound} onValueChange={setSelectedSound}>
-                <SelectTrigger className="w-full h-9 text-sm">
-                  <SelectValue placeholder="Выберите звук" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ALARM_SOUNDS.map((sound) => (
-                    <SelectItem key={sound.id} value={sound.id}>
-                      {sound.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              
+              {/* Кнопки выбора звука */}
+              <div className="grid grid-cols-5 gap-2">
+                {ALARM_SOUNDS.map((sound) => (
+                  <motion.div
+                    key={sound.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative"
+                  >
+                    <Button
+                      onClick={() => {
+                        setSelectedSound(sound.id);
+                        testSound(sound.id);
+                      }}
+                      className={cn(
+                        "w-full h-10 p-0 rounded-lg border-2 transition-all",
+                        selectedSound === sound.id
+                          ? "border-purple-500 bg-purple-100 shadow-md"
+                          : "border-purple-200 bg-white hover:border-purple-300"
+                      )}
+                      title={sound.name}
+                    >
+                      <span className="text-lg">{sound.name.split(' ')[0]}</span>
+                    </Button>
+                    {/* Тест-кнопка */}
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="absolute -right-2 -top-2 h-5 w-5 rounded-full bg-white shadow-sm border border-purple-200 hover:bg-purple-50 p-0"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        testSound(sound.id);
+                      }}
+                      title="Прослушать"
+                    >
+                      <Play className="h-3 w-3 text-purple-600" />
+                    </Button>
+                  </motion.div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </motion.div>
