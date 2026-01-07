@@ -12,6 +12,7 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
+import { cn } from "@/lib/utils";
 
 export const ProfileSettings: React.FC = () => {
   const { profile, updateProfile, updateSettings, resetProfile } = useUserProfile();
