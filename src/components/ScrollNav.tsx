@@ -47,7 +47,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
 
   return (
     <div className={cn("fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3", className)}>
-      {/* Вверх (предыдущий) - оранжевая */}
+      {/* Вверх (предыдущий) - прозрачный с оранжевым текстом */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -55,7 +55,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
       >
         <Button
           onClick={scrollToPrev}
-          className="w-14 h-14 rounded-full shadow-xl bg-orange-500 hover:bg-orange-600 text-white p-0 border-2 border-orange-300"
+          className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-orange-500 border-2 border-orange-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll up"
         >
@@ -63,7 +63,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
         </Button>
       </motion.div>
       
-      {/* Наверх (в начало) - голубая */}
+      {/* Наверх (в начало) - прозрачный с голубым текстом */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -71,7 +71,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
       >
         <Button
           onClick={scrollToTop}
-          className="w-14 h-14 rounded-full shadow-xl bg-cyan-500 hover:bg-cyan-600 text-white p-0 border-2 border-cyan-300"
+          className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-cyan-500 border-2 border-cyan-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll to top"
           title="Наверх"
@@ -80,7 +80,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
         </Button>
       </motion.div>
 
-      {/* Вниз (следующий) - зеленая */}
+      {/* Вниз (следующий) - прозрачный с зеленым текстом */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -88,7 +88,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
       >
         <Button
           onClick={scrollToNext}
-          className="w-14 h-14 rounded-full shadow-xl bg-green-500 hover:bg-green-600 text-white p-0 border-2 border-green-300"
+          className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-green-500 border-2 border-green-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll down"
         >
