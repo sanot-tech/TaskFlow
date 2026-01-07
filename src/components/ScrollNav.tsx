@@ -46,7 +46,8 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
   };
 
   return (
-    <div className={cn("fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2", className)}>
+    <div className={cn("fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3", className)}>
+      {/* Вверх - оранжевый */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -54,14 +55,15 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
       >
         <Button
           onClick={scrollToPrev}
-          className="w-12 h-12 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-white p-0"
+          className="w-14 h-14 rounded-full shadow-xl bg-orange-500 hover:bg-orange-600 text-white p-0 border-2 border-orange-300"
           size="icon"
           aria-label="Scroll up"
         >
-          <ChevronUp className="h-6 w-6" />
+          <ChevronUp className="h-7 w-7" />
         </Button>
       </motion.div>
       
+      {/* Наверх - синий */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -69,15 +71,16 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
       >
         <Button
           onClick={scrollToTop}
-          className="w-12 h-12 rounded-full shadow-lg bg-secondary hover:bg-secondary/80 text-secondary-foreground p-0"
+          className="w-14 h-14 rounded-full shadow-xl bg-blue-500 hover:bg-blue-600 text-white p-0 border-2 border-blue-300"
           size="icon"
           aria-label="Scroll to top"
           title="Наверх"
         >
-          <ChevronUp className="h-6 w-6" />
+          <ChevronUp className="h-7 w-7" />
         </Button>
       </motion.div>
 
+      {/* Вниз - зеленый */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -85,11 +88,11 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
       >
         <Button
           onClick={scrollToNext}
-          className="w-12 h-12 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-white p-0"
+          className="w-14 h-14 rounded-full shadow-xl bg-green-500 hover:bg-green-600 text-white p-0 border-2 border-green-300"
           size="icon"
           aria-label="Scroll down"
         >
-          <ChevronDown className="h-6 w-6" />
+          <ChevronDown className="h-7 w-7" />
         </Button>
       </motion.div>
     </div>

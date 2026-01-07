@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Layout, Zap, Target, Palette } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -102,12 +102,104 @@ const Index = () => {
     });
   }, []);
 
-  // LOGIC CYCLE: Task loading - COMPLETE
+  // LOGIC CYCLE: Load demo data - COMPLETE
+  // ВСЕГДА загружаем демо-данные при старте, если localStorage пуст
   useEffect(() => {
-    if (tasks.length === 0) {
-      console.log("No tasks found. Add your first task!");
+    const savedTasks = localStorage.getItem("todo_tasks");
+    if (!savedTasks || savedTasks === "[]") {
+      const demoTasks: Task[] = [
+        {
+          id: "demo-1",
+          title: "Complete Project Proposal",
+          description: "Finish the Q4 project proposal and send to team for review",
+          completed: false,
+          priority: "High Priority",
+          priorityColor: "bg-red-500",
+          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // +3 days
+          tags: ["work", "urgent", "deadline"],
+          subtasks: [
+            { id: "demo-1-1", title: "Research competitors", completed: true },
+            { id: "demo-1-2", title: "Write executive summary", completed: false },
+            { id: "demo-1-3", title: "Create budget section", completed: false },
+          ],
+        },
+        {
+          id: "demo-2",
+          title: "Buy Groceries for Week",
+          description: "Weekly shopping list for healthy meals",
+          completed: false,
+          priority: "Medium Priority",
+          priorityColor: "bg-yellow-500",
+          dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // +1 day
+          tags: ["personal", "shopping", "home"],
+          subtasks: [
+            { id: "demo-2-1", title: "Fresh vegetables", completed: false },
+            { id: "demo-2-2", title: "Chicken breast", completed: false },
+            { id: "demo-2-3", title: "Greek yogurt", completed: false },
+            { id: "demo-2-4", title: "Whole grain bread", completed: false },
+          ],
+        },
+        {
+          id: "demo-3",
+          title: "Morning Workout Routine",
+          description: "30 minutes cardio + 20 minutes strength training",
+          completed: true,
+          priority: "Low Priority",
+          priorityColor: "bg-green-500",
+          dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // -1 day (yesterday)
+          tags: ["health", "fitness", "morning"],
+          subtasks: [
+            { id: "demo-3-1", title: "Warm-up stretches", completed: true },
+            { id: "demo-3-2", title: "Run 5km", completed: true },
+            { id: "demo-3-3", title: "Push-ups & Squats", completed: true },
+          ],
+        },
+        {
+          id: "demo-4",
+          title: "Call Mom for Birthday",
+          description: "Don't forget to wish mom happy birthday!",
+          completed: false,
+          priority: "Important",
+          priorityColor: "bg-purple-500",
+          dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // +7 days
+          tags: ["family", "personal", "birthday"],
+          subtasks: [],
+        },
+        {
+          id: "demo-5",
+          title: "Learn React Hooks",
+          description: "Master useEffect, useState, and custom hooks",
+          completed: false,
+          priority: "Learning",
+          priorityColor: "bg-blue-500",
+          dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // +14 days
+          tags: ["work", "learning", "code"],
+          subtasks: [
+            { id: "demo-5-1", title: "Read documentation", completed: true },
+            { id: "demo-5-2", title: "Build practice project", completed: false },
+            { id: "demo-5-3", title: "Write custom hook", completed: false },
+          ],
+        },
+        {
+          id: "demo-6",
+          title: "Plan Weekend Trip",
+          description: "Research destinations and book accommodation",
+          completed: false,
+          priority: "Fun",
+          priorityColor: "bg-pink-500",
+          dueDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000), // +21 days
+          tags: ["travel", "weekend", "fun"],
+          subtasks: [
+            { id: "demo-6-1", title: "Check weather", completed: false },
+            { id: "demo-6-2", title: "Book hotel", completed: false },
+            { id: "demo-6-3", title: "Pack bags", completed: false },
+          ],
+        },
+      ];
+      setTasks(demoTasks);
+      showSuccess("Demo data loaded! 🎉");
     }
-  }, [tasks]);
+  }, []);
 
   // LOGIC CYCLE: Add task - COMPLETE
   const addTask = () => {
@@ -545,6 +637,7 @@ const Index = () => {
                         </div>
                       </div>
 
+                      {/* Кнопка удаления - ВСЕГДА ВИДНАЯ */}
                       <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -554,7 +647,7 @@ const Index = () => {
                           variant="destructive"
                           size="sm"
                           onClick={() => deleteTask(task.id)}
-                          className="flex-shrink-0 px-4 py-2 select-none"
+                          className="flex-shrink-0 px-4 py-2 opacity-100"
                         >
                           <Trash2 className="h-4 w-4 mr-2" /> Delete
                         </Button>
