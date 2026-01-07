@@ -57,6 +57,10 @@ const Guide = () => {
     });
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     // Добавляем классы для эффекта нажатого скролла
     <div className="min-h-screen bg-background text-foreground p-4 dark smooth-scroll scrollable">
@@ -600,7 +604,7 @@ const Guide = () => {
             <ChevronRight className="h-5 w-5 mr-2" /> К задачам
           </Button>
         </Link>
-        <Link to="/">
+        <Link to="/" onClick={scrollToTop}>
           <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg rounded-full px-6 h-12 font-bold">
             <BookOpen className="h-5 w-5 mr-2" /> На главную
           </Button>
