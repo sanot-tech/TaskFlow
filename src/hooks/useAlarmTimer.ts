@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { showSuccess, showError } from "@/utils/toast";
+import { showError } from "@/utils/toast";
 
 interface AlarmTimer {
   taskId: string;
@@ -9,10 +9,21 @@ interface AlarmTimer {
   remainingTime: number;
 }
 
+// Список звуков будильника (можно добавить свои URL с samplefocus.com)
+const ALARM_SOUNDS = [
+  { id: 'bell', name: '🔔 Восход', url: 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3' },
+  { id: 'chime', name: '✨ Мелодия', url: 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3' },
+  { id: 'siren', name: '🚨 Сирена', url: 'https://assets.mixkit.co/sfx/preview/mixkit-siren-alert-986.mp3' },
+  { id: 'beep', name: '🔊 Бип', url: 'https://assets.mixkit.co/sfx/preview/mixkit-classic-alarm-995.mp3' },
+  { id: 'soft', name: '🎵 Нежный', url: 'https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3' },
+];
+
 export const useAlarmTimer = () => {
   const [alarms, setAlarms] = useState<AlarmTimer[]>([]);
   const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
+  const [selectedSound, setSelectedSound] = useState(ALARM_SOUNDS[0].id);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const startTimer = (taskId: string, taskTitle: string, duration: number) => {
     if (!isAlarmEnabled) {
@@ -35,25 +46,98 @@ export const useAlarmTimer = () => {
     };
 
     setAlarms(prev => [...prev, newAlarm]);
-    showSuccess(`Таймер запущен: ${taskTitle} (${duration} мин)`);
   };
 
   const stopTimer = (taskId: string) => {
     setAlarms(prev => prev.filter(a => a.taskId !== taskId));
-    showSuccess("Таймер остановлен");
+    stopSound();
   };
 
   const toggleAlarmSystem = () => {
     setIsAlarmEnabled(prev => {
       const newState = !prev;
-      if (newState) {
-        showSuccess("Система будильников ВКЛЮЧЕНА");
-      } else {
+      if (!newState) {
         setAlarms([]);
-        showSuccess("Система будильников ВЫКЛЮЧЕНА");
+        stopSound();
       }
       return newState;
     });
+  };
+
+  // Проигрывание звука
+  const playSound = () => {
+    const sound = ALARM_SOUNDS.find(s => s.id === selectedSound);
+    if (!sound) return;
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    audioRef.current = new Audio(sound.url);
+    audioRef.current.loop = true; // Повторять пока не остановят
+    audioRef.current.volume = 1.0;
+    
+    // Попытка проиграть (может быть заблокировано браузером)
+    audioRef.current.play().catch(() => {
+      console.log('Автовоспроизведение заблокировано');
+    });
+  };
+
+  const stopSound = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+  };
+
+  // Триггер будильника
+  const triggerAlarm = (alarm: AlarmTimer) => {
+    // 1. Звуковое уведомление
+    playSound();
+
+    // 2. Браузерное уведомление (системное)
+    if ("Notification" in window) {
+      if (Notification.permission === "granted") {
+        new Notification("⏰ Будильник сработал!", {
+          body: `Задача "${alarm.taskTitle}" требует внимания!`,
+          icon: "/favicon.ico",
+          tag: alarm.taskId, // Чтобы не дублировать
+        });
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification("⏰ Будильник сработал!", {
+              body: `Задача "${alarm.taskTitle}" требует внимания!`,
+              icon: "/favicon.ico",
+            });
+          }
+        });
+      }
+    }
+
+    // 3. Вибрация (мобильные устройства)
+    if ("vibrate" in navigator) {
+      navigator.vibrate([200, 100, 200, 100, 400, 200, 200]);
+    }
+
+    // 4. Мигание заголовком страницы
+    let flashCount = 0;
+    const originalTitle = document.title;
+    const flashInterval = setInterval(() => {
+      document.title = flashCount % 2 === 0 ? "⏰ ВРЕМЯ ВЫШЛО!" : originalTitle;
+      flashCount++;
+      if (flashCount > 15) {
+        clearInterval(flashInterval);
+        document.title = originalTitle;
+      }
+    }, 600);
+
+    // 5. Всплывающее окно (alert) — как последний резервный вариант
+    setTimeout(() => {
+      alert(`⏰ ВРЕМЯ ВЫШЛО!\n\nЗадача: "${alarm.taskTitle}"\n\nНажмите OK для подтверждения.`);
+    }, 500);
   };
 
   useEffect(() => {
@@ -86,44 +170,7 @@ export const useAlarmTimer = () => {
         intervalRef.current = null;
       }
     };
-  }, [isAlarmEnabled, alarms.length]);
-
-  const triggerAlarm = (alarm: AlarmTimer) => {
-    showSuccess(`⏰ ВРЕМЯ ВЫШЛО! Задача: "${alarm.taskTitle}"`);
-
-    if ("Notification" in window) {
-      if (Notification.permission === "granted") {
-        new Notification("⏰ Будильник сработал!", {
-          body: `Задача "${alarm.taskTitle}" требует внимания!`,
-          icon: "/favicon.ico",
-        });
-      } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(permission => {
-          if (permission === "granted") {
-            new Notification("⏰ Будильник сработал!", {
-              body: `Задача "${alarm.taskTitle}" требует внимания!`,
-              icon: "/favicon.ico",
-            });
-          }
-        });
-      }
-    }
-
-    if ("vibrate" in navigator) {
-      navigator.vibrate([200, 100, 200, 100, 400]);
-    }
-
-    let flashCount = 0;
-    const originalTitle = document.title;
-    const flashInterval = setInterval(() => {
-      document.title = flashCount % 2 === 0 ? "⏰ ВРЕМЯ ВЫШЛО!" : originalTitle;
-      flashCount++;
-      if (flashCount > 10) {
-        clearInterval(flashInterval);
-        document.title = originalTitle;
-      }
-    }, 500);
-  };
+  }, [isAlarmEnabled, alarms.length, selectedSound]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -143,9 +190,12 @@ export const useAlarmTimer = () => {
   return {
     alarms,
     isAlarmEnabled,
+    selectedSound,
+    ALARM_SOUNDS,
     startTimer,
     stopTimer,
     toggleAlarmSystem,
+    setSelectedSound,
     formatTime,
     getTimeForTask,
     isTimerActive,

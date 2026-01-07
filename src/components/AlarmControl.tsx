@@ -3,10 +3,11 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, BellOff, Clock, X, Zap, Activity } from "lucide-react";
+import { Bell, BellOff, Clock, X, Zap, Activity, Music, Volume2 } from "lucide-react";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const AlarmControl: React.FC = () => {
   const {
@@ -15,6 +16,9 @@ export const AlarmControl: React.FC = () => {
     stopTimer,
     toggleAlarmSystem,
     formatTime,
+    selectedSound,
+    setSelectedSound,
+    ALARM_SOUNDS,
   } = useAlarmTimer();
 
   return (
@@ -61,7 +65,42 @@ export const AlarmControl: React.FC = () => {
         </div>
       </div>
 
-      {/* Активные таймеры - компактная сетка */}
+      {/* Выбор звука */}
+      {isAlarmEnabled && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          className="overflow-hidden"
+        >
+          <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-md">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-purple-700 flex items-center gap-1">
+                  <Music className="h-3 w-3" /> Звук будильника
+                </span>
+                <span className="text-xs text-purple-600 flex items-center gap-1">
+                  <Volume2 className="h-3 w-3" /> {ALARM_SOUNDS.find(s => s.id === selectedSound)?.name}
+                </span>
+              </div>
+              <Select value={selectedSound} onValueChange={setSelectedSound}>
+                <SelectTrigger className="w-full h-9 text-sm">
+                  <SelectValue placeholder="Выберите звук" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ALARM_SOUNDS.map((sound) => (
+                    <SelectItem key={sound.id} value={sound.id}>
+                      {sound.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
+      {/* Активные таймеры */}
       {isAlarmEnabled && alarms.length > 0 && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
