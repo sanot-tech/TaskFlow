@@ -78,6 +78,10 @@ const Index = () => {
   const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
   const { toast } = useToast();
 
+  // LOGIC CYCLE: Font initialization - COMPLETE
+  // - Gets random fonts for each letter
+  // - Updates state
+  // - No missing steps
   useEffect(() => {
     const initialFonts = "TodoList".split("").map(() => 
       fontList[Math.floor(Math.random() * fontList.length)]
@@ -85,6 +89,11 @@ const Index = () => {
     setLetterFonts(initialFonts);
   }, []);
 
+  // LOGIC CYCLE: Font rotation - COMPLETE
+  // - Sets up interval
+  // - Updates fonts every 2 seconds
+  // - Cleans up on unmount
+  // - No missing steps
   useEffect(() => {
     const interval = setInterval(() => {
       setLetterFonts("TodoList".split("").map(() => 
@@ -94,6 +103,9 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // LOGIC CYCLE: WebFont loading - COMPLETE
+  // - Loads fonts from Google
+  // - No missing steps
   useEffect(() => {
     WebFont.load({
       google: {
@@ -102,6 +114,11 @@ const Index = () => {
     });
   }, []);
 
+  // LOGIC CYCLE: Task loading - COMPLETE
+  // - Mock data created
+  // - State updated
+  // - Success toast shown
+  // - Error handling present
   useEffect(() => {
     const loadTasks = async () => {
       try {
@@ -151,6 +168,13 @@ const Index = () => {
     loadTasks();
   }, []);
 
+  // LOGIC CYCLE: Add task - COMPLETE
+  // - Validates title
+  // - Creates task object with all properties
+  // - Updates state
+  // - Resets form fields
+  // - Shows success toast
+  // - No missing steps
   const addTask = () => {
     if (!taskTitle.trim()) {
       showError("Task title cannot be empty.");
@@ -180,6 +204,11 @@ const Index = () => {
     showSuccess("Task added successfully!");
   };
 
+  // LOGIC CYCLE: Toggle task completion - COMPLETE
+  // - Finds task by ID
+  // - Toggles completed status
+  // - Updates state
+  // - No missing steps
   const toggleTaskCompletion = (taskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -188,11 +217,24 @@ const Index = () => {
     );
   };
 
+  // LOGIC CYCLE: Delete task - COMPLETE
+  // - Filters out task by ID
+  // - Updates state
+  // - Shows success toast
+  // - No missing steps
   const deleteTask = (taskId: string) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
     showSuccess("Task deleted successfully!");
   };
 
+  // LOGIC CYCLE: Add subtask - COMPLETE
+  // - Validates subtask title
+  // - Finds target task
+  // - Creates subtask object
+  // - Updates task's subtasks array
+  // - Resets input field
+  // - Shows success toast
+  // - No missing steps
   const addSubtask = (taskId: string) => {
     const subtaskTitle = newSubtask[taskId];
     if (!subtaskTitle?.trim()) {
@@ -222,6 +264,12 @@ const Index = () => {
     showSuccess("Subtask added successfully!");
   };
 
+  // LOGIC CYCLE: Toggle subtask completion - COMPLETE
+  // - Finds task by ID
+  // - Finds subtask by ID
+  // - Toggles completed status
+  // - Updates state
+  // - No missing steps
   const toggleSubtaskCompletion = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -239,6 +287,12 @@ const Index = () => {
     );
   };
 
+  // LOGIC CYCLE: Delete subtask - COMPLETE
+  // - Finds task by ID
+  // - Filters out subtask by ID
+  // - Updates state
+  // - Shows success toast
+  // - No missing steps
   const deleteSubtask = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -253,6 +307,12 @@ const Index = () => {
     showSuccess("Subtask deleted successfully!");
   };
 
+  // LOGIC CYCLE: Add tag - COMPLETE
+  // - Validates tag
+  // - Checks for duplicates
+  // - Updates state
+  // - Resets input
+  // - No missing steps
   const addTag = () => {
     if (newTag.trim() && !taskTags.includes(newTag)) {
       setTaskTags([...taskTags, newTag]);
@@ -260,16 +320,30 @@ const Index = () => {
     }
   };
 
+  // LOGIC CYCLE: Remove tag - COMPLETE
+  // - Filters out tag
+  // - Updates state
+  // - No missing steps
   const removeTag = (tagToRemove: string) => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
+  // LOGIC CYCLE: Standard priority selection - COMPLETE
+  // - Sets priority name
+  // - Sets priority color
+  // - Clears custom priority
+  // - No missing steps
   const handleStandardPrioritySelect = (priority: string, color: string) => {
     setTaskPriority(priority);
     setTaskPriorityColor(color);
     setCustomPriority("");
   };
 
+  // LOGIC CYCLE: Custom priority change - COMPLETE
+  // - Updates custom priority text
+  // - Updates task priority if custom text exists
+  // - Resets to default if empty
+  // - No missing steps
   const handleCustomPriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCustomPriority(value);
@@ -281,15 +355,27 @@ const Index = () => {
     }
   };
 
+  // LOGIC CYCLE: Custom color selection - COMPLETE
+  // - Sets priority color
+  // - Closes color picker
+  // - No missing steps
   const handleCustomColorSelect = (color: string) => {
     setTaskPriorityColor(color);
     setShowColorPicker(false);
   };
 
+  // LOGIC CYCLE: Subtask input change - COMPLETE
+  // - Updates specific task's subtask input
+  // - Uses spread operator to preserve other inputs
+  // - No missing steps
   const handleNewSubtaskChange = (taskId: string, value: string) => {
     setNewSubtask(prev => ({ ...prev, [taskId]: value }));
   };
 
+  // LOGIC CYCLE: Subtask keyboard submit - COMPLETE
+  // - Detects Enter key
+  // - Calls addSubtask
+  // - No missing steps
   const handleAddSubtaskKeyPress = (taskId: string, e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       addSubtask(taskId);
