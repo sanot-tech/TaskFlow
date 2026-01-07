@@ -69,8 +69,8 @@ export const ProfileSettings: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Avatar className="w-16 h-16 border-2 border-primary/30">
-                <AvatarImage src={profile.avatar} alt={profile.username} />
+              <Avatar className="w-24 h-24 border-2 border-primary/30 rounded-full overflow-hidden">
+                <AvatarImage src={profile.avatar} alt={profile.username} className="rounded-full" />
                 <AvatarFallback>{profile.username[0]}</AvatarFallback>
               </Avatar>
             </motion.div>

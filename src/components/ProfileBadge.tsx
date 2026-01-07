@@ -25,10 +25,10 @@ export const ProfileBadge: React.FC = () => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <Avatar className="w-10 h-10 border-2 border-primary/30 cursor-pointer">
-        <AvatarImage src={profile.avatar} alt={profile.username} />
+      <Avatar className="w-16 h-16 border-2 border-primary/30 cursor-pointer rounded-full overflow-hidden">
+        <AvatarImage src={profile.avatar} alt={profile.username} className="rounded-full" />
         <AvatarFallback>
-          <User className="h-4 w-4" />
+          <User className="h-6 w-6" />
         </AvatarFallback>
       </Avatar>
     </motion.div>
