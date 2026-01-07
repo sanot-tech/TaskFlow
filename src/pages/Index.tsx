@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Settings, User } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Settings, User, Smile } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -79,7 +79,7 @@ const Index = () => {
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
   const { toast } = useToast();
-  const { profile, isLoading } = useUserProfile();
+  const { profile, isLoading, regenerateAvatar } = useUserProfile();
 
   // LOGIC CYCLE: Font initialization - COMPLETE
   useEffect(() => {

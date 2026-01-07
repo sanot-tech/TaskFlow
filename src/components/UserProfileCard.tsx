@@ -4,18 +4,19 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Settings, LogOut, User, Calendar, Clock } from "lucide-react";
+import { Settings, LogOut, User, Calendar, Clock, Smile } from "lucide-react";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 
 interface UserProfileCardProps {
   compact?: boolean;
 }
 
 export const UserProfileCard: React.FC<UserProfileCardProps> = ({ compact = false }) => {
-  const { profile, isLoading, resetProfile } = useUserProfile();
+  const { profile, isLoading, resetProfile, regenerateAvatar } = useUserProfile();
 
   if (isLoading) {
     return (
@@ -82,8 +83,13 @@ export const UserProfileCard: React.FC<UserProfileCardProps> = ({ compact = fals
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button size="sm" variant="outline" className="h-7 px-2">
-                    <Settings className="h-3 w-3 mr-1" /> Настройки
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="h-7 px-2 gap-1"
+                    onClick={regenerateAvatar}
+                  >
+                    <Smile className="h-3 w-3" /> Новый
                   </Button>
                 </motion.div>
               </div>

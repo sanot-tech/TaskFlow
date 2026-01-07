@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings, Save, RefreshCw, User, Trash2 } from "lucide-react";
+import { Settings, Save, RefreshCw, User, Trash2, Smile } from "lucide-react";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -15,7 +15,7 @@ import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { cn } from "@/lib/utils";
 
 export const ProfileSettings: React.FC = () => {
-  const { profile, updateProfile, updateSettings, resetProfile } = useUserProfile();
+  const { profile, updateProfile, updateSettings, resetProfile, regenerateAvatar } = useUserProfile();
   const { ALARM_SOUNDS, selectedSound, setSelectedSound } = useAlarmTimer();
   const [isOpen, setIsOpen] = useState(false);
   const [tempUsername, setTempUsername] = useState("");
@@ -30,8 +30,7 @@ export const ProfileSettings: React.FC = () => {
   };
 
   const handleRegenerateAvatar = () => {
-    const newSeed = Math.random().toString(36).substr(2, 9);
-    updateProfile({ avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${newSeed}&backgroundColor=b6e3f4,c0aede,d1d4f9` });
+    regenerateAvatar();
   };
 
   const handleReset = () => {
@@ -88,8 +87,14 @@ export const ProfileSettings: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button size="icon" variant="secondary" onClick={handleRegenerateAvatar} title="Новый аватар">
-                    <RefreshCw className="h-4 w-4" />
+                  <Button 
+                    size="icon" 
+                    variant="secondary" 
+                    onClick={handleRegenerateAvatar} 
+                    title="Новая радостная аватарка"
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white"
+                  >
+                    <Smile className="h-4 w-4" />
                   </Button>
                 </motion.div>
               </div>
