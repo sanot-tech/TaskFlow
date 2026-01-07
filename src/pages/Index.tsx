@@ -471,12 +471,13 @@ const Index = () => {
                               <Button
                                 onClick={() => handleColorSelect(color.color)}
                                 className={cn(
-                                  "w-12 h-12 p-0 border-2",
+                                  "w-12 h-12 p-0 border-2 transition-all duration-200",
                                   taskPriorityColor === color.color 
-                                    ? "border-primary ring-2 ring-primary/30" 
-                                    : "border-gray-300 hover:border-primary"
+                                    ? "border-primary ring-2 ring-primary/50 scale-110 shadow-lg" 
+                                    : "border-gray-300 hover:border-primary hover:scale-105"
                                 )}
                                 title={color.name}
+                                style={{ outline: taskPriorityColor === color.color ? "3px solid hsl(var(--primary))" : "none", outlineOffset: "2px" }}
                               >
                                 <div className={cn("w-full h-full rounded-sm", color.color)}></div>
                               </Button>
