@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -19,6 +19,9 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ScrollNav } from "@/components/ScrollNav";
 import { AlarmControl } from "@/components/AlarmControl";
 import { TaskTimerButton } from "@/components/TaskTimerButton";
+import { useUserProfile } from "@/hooks/useUserProfile";
+import { ProfileBadge } from "@/components/ProfileBadge";
+import { ProfileSettings } from "@/components/ProfileSettings";
 
 interface Task {
   id: string;
@@ -76,6 +79,7 @@ const Index = () => {
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
   const { toast } = useToast();
+  const { profile, isLoading } = useUserProfile();
 
   // LOGIC CYCLE: Font initialization - COMPLETE
   useEffect(() => {
@@ -388,23 +392,15 @@ const Index = () => {
               </h1>
             </motion.div>
             
+            {/* Profile Section */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="flex items-center gap-3"
             >
-              <Link to="/guide">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="btn-outline relative overflow-hidden group px-6 py-5 select-none"
-                >
-                  <span className="relative z-10 flex items-center text-lg select-none">
-                    <BookOpen className="h-5 w-5 mr-3" /> Guide
-                  </span>
-                  <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></span>
-                </Button>
-              </Link>
+              <ProfileBadge />
+              <ProfileSettings />
             </motion.div>
           </div>
         </div>
