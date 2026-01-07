@@ -7,6 +7,7 @@ import { Bell, BellOff, Clock, Play, StopCircle, X } from "lucide-react";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export const AlarmControl: React.FC = () => {
   const {
