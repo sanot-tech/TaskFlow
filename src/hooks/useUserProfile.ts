@@ -20,21 +20,30 @@ const generateUserId = () => {
   return `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-// НОВАЯ: Увеличенные аватарки (в 3 раза больше) с ОТКРЫТЫМИ глазами
-const HAPPY_AVATARS = [
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=2c1b18&facialHairType=blank&clothingType=blazerShirt&clothingColor=25557c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Luna&backgroundColor=c0aede&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=4a312c&facialHairType=blank&clothingType=blazerSweater&clothingColor=ff69b4&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Max&backgroundColor=d1d4f9&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=6b4f4f&facialHairType=blank&clothingType=collarSweater&clothingColor=ffd700&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Bella&backgroundColor=f0e68c&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=854d4e&facialHairType=blank&clothingType=graphicShirt&clothingColor=a8e6cf&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie&backgroundColor=ffd700&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=b5651d&facialHairType=blank&clothingType=blazerShirt&clothingColor=2c2c2c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Daisy&backgroundColor=ff69b4&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=2c1b18&facialHairType=blank&clothingType=blazerSweater&clothingColor=7f4e1e&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Rocky&backgroundColor=a8e6cf&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=4a312c&facialHairType=blank&clothingType=collarSweater&clothingColor=25557c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Zoe&backgroundColor=b6e3f4&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=6b4f4f&facialHairType=blank&clothingType=graphicShirt&clothingColor=ff69b4&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Oscar&backgroundColor=c0aede&accessories=round&accessoriesProbability=100&skinColor=edb98a&topType=shortHairShortFlat&hairColor=854d4e&facialHairType=blank&clothingType=blazerShirt&clothingColor=ffd700&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Milo&backgroundColor=d1d4f9&accessories=round&accessoriesProbability=100&skinColor=ffdbac&topType=shortHairShortWaved&hairColor=b5651d&facialHairType=blank&clothingType=blazerSweater&clothingColor=2c2c2c&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Ruby&backgroundColor=f0e68c&accessories=round&accessoriesProbability=100&skinColor=f1c27d&topType=shortHairShortCurly&hairColor=2c1b18&facialHairType=blank&clothingType=collarSweater&clothingColor=7f4e1e&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Jasper&backgroundColor=ffd700&accessories=round&accessoriesProbability=100&skinColor=f6c7b6&topType=shortHairDreads01&hairColor=4a312c&facialHairType=blank&clothingType=graphicShirt&clothingColor=a8e6cf&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50",
-];
+// Параметры для рандомной генерации аватарок
+const AVATAR_PARAMS = {
+  backgroundColors: ["b6e3f4", "c0aede", "d1d4f9", "f0e68c", "ffd700", "ff69b4", "a8e6cf", "f0e68c", "ffd700", "ff69b4"],
+  skinColors: ["edb98a", "ffdbac", "f1c27d", "f6c7b6", "edb98a", "ffdbac"],
+  topTypes: ["shortHairShortFlat", "shortHairShortWaved", "shortHairShortCurly", "shortHairDreads01", "shortHairFrizzle", "shortHairShaggyMullet"],
+  hairColors: ["2c1b18", "4a312c", "6b4f4f", "854d4e", "b5651d", "4a312c"],
+  clothingTypes: ["blazerShirt", "blazerSweater", "collarSweater", "graphicShirt", "hoodie", "overall"],
+  clothingColors: ["25557c", "ff69b4", "ffd700", "2c2c2c", "7f4e1e", "a8e6cf"],
+  accessories: ["round", "prescription01", "sunglasses", "wayfarers"],
+};
+
+// Функция для рандомной генерации аватарки
+const generateRandomAvatar = () => {
+  const seed = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  const backgroundColor = AVATAR_PARAMS.backgroundColors[Math.floor(Math.random() * AVATAR_PARAMS.backgroundColors.length)];
+  const skinColor = AVATAR_PARAMS.skinColors[Math.floor(Math.random() * AVATAR_PARAMS.skinColors.length)];
+  const topType = AVATAR_PARAMS.topTypes[Math.floor(Math.random() * AVATAR_PARAMS.topTypes.length)];
+  const hairColor = AVATAR_PARAMS.hairColors[Math.floor(Math.random() * AVATAR_PARAMS.hairColors.length)];
+  const clothingType = AVATAR_PARAMS.clothingTypes[Math.floor(Math.random() * AVATAR_PARAMS.clothingTypes.length)];
+  const clothingColor = AVATAR_PARAMS.clothingColors[Math.floor(Math.random() * AVATAR_PARAMS.clothingColors.length)];
+  const accessory = AVATAR_PARAMS.accessories[Math.floor(Math.random() * AVATAR_PARAMS.accessories.length)];
+
+  return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=${backgroundColor}&accessories=${accessory}&accessoriesProbability=100&skinColor=${skinColor}&topType=${topType}&hairColor=${hairColor}&facialHairType=blank&clothingType=${clothingType}&clothingColor=${clothingColor}&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50`;
+};
 
 const getRandomUsername = () => {
   const adjectives = ["Happy", "Bright", "Swift", "Calm", "Brave", "Smart", "Cool", "Warm", "Joyful", "Sunny"];
@@ -61,7 +70,7 @@ export const useUserProfile = () => {
 
       const userId = generateUserId();
       const username = getRandomUsername();
-      const randomAvatar = HAPPY_AVATARS[Math.floor(Math.random() * HAPPY_AVATARS.length)];
+      const randomAvatar = generateRandomAvatar();
       
       const newProfile: UserProfile = {
         id: userId,
@@ -107,7 +116,7 @@ export const useUserProfile = () => {
 
   const regenerateAvatar = () => {
     if (profile) {
-      const newAvatar = HAPPY_AVATARS[Math.floor(Math.random() * HAPPY_AVATARS.length)];
+      const newAvatar = generateRandomAvatar();
       updateProfile({ avatar: newAvatar });
     }
   };

@@ -91,7 +91,7 @@ export const ProfileSettings: React.FC = () => {
                     size="icon" 
                     variant="secondary" 
                     onClick={handleRegenerateAvatar} 
-                    title="Новая радостная аватарка"
+                    title="Сгенерировать новую аватарку"
                     className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white"
                   >
                     <Smile className="h-4 w-4" />
