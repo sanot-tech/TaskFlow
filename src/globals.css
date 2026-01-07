@@ -228,7 +228,113 @@
     animation: scrollPulse 2s ease-in-out infinite;
   }
 
-  /* Улучшенный скролл для мобильных устройств */
+  /* ПЛАНШЕТ-ФРЕНДЛИ СТИЛИ (768px - 1024px) */
+  @media (max-width: 1024px) {
+    /* Общие отступы */
+    .min-h-screen {
+      padding: 1.5rem; /* 24px */
+    }
+
+    /* Заголовок */
+    h1.text-4xl {
+      font-size: 2.5rem; /* 40px */
+    }
+
+    /* Кнопки */
+    .btn-primary, .btn-secondary, .btn-outline {
+      padding: 0.75rem 1.5rem; /* 12px 24px */
+      font-size: 1rem; /* 16px */
+    }
+
+    /* Инпуты */
+    input[type="text"], input[type="number"] {
+      padding: 0.75rem 1rem; /* 12px 16px */
+      font-size: 1rem; /* 16px */
+    }
+
+    /* Карты */
+    .custom-card {
+      border-radius: 1rem; /* 16px */
+    }
+
+    /* Аватарки */
+    .w-16 {
+      width: 3rem; /* 48px */
+      height: 3rem; /* 48px */
+    }
+
+    .w-24 {
+      width: 5rem; /* 80px */
+      height: 5rem; /* 80px */
+    }
+
+    /* Скролл-навигация */
+    .fixed.right-4 {
+      right: 1rem; /* 16px */
+    }
+
+    .w-14 {
+      width: 3rem; /* 48px */
+      height: 3rem; /* 48px */
+    }
+
+    /* Бейджи */
+    .text-xs {
+      font-size: 0.75rem; /* 12px */
+    }
+
+    /* Текст */
+    .text-sm {
+      font-size: 0.875rem; /* 14px */
+    }
+
+    .text-base {
+      font-size: 1rem; /* 16px */
+    }
+
+    .text-lg {
+      font-size: 1.125rem; /* 18px */
+    }
+
+    .text-xl {
+      font-size: 1.25rem; /* 20px */
+    }
+
+    .text-2xl {
+      font-size: 1.5rem; /* 24px */
+    }
+
+    /* Grid layouts */
+    .grid-cols-5 {
+      grid-template-columns: repeat(4, 1fr); /* 4 колонки вместо 5 */
+    }
+
+    /* Кнопки выбора звука */
+    .h-12 {
+      height: 3rem; /* 48px */
+    }
+
+    /* Диалоги */
+    .sm\:max-w-\[600px\] {
+      max-width: 90vw; /* 90% ширины экрана */
+    }
+
+    /* Контейнеры */
+    .max-w-6xl {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+
+    .max-w-3xl {
+      max-width: 100%;
+    }
+
+    .max-w-2xl {
+      max-width: 100%;
+    }
+  }
+
+  /* МОБИЛЬНЫЕ УСТРОЙСТВА (до 768px) */
   @media (max-width: 768px) {
     ::-webkit-scrollbar {
       width: 6px;
@@ -238,6 +344,26 @@
     ::-webkit-scrollbar-thumb {
       background: hsl(var(--muted));
       border-width: 1px;
+    }
+
+    /* Ещё меньше отступы */
+    .min-h-screen {
+      padding: 1rem; /* 16px */
+    }
+
+    /* Заголовок */
+    h1.text-4xl {
+      font-size: 2rem; /* 32px */
+    }
+
+    /* Grid 5 колонок → 3 колонки */
+    .grid-cols-5 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Скролл-навигация скрываем на мобильных */
+    .fixed.right-4 {
+      display: none;
     }
   }
 }

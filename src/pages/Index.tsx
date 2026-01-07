@@ -67,7 +67,6 @@ const fontList = [
 ];
 
 const Index = () => {
-  // ЗАМЕНА: useState → useLocalStorage для всех данных
   const [tasks, setTasks] = useLocalStorage<Task[]>("todo_tasks", []);
   const [taskTitle, setTaskTitle] = useLocalStorage<string>("todo_title", "");
   const [taskDescription, setTaskDescription] = useLocalStorage<string>("todo_description", "");
@@ -109,7 +108,6 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: Load demo data - COMPLETE
-  // ВСЕГДА загружаем демо-данные при старте, если localStorage пуст
   useEffect(() => {
     const savedTasks = localStorage.getItem("todo_tasks");
     if (!savedTasks || savedTasks === "[]") {
@@ -121,7 +119,7 @@ const Index = () => {
           completed: false,
           priority: "High Priority",
           priorityColor: "bg-red-500",
-          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // +3 days
+          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
           tags: ["work", "urgent", "deadline"],
           subtasks: [
             { id: "demo-1-1", title: "Research competitors", completed: true },
@@ -136,7 +134,7 @@ const Index = () => {
           completed: false,
           priority: "Medium Priority",
           priorityColor: "bg-yellow-500",
-          dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // +1 day
+          dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
           tags: ["personal", "shopping", "home"],
           subtasks: [
             { id: "demo-2-1", title: "Fresh vegetables", completed: false },
@@ -152,7 +150,7 @@ const Index = () => {
           completed: true,
           priority: "Low Priority",
           priorityColor: "bg-green-500",
-          dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // -1 day (yesterday)
+          dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
           tags: ["health", "fitness", "morning"],
           subtasks: [
             { id: "demo-3-1", title: "Warm-up stretches", completed: true },
@@ -167,7 +165,7 @@ const Index = () => {
           completed: false,
           priority: "Important",
           priorityColor: "bg-purple-500",
-          dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // +7 days
+          dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
           tags: ["family", "personal", "birthday"],
           subtasks: [],
         },
@@ -178,7 +176,7 @@ const Index = () => {
           completed: false,
           priority: "Learning",
           priorityColor: "bg-blue-500",
-          dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // +14 days
+          dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
           tags: ["work", "learning", "code"],
           subtasks: [
             { id: "demo-5-1", title: "Read documentation", completed: true },
@@ -193,7 +191,7 @@ const Index = () => {
           completed: false,
           priority: "Fun",
           priorityColor: "bg-pink-500",
-          dueDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000), // +21 days
+          dueDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
           tags: ["travel", "weekend", "fun"],
           subtasks: [
             { id: "demo-6-1", title: "Check weather", completed: false },
@@ -207,7 +205,6 @@ const Index = () => {
     }
   }, []);
 
-  // LOGIC CYCLE: Add task - COMPLETE
   const addTask = () => {
     if (!taskTitle.trim()) {
       showError("Task title cannot be empty.");
@@ -236,7 +233,6 @@ const Index = () => {
     showSuccess("Task added successfully!");
   };
 
-  // LOGIC CYCLE: Toggle task completion - COMPLETE
   const toggleTaskCompletion = (taskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -245,13 +241,11 @@ const Index = () => {
     );
   };
 
-  // LOGIC CYCLE: Delete task - COMPLETE
   const deleteTask = (taskId: string) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
     showSuccess("Task deleted successfully!");
   };
 
-  // LOGIC CYCLE: Add subtask - COMPLETE
   const addSubtask = (taskId: string) => {
     const subtaskTitle = newSubtask[taskId];
     if (!subtaskTitle?.trim()) {
@@ -281,7 +275,6 @@ const Index = () => {
     showSuccess("Subtask added successfully!");
   };
 
-  // LOGIC CYCLE: Toggle subtask completion - COMPLETE
   const toggleSubtaskCompletion = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -299,7 +292,6 @@ const Index = () => {
     );
   };
 
-  // LOGIC CYCLE: Delete subtask - COMPLETE
   const deleteSubtask = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -314,7 +306,6 @@ const Index = () => {
     showSuccess("Subtask deleted successfully!");
   };
 
-  // LOGIC CYCLE: Add tag - COMPLETE
   const addTag = () => {
     if (newTag.trim() && !taskTags.includes(newTag)) {
       setTaskTags([...taskTags, newTag]);
@@ -322,27 +313,22 @@ const Index = () => {
     }
   };
 
-  // LOGIC CYCLE: Remove tag - COMPLETE
   const removeTag = (tagToRemove: string) => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
-  // LOGIC CYCLE: Priority text change - NEW
   const handlePriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskPriority(e.target.value);
   };
 
-  // LOGIC CYCLE: Color selection - NEW
   const handleColorSelect = (color: string) => {
     setTaskPriorityColor(color);
   };
 
-  // LOGIC CYCLE: Subtask input change - COMPLETE
   const handleNewSubtaskChange = (taskId: string, value: string) => {
     setNewSubtask(prev => ({ ...prev, [taskId]: value }));
   };
 
-  // LOGIC CYCLE: Subtask keyboard submit - COMPLETE
   const handleAddSubtaskKeyPress = (taskId: string, e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       addSubtask(taskId);
