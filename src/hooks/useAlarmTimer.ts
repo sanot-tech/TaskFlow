@@ -9,13 +9,13 @@ interface AlarmTimer {
   remainingTime: number;
 }
 
-// Прямые URL с Mixkit (безопасные и работающие)
+// Локальные звуки из папки public/sounds
 const ALARM_SOUNDS = [
-  { id: 'bell', name: '🔔 Восход', url: 'https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3' },
-  { id: 'chime', name: '✨ Мелодия', url: 'https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3' },
-  { id: 'siren', name: '🚨 Сирена', url: 'https://assets.mixkit.co/sfx/preview/mixkit-siren-alert-986.mp3' },
-  { id: 'beep', name: '🔊 Бип', url: 'https://assets.mixkit.co/sfx/preview/mixkit-classic-alarm-995.mp3' },
-  { id: 'soft', name: '🎵 Нежный', url: 'https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3' },
+  { id: 'bell', name: '🔔 Восход', url: '/sounds/bell.mp3' },
+  { id: 'chime', name: '✨ Мелодия', url: '/sounds/chime.mp3' },
+  { id: 'siren', name: '🚨 Сирена', url: '/sounds/siren.mp3' },
+  { id: 'beep', name: '🔊 Бип', url: '/sounds/beep.mp3' },
+  { id: 'soft', name: '🎵 Нежный', url: '/sounds/soft.mp3' },
 ];
 
 export const useAlarmTimer = () => {
