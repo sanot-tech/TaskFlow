@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns";
 import WebFont from "webfontloader";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface Task {
   id: string;
@@ -60,13 +61,14 @@ const fontList = [
 ];
 
 const Index = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
-  const [taskPriority, setTaskPriority] = useState("medium");
-  const [taskPriorityColor, setTaskPriorityColor] = useState("bg-yellow-500");
-  const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
-  const [taskTags, setTaskTags] = useState<string[]>([]);
+  // ЗАМЕНА: useState → useLocalStorage для всех данных
+  const [tasks, setTasks] = useLocalStorage<Task[]>("todo_tasks", []);
+  const [taskTitle, setTaskTitle] = useLocalStorage<string>("todo_title", "");
+  const [taskDescription, setTaskDescription] = useLocalStorage<string>("todo_description", "");
+  const [taskPriority, setTaskPriority] = useLocalStorage<string>("todo_priority", "medium");
+  const [taskPriorityColor, setTaskPriorityColor] = useLocalStorage<string>("todo_priority_color", "bg-yellow-500");
+  const [taskDueDate, setTaskDueDate] = useLocalStorage<Date | undefined>("todo_due_date", undefined);
+  const [taskTags, setTaskTags] = useLocalStorage<string[]>("todo_tags", []);
   const [newTag, setNewTag] = useState("");
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
@@ -100,54 +102,14 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: Task loading - COMPLETE
+  // УБИРАЕМ: useEffect с mockTasks — теперь данные загружаются из localStorage автоматически
+  // Но можно добавить проверку, если данных нет
   useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        const mockTasks: Task[] = [
-          {
-            id: "1",
-            title: "Complete Project",
-            description: "Finish the React Native project with all required features",
-            completed: false,
-            priority: "high",
-            priorityColor: "bg-red-500",
-            dueDate: new Date("2025-12-31"),
-            tags: ["work", "urgent"],
-            subtasks: [
-              { id: "1-1", title: "Design UI", completed: false },
-              { id: "1-2", title: "Implement API", completed: false },
-              { id: "1-3", title: "Write documentation", completed: false },
-            ],
-          },
-          {
-            id: "2",
-            title: "Buy Groceries",
-            description: "Milk, eggs, bread, fruits and vegetables",
-            completed: false,
-            priority: "medium",
-            priorityColor: "bg-yellow-500",
-            tags: ["personal", "shopping"],
-            subtasks: [],
-          },
-          {
-            id: "3",
-            title: "Exercise",
-            description: "30 minutes of cardio and strength training",
-            completed: false,
-            priority: "low",
-            priorityColor: "bg-green-500",
-            tags: ["health", "fitness"],
-            subtasks: [],
-          },
-        ];
-        setTasks(mockTasks);
-        showSuccess("Tasks loaded successfully!");
-      } catch (error) {
-        showError("Failed to load tasks.");
-      }
-    };
-    loadTasks();
-  }, []);
+    if (tasks.length === 0) {
+      // Показываем подсказку, что можно добавить задачи
+      console.log("No tasks found. Add your first task!");
+    }
+  }, [tasks]);
 
   // LOGIC CYCLE: Add task - COMPLETE
   const addTask = () => {
