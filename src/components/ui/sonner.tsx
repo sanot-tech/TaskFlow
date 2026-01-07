@@ -8,20 +8,23 @@ const Sonner = ({ ...props }: ToasterProps) => {
     <SonnerToaster
       {...props}
       toastOptions={{
-        classNames: {
-          toast: "group toast group-[.toast]:bg-background group-[.toast]:text-foreground group-[.toast]:border-border group-[.toast]:shadow-xl group-[.toast]:rounded-lg group-[.toast]:p-4 group-[.toast]:font-semibold group-[.toast]:text-lg",
-          description: "group-[.toast]:text-muted-foreground",
-          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
-          closeButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground hover:group-[.toast]:bg-muted-foreground hover:group-[.toast]:text-muted",
+        style: {
+          background: "white",
+          color: "black",
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px",
+          padding: "12px 16px",
+          fontSize: "14px",
+          fontWeight: "500",
         },
+        className: "shadow-lg",
       }}
-      className="toaster-group"
       position="top-right"
-      richColors
       expand
       visibleToasts={5}
-      duration={3000}
+      duration={4000}
+      gap={12}
+      className="toaster-group"
     />
   );
 };
