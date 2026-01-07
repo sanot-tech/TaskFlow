@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Layout, Zap, Target } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Layout, Zap, Target, Palette } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -42,12 +42,15 @@ const standardPriorities = [
 ];
 
 const customPriorityColors = [
-  { color: "bg-red-500" },
-  { color: "bg-yellow-500" },
-  { color: "bg-green-500" },
-  { color: "bg-orange-500" },
-  { color: "bg-purple-500" },
-  { color: "bg-blue-500" },
+  { color: "bg-red-500", name: "Red" },
+  { color: "bg-yellow-500", name: "Yellow" },
+  { color: "bg-green-500", name: "Green" },
+  { color: "bg-orange-500", name: "Orange" },
+  { color: "bg-purple-500", name: "Purple" },
+  { color: "bg-blue-500", name: "Blue" },
+  { color: "bg-pink-500", name: "Pink" },
+  { color: "bg-teal-500", name: "Teal" },
+  { color: "bg-indigo-500", name: "Indigo" },
 ];
 
 const fontList = [
@@ -69,7 +72,6 @@ const Index = () => {
   const [taskDescription, setTaskDescription] = useState("");
   const [taskPriority, setTaskPriority] = useState("medium");
   const [taskPriorityColor, setTaskPriorityColor] = useState("bg-yellow-500");
-  const [customPriority, setCustomPriority] = useState("");
   const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
@@ -167,7 +169,7 @@ const Index = () => {
       title: taskTitle,
       description: taskDescription,
       completed: false,
-      priority: customPriority || taskPriority,
+      priority: taskPriority,
       priorityColor: taskPriorityColor,
       dueDate: taskDueDate,
       tags: taskTags,
@@ -179,7 +181,6 @@ const Index = () => {
     setTaskDescription("");
     setTaskPriority("medium");
     setTaskPriorityColor("bg-yellow-500");
-    setCustomPriority("");
     setTaskDueDate(undefined);
     setTaskTags([]);
     showSuccess("Task added successfully!");
@@ -276,24 +277,34 @@ const Index = () => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
-  // LOGIC CYCLE: Standard priority selection - FIXED
-  // Теперь очищает кастомный текст при выборе стандартного приоритета
-  const handleStandardPrioritySelect = (priority: string, color: string) => {
-    setTaskPriority(priority);
-    setTaskPriorityColor(color);
-    setCustomPriority(""); // ← Очищаем кастомный текст
+  // LOGIC CYCLE: Priority selection - NEW APPROACH
+  // Выбор приоритета из списка (High/Medium/Low/Custom)
+  const handlePrioritySelect = (value: string) => {
+    if (value === "custom") {
+      // Для кастомного приоритета — просто ставим текст, цвет остаётся как был
+      setTaskPriority("");
+    } else {
+      // Для стандартных — находим цвет и ставим
+      const selected = standardPriorities.find((p) => p.value === value);
+      if (selected) {
+        setTaskPriority(selected.name);
+        setTaskPriorityColor(selected.color);
+      } else {
+        setTaskPriority(value);
+      }
+    }
   };
 
-  // LOGIC CYCLE: Custom priority change - FIXED
-  // Теперь НЕ трогает taskPriority и taskPriorityColor
+  // LOGIC CYCLE: Custom priority text - NEW
+  // Пользователь вводит свой текст приоритета
   const handleCustomPriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setCustomPriority(value);
-    // НЕ меняем taskPriority и taskPriorityColor здесь
+    setTaskPriority(value);
   };
 
-  // LOGIC CYCLE: Custom color selection - COMPLETE
-  const handleCustomColorSelect = (color: string) => {
+  // LOGIC CYCLE: Color selection - NEW
+  // Выбор цвета из палитры (всегда доступен)
+  const handleColorSelect = (color: string) => {
     setTaskPriorityColor(color);
     setShowColorPicker(false);
   };
@@ -414,61 +425,14 @@ const Index = () => {
                   <div className="space-y-2">
                     <Label className="font-medium text-lg">Priority</Label>
                     <div className="space-y-3">
-                      {/* Кастомный инпут + кнопка выбора цвета */}
-                      <div className="flex items-center space-x-2">
-                        <Input
-                          placeholder="Custom priority (optional)"
-                          value={customPriority}
-                          onChange={handleCustomPriorityChange}
-                          className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1"
-                        />
-                        
-                        {/* Кнопка выбора цвета (показывается только если есть кастомный текст) */}
-                        {customPriority && (
-                          <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className="w-12 h-12 p-0 border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
-                              >
-                                <div className={cn("w-7 h-7 rounded-sm mx-auto", taskPriorityColor)}></div>
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-2" align="start">
-                              <div className="grid grid-cols-3 gap-2">
-                                {customPriorityColors.map((color, index) => (
-                                  <Button
-                                    key={index}
-                                    onClick={() => handleCustomColorSelect(color.color)}
-                                    className={cn(
-                                      "w-10 h-10 p-1",
-                                      taskPriorityColor === color.color ? "ring-2 ring-primary" : ""
-                                    )}
-                                  >
-                                    <div className={cn("w-full h-full rounded-sm", color.color)}></div>
-                                  </Button>
-                                ))}
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                        )}
-                      </div>
-
-                      {/* Select со стандартными приоритетами - ВСЕГДА работает */}
+                      {/* Select с приоритетами (включая кастомный) */}
                       <Select
-                        value={taskPriority}
-                        onValueChange={(value) => {
-                          const selected = standardPriorities.find((p) => p.value === value);
-                          if (selected) {
-                            handleStandardPrioritySelect(selected.value, selected.color);
-                          } else {
-                            setTaskPriority(value);
-                          }
-                        }}
+                        value={taskPriority || "custom"}
+                        onValueChange={handlePrioritySelect}
                       >
                         <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
-                          <SelectValue placeholder={taskPriority || "Select priority"}>
-                            {customPriority || taskPriority}
+                          <SelectValue placeholder="Select priority">
+                            {taskPriority || "Custom"}
                           </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
@@ -480,8 +444,56 @@ const Index = () => {
                               </div>
                             </SelectItem>
                           ))}
+                          <SelectItem value="custom">
+                            <div className="flex items-center space-x-2">
+                              <div className={cn("w-4 h-4 rounded-sm", taskPriorityColor)}></div>
+                              <span>Custom (type below)</span>
+                            </div>
+                          </SelectItem>
                         </SelectContent>
                       </Select>
+
+                      {/* Поле для кастомного текста (всегда доступно) */}
+                      <Input
+                        placeholder="Enter custom priority (optional)"
+                        value={taskPriority}
+                        onChange={handleCustomPriorityChange}
+                        className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                      />
+
+                      {/* Кнопка выбора цвета (всегда доступна) */}
+                      <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full justify-start border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                          >
+                            <Palette className="h-5 w-5 mr-2" />
+                            <span className="flex items-center gap-2">
+                              Color: 
+                              <div className={cn("w-5 h-5 rounded-sm", taskPriorityColor)}></div>
+                              {customPriorityColors.find(c => c.color === taskPriorityColor)?.name || "Custom"}
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-2" align="start">
+                          <div className="grid grid-cols-3 gap-2">
+                            {customPriorityColors.map((color, index) => (
+                              <Button
+                                key={index}
+                                onClick={() => handleColorSelect(color.color)}
+                                className={cn(
+                                  "w-10 h-10 p-1",
+                                  taskPriorityColor === color.color ? "ring-2 ring-primary" : ""
+                                )}
+                                title={color.name}
+                              >
+                                <div className={cn("w-full h-full rounded-sm", color.color)}></div>
+                              </Button>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
 
