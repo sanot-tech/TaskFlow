@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Settings, User, Smile } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Settings, User, Smile, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -783,6 +783,19 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      {/* Кнопка перехода на страницу гайда */}
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-4 left-4 z-50"
+      >
+        <Link to="/guide">
+          <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg rounded-full w-14 h-14 p-0">
+            <HelpCircle className="h-6 w-6" />
+          </Button>
+        </Link>
+      </motion.div>
     </div>
   );
 };
