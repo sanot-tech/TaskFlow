@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Clock } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -351,7 +351,7 @@ const Index = () => {
       <ScrollNav />
       <div className="max-w-6xl mx-auto">
         {/* Header Section - Perfectly Centered */}
-        <div className="flex justify-center items-center mb-12">
+        <div className="flex justify-center items-center mb-8">
           <div className="flex items-center space-x-6">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -409,14 +409,14 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Alarm Control Section */}
+        {/* Alarm Control Section - COMPACT */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex justify-center mb-8"
+          className="flex justify-center mb-6"
         >
-          <div className="w-full max-w-3xl">
+          <div className="w-full max-w-2xl">
             <AlarmControl />
           </div>
         </motion.div>
@@ -427,7 +427,7 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="flex justify-center mb-10">
+          <div className="flex justify-center mb-8">
             <Card className="custom-card w-full max-w-3xl select-none">
               <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl font-bold flex items-center justify-center select-none">

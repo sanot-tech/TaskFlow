@@ -3,113 +3,125 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, BellOff, Clock, Play, StopCircle, X } from "lucide-react";
+import { Bell, BellOff, Clock, X, Zap, Activity } from "lucide-react";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export const AlarmControl: React.FC = () => {
   const {
     alarms,
     isAlarmEnabled,
-    startTimer,
     stopTimer,
     toggleAlarmSystem,
     formatTime,
   } = useAlarmTimer();
 
   return (
-    <div className="space-y-4">
-      {/* Кнопка включения/выключения */}
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-      >
-        <Button
-          onClick={toggleAlarmSystem}
-          className={cn(
-            "w-full py-6 text-lg font-semibold transition-all duration-300",
-            isAlarmEnabled 
-              ? "bg-red-500 hover:bg-red-600 border-2 border-red-300" 
-              : "bg-green-500 hover:bg-green-600 border-2 border-green-300"
-          )}
+    <div className="space-y-3">
+      {/* Компактная панель управления */}
+      <div className="flex items-center gap-3">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex-1"
         >
-          {isAlarmEnabled ? (
-            <>
-              <BellOff className="h-6 w-6 mr-3" /> Выключить будильники
-            </>
-          ) : (
-            <>
-              <Bell className="h-6 w-6 mr-3" /> Включить будильники
-            </>
-          )}
-        </Button>
-      </motion.div>
+          <Button
+            onClick={toggleAlarmSystem}
+            className={cn(
+              "w-full py-5 font-semibold transition-all duration-300 rounded-xl",
+              isAlarmEnabled 
+                ? "bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-lg shadow-red-500/20" 
+                : "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg shadow-green-500/20"
+            )}
+          >
+            {isAlarmEnabled ? (
+              <span className="flex items-center gap-2">
+                <BellOff className="h-5 w-5" /> 
+                <span>Выключить</span>
+              </span>
+            ) : (
+              <span className="flex items-center gap-2">
+                <Bell className="h-5 w-5" /> 
+                <span>Включить будильники</span>
+              </span>
+            )}
+          </Button>
+        </motion.div>
 
-      {/* Статус системы */}
-      <div className="text-center">
-        <Badge 
-          variant={isAlarmEnabled ? "default" : "secondary"}
-          className={cn(
-            "px-4 py-2 text-sm font-semibold",
-            isAlarmEnabled ? "bg-green-500 text-white" : "bg-gray-400 text-gray-800"
-          )}
-        >
-          {isAlarmEnabled ? "🟢 СИСТЕМА АКТИВНА" : "🔴 СИСТЕМА ВЫКЛЮЧЕНА"}
-        </Badge>
+        {/* Статус-бадж */}
+        <div className={cn(
+          "px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1",
+          isAlarmEnabled 
+            ? "bg-green-500/20 text-green-600 border border-green-500/30" 
+            : "bg-gray-500/20 text-gray-500 border border-gray-500/30"
+        )}>
+          {isAlarmEnabled ? <Zap className="h-3 w-3" /> : <Activity className="h-3 w-3" />}
+          {isAlarmEnabled ? "ON" : "OFF"}
+        </div>
       </div>
 
-      {/* Активные таймеры */}
+      {/* Активные таймеры - компактная сетка */}
       {isAlarmEnabled && alarms.length > 0 && (
-        <Card className="border-2 border-blue-500/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg font-bold flex items-center">
-              <Clock className="h-5 w-5 mr-2 text-blue-500" /> Активные таймеры
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <AnimatePresence>
-              {alarms.map((alarm) => (
-                <motion.div
-                  key={alarm.taskId}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200"
-                >
-                  <div className="flex-1">
-                    <div className="font-semibold text-sm">{alarm.taskTitle}</div>
-                    <div className="text-blue-600 font-mono text-lg">
-                      {formatTime(alarm.remainingTime)}
-                    </div>
-                  </div>
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => stopTimer(alarm.taskId)}
-                      className="px-3 py-1"
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          className="overflow-hidden"
+        >
+          <Card className="border-0 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-md">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-blue-700 flex items-center gap-1">
+                  <Clock className="h-3 w-3" /> Активные ({alarms.length})
+                </span>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-2">
+                <AnimatePresence>
+                  {alarms.map((alarm) => (
+                    <motion.div
+                      key={alarm.taskId}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      className="flex items-center justify-between bg-white/60 backdrop-blur-sm rounded-lg p-2 border border-blue-200/50"
                     >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </CardContent>
-        </Card>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-semibold truncate text-gray-800">
+                          {alarm.taskTitle}
+                        </div>
+                        <div className="text-xs font-mono text-blue-600 font-bold">
+                          {formatTime(alarm.remainingTime)}
+                        </div>
+                      </div>
+                      
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => stopTimer(alarm.taskId)}
+                          className="h-7 w-7 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </motion.div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
-      {/* Инструкция */}
+      {/* Подсказка */}
       {!isAlarmEnabled && (
-        <div className="text-center text-sm text-muted-foreground p-3 bg-gray-50 rounded-lg">
-          Включите систему, чтобы использовать таймеры
+        <div className="text-center text-xs text-muted-foreground py-2 px-3 bg-gray-50/50 rounded-lg border border-gray-200/50">
+          Включите для использования таймеров
         </div>
       )}
     </div>
