@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target } from "lucide-react";
+import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Zap, Target, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -17,6 +17,8 @@ import WebFont from "webfontloader";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ScrollNav } from "@/components/ScrollNav";
+import { AlarmControl } from "@/components/AlarmControl";
+import { TaskTimerButton } from "@/components/TaskTimerButton";
 
 interface Task {
   id: string;
@@ -407,6 +409,18 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Alarm Control Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="flex justify-center mb-8"
+        >
+          <div className="w-full max-w-3xl">
+            <AlarmControl />
+          </div>
+        </motion.div>
+
         {/* Add Task Section - Perfectly Centered */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -773,6 +787,11 @@ const Index = () => {
                             <Plus className="h-4 w-4 mr-2" /> Add
                           </Button>
                         </motion.div>
+                      </div>
+
+                      {/* Timer Button */}
+                      <div className="pt-3 border-t border-primary/20">
+                        <TaskTimerButton taskId={task.id} taskTitle={task.title} />
                       </div>
                     </CardContent>
                   </Card>
