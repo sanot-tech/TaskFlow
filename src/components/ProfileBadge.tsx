@@ -23,6 +23,7 @@ export const ProfileBadge: React.FC = () => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
       whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
     >
       <Avatar className="w-10 h-10 border-2 border-primary/30 cursor-pointer">
         <AvatarImage src={profile.avatar} alt={profile.username} />
