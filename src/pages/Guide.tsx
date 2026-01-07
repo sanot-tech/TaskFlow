@@ -324,7 +324,7 @@ const Guide = () => {
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-muted-foreground text-sm">
+                        <p className="text-sm text-muted-foreground">
                           Work for 25 minutes, then take a 5-minute break. This helps you stay focused.
                         </p>
                         <Progress value={75} className="h-1 mt-2" />
@@ -338,7 +338,7 @@ const Guide = () => {
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-muted-foreground text-sm">
+                        <p className="text-sm text-muted-foreground">
                           Decide what you want to do in the morning, afternoon, and evening.
                         </p>
                       </AccordionContent>

@@ -14,7 +14,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { cn } from "@/lib/utils";
 import { AvatarConstructor } from "./AvatarConstructor";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const ProfileSettings: React.FC = () => {
   const { profile, updateProfile, updateSettings, resetProfile, regenerateAvatar } = useUserProfile();
@@ -73,12 +72,11 @@ export const ProfileSettings: React.FC = () => {
           </DialogHeader>
         </div>
 
-        {/* Скролл контент */}
-        <ScrollArea className="flex-1">
+        {/* Скролл контент - ПРАВИЛЬНАЯ РЕАЛИЗАЦИЯ */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
           <div className="p-6 space-y-6 bg-white">
-            {/* Секция 1: Аватар и имя (Flex Perfect Symmetry) */}
+            {/* Секция 1: Аватар и имя */}
             <div className="flex items-center gap-6 p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl border-2 border-purple-200">
-              {/* Аватар */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -90,7 +88,6 @@ export const ProfileSettings: React.FC = () => {
                     {profile.username[0]}
                   </AvatarFallback>
                 </Avatar>
-                {/* Быстрые кнопки действий */}
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -107,7 +104,6 @@ export const ProfileSettings: React.FC = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Имя и конструктор */}
               <div className="flex-1 space-y-3 min-w-0">
                 <div className="space-y-1">
                   <Label className="text-sm font-bold text-purple-800">Имя пользователя</Label>
@@ -142,7 +138,7 @@ export const ProfileSettings: React.FC = () => {
               </div>
             </div>
 
-            {/* Конструктор (анимированный) */}
+            {/* Конструктор */}
             <AnimatePresence>
               {showConstructor && (
                 <motion.div
@@ -160,7 +156,7 @@ export const ProfileSettings: React.FC = () => {
               )}
             </AnimatePresence>
 
-            {/* Секция 2: Уведомления (Gold Standard Card) */}
+            {/* Секция 2: Уведомления */}
             <Card className="border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg font-bold text-amber-900 flex items-center gap-2">
@@ -187,7 +183,7 @@ export const ProfileSettings: React.FC = () => {
               </CardContent>
             </Card>
 
-            {/* Секция 3: Звук будильника (Perfect Symmetry) */}
+            {/* Секция 3: Звук будильника */}
             <Card className="border-2 border-blue-300 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg font-bold text-blue-900 flex items-center gap-2">
@@ -225,7 +221,7 @@ export const ProfileSettings: React.FC = () => {
               </CardContent>
             </Card>
 
-            {/* Секция 4: Опасная зона (Gold Standard) */}
+            {/* Секция 4: Опасная зона */}
             <Card className="border-2 border-red-300 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg font-bold text-red-900 flex items-center gap-2">
@@ -249,9 +245,9 @@ export const ProfileSettings: React.FC = () => {
               </CardContent>
             </Card>
           </div>
-        </ScrollArea>
+        </div>
 
-        {/* Футер с кнопками (фиксированный внизу) */}
+        {/* Футер с кнопками */}
         <div className="p-6 bg-white border-t border-gray-200 flex-shrink-0">
           <div className="flex gap-3">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
