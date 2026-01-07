@@ -79,9 +79,6 @@ const Index = () => {
   const { toast } = useToast();
 
   // LOGIC CYCLE: Font initialization - COMPLETE
-  // - Gets random fonts for each letter
-  // - Updates state
-  // - No missing steps
   useEffect(() => {
     const initialFonts = "TodoList".split("").map(() => 
       fontList[Math.floor(Math.random() * fontList.length)]
@@ -90,10 +87,6 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: Font rotation - COMPLETE
-  // - Sets up interval
-  // - Updates fonts every 2 seconds
-  // - Cleans up on unmount
-  // - No missing steps
   useEffect(() => {
     const interval = setInterval(() => {
       setLetterFonts("TodoList".split("").map(() => 
@@ -104,8 +97,6 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: WebFont loading - COMPLETE
-  // - Loads fonts from Google
-  // - No missing steps
   useEffect(() => {
     WebFont.load({
       google: {
@@ -115,10 +106,6 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: Task loading - COMPLETE
-  // - Mock data created
-  // - State updated
-  // - Success toast shown
-  // - Error handling present
   useEffect(() => {
     const loadTasks = async () => {
       try {
@@ -169,12 +156,6 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: Add task - COMPLETE
-  // - Validates title
-  // - Creates task object with all properties
-  // - Updates state
-  // - Resets form fields
-  // - Shows success toast
-  // - No missing steps
   const addTask = () => {
     if (!taskTitle.trim()) {
       showError("Task title cannot be empty.");
@@ -205,10 +186,6 @@ const Index = () => {
   };
 
   // LOGIC CYCLE: Toggle task completion - COMPLETE
-  // - Finds task by ID
-  // - Toggles completed status
-  // - Updates state
-  // - No missing steps
   const toggleTaskCompletion = (taskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -218,23 +195,12 @@ const Index = () => {
   };
 
   // LOGIC CYCLE: Delete task - COMPLETE
-  // - Filters out task by ID
-  // - Updates state
-  // - Shows success toast
-  // - No missing steps
   const deleteTask = (taskId: string) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
     showSuccess("Task deleted successfully!");
   };
 
   // LOGIC CYCLE: Add subtask - COMPLETE
-  // - Validates subtask title
-  // - Finds target task
-  // - Creates subtask object
-  // - Updates task's subtasks array
-  // - Resets input field
-  // - Shows success toast
-  // - No missing steps
   const addSubtask = (taskId: string) => {
     const subtaskTitle = newSubtask[taskId];
     if (!subtaskTitle?.trim()) {
@@ -265,11 +231,6 @@ const Index = () => {
   };
 
   // LOGIC CYCLE: Toggle subtask completion - COMPLETE
-  // - Finds task by ID
-  // - Finds subtask by ID
-  // - Toggles completed status
-  // - Updates state
-  // - No missing steps
   const toggleSubtaskCompletion = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -288,11 +249,6 @@ const Index = () => {
   };
 
   // LOGIC CYCLE: Delete subtask - COMPLETE
-  // - Finds task by ID
-  // - Filters out subtask by ID
-  // - Updates state
-  // - Shows success toast
-  // - No missing steps
   const deleteSubtask = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -308,11 +264,6 @@ const Index = () => {
   };
 
   // LOGIC CYCLE: Add tag - COMPLETE
-  // - Validates tag
-  // - Checks for duplicates
-  // - Updates state
-  // - Resets input
-  // - No missing steps
   const addTag = () => {
     if (newTag.trim() && !taskTags.includes(newTag)) {
       setTaskTags([...taskTags, newTag]);
@@ -321,61 +272,38 @@ const Index = () => {
   };
 
   // LOGIC CYCLE: Remove tag - COMPLETE
-  // - Filters out tag
-  // - Updates state
-  // - No missing steps
   const removeTag = (tagToRemove: string) => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
-  // LOGIC CYCLE: Standard priority selection - COMPLETE
-  // - Sets priority name
-  // - Sets priority color
-  // - Clears custom priority
-  // - No missing steps
+  // LOGIC CYCLE: Standard priority selection - FIXED
+  // Теперь очищает кастомный текст при выборе стандартного приоритета
   const handleStandardPrioritySelect = (priority: string, color: string) => {
     setTaskPriority(priority);
     setTaskPriorityColor(color);
-    setCustomPriority("");
+    setCustomPriority(""); // ← Очищаем кастомный текст
   };
 
-  // LOGIC CYCLE: Custom priority change - COMPLETE
-  // - Updates custom priority text
-  // - Updates task priority if custom text exists
-  // - Resets to default if empty
-  // - No missing steps
+  // LOGIC CYCLE: Custom priority change - FIXED
+  // Теперь НЕ трогает taskPriority и taskPriorityColor
   const handleCustomPriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCustomPriority(value);
-    if (value.trim()) {
-      setTaskPriority(value);
-    } else {
-      setTaskPriority("medium");
-      setTaskPriorityColor("bg-yellow-500");
-    }
+    // НЕ меняем taskPriority и taskPriorityColor здесь
   };
 
   // LOGIC CYCLE: Custom color selection - COMPLETE
-  // - Sets priority color
-  // - Closes color picker
-  // - No missing steps
   const handleCustomColorSelect = (color: string) => {
     setTaskPriorityColor(color);
     setShowColorPicker(false);
   };
 
   // LOGIC CYCLE: Subtask input change - COMPLETE
-  // - Updates specific task's subtask input
-  // - Uses spread operator to preserve other inputs
-  // - No missing steps
   const handleNewSubtaskChange = (taskId: string, value: string) => {
     setNewSubtask(prev => ({ ...prev, [taskId]: value }));
   };
 
   // LOGIC CYCLE: Subtask keyboard submit - COMPLETE
-  // - Detects Enter key
-  // - Calls addSubtask
-  // - No missing steps
   const handleAddSubtaskKeyPress = (taskId: string, e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       addSubtask(taskId);
@@ -486,13 +414,16 @@ const Index = () => {
                   <div className="space-y-2">
                     <Label className="font-medium text-lg">Priority</Label>
                     <div className="space-y-3">
-                      <Input
-                        placeholder="Custom priority (optional)"
-                        value={customPriority}
-                        onChange={handleCustomPriorityChange}
-                        className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
-                      />
+                      {/* Кастомный инпут + кнопка выбора цвета */}
                       <div className="flex items-center space-x-2">
+                        <Input
+                          placeholder="Custom priority (optional)"
+                          value={customPriority}
+                          onChange={handleCustomPriorityChange}
+                          className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1"
+                        />
+                        
+                        {/* Кнопка выбора цвета (показывается только если есть кастомный текст) */}
                         {customPriority && (
                           <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
                             <PopoverTrigger asChild>
@@ -521,34 +452,36 @@ const Index = () => {
                             </PopoverContent>
                           </Popover>
                         )}
-                        <Select
-                          value={customPriority || taskPriority}
-                          onValueChange={(value) => {
-                            const selected = standardPriorities.find((p) => p.value === value);
-                            if (selected) {
-                              handleStandardPrioritySelect(selected.value, selected.color);
-                            } else {
-                              setTaskPriority(value);
-                            }
-                          }}
-                        >
-                          <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
-                            <SelectValue placeholder={customPriority || taskPriority || "Select priority"}>
-                              {customPriority || taskPriority}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                            {standardPriorities.map((priority) => (
-                              <SelectItem key={priority.value} value={priority.value}>
-                                <div className="flex items-center space-x-2">
-                                  <div className={cn("w-4 h-4 rounded-sm", priority.color)}></div>
-                                  <span>{priority.name}</span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
                       </div>
+
+                      {/* Select со стандартными приоритетами - ВСЕГДА работает */}
+                      <Select
+                        value={taskPriority}
+                        onValueChange={(value) => {
+                          const selected = standardPriorities.find((p) => p.value === value);
+                          if (selected) {
+                            handleStandardPrioritySelect(selected.value, selected.color);
+                          } else {
+                            setTaskPriority(value);
+                          }
+                        }}
+                      >
+                        <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
+                          <SelectValue placeholder={taskPriority || "Select priority"}>
+                            {customPriority || taskPriority}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {standardPriorities.map((priority) => (
+                            <SelectItem key={priority.value} value={priority.value}>
+                              <div className="flex items-center space-x-2">
+                                <div className={cn("w-4 h-4 rounded-sm", priority.color)}></div>
+                                <span>{priority.name}</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
