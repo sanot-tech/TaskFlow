@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import WebFont from "webfontloader";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { ScrollNav } from "@/components/ScrollNav";
 
 interface Task {
   id: string;
@@ -102,11 +103,8 @@ const Index = () => {
   }, []);
 
   // LOGIC CYCLE: Task loading - COMPLETE
-  // УБИРАЕМ: useEffect с mockTasks — теперь данные загружаются из localStorage автоматически
-  // Но можно добавить проверку, если данных нет
   useEffect(() => {
     if (tasks.length === 0) {
-      // Показываем подсказку, что можно добавить задачи
       console.log("No tasks found. Add your first task!");
     }
   }, [tasks]);
@@ -254,7 +252,9 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen p-4">
+    // Добавляем user-select-none для всего приложения
+    <div className="min-h-screen p-4 select-none touch-pan-y">
+      <ScrollNav />
       <div className="max-w-6xl mx-auto">
         {/* Header Section - Perfectly Centered */}
         <div className="flex justify-center items-center mb-12">
@@ -264,7 +264,7 @@ const Index = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
             >
-              <h1 className="text-4xl font-bold text-primary flex items-center space-x-2">
+              <h1 className="text-4xl font-bold text-primary flex items-center space-x-2 select-none">
                 <motion.span
                   animate={{ rotate: [0, 5, 0, -5, 0] }}
                   transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}
@@ -276,7 +276,7 @@ const Index = () => {
                     <motion.span 
                       key={index} 
                       style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
-                      className="transition-all duration-500 ease-in-out inline-block"
+                      className="transition-all duration-500 ease-in-out inline-block select-none"
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -303,9 +303,9 @@ const Index = () => {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="btn-outline relative overflow-hidden group px-6 py-5"
+                  className="btn-outline relative overflow-hidden group px-6 py-5 select-none"
                 >
-                  <span className="relative z-10 flex items-center text-lg">
+                  <span className="relative z-10 flex items-center text-lg select-none">
                     <BookOpen className="h-5 w-5 mr-3" /> Guide
                   </span>
                   <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></span>
@@ -322,9 +322,9 @@ const Index = () => {
           transition={{ duration: 0.4 }}
         >
           <div className="flex justify-center mb-10">
-            <Card className="custom-card w-full max-w-3xl">
+            <Card className="custom-card w-full max-w-3xl select-none">
               <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl font-bold flex items-center justify-center">
+                <CardTitle className="text-2xl font-bold flex items-center justify-center select-none">
                   <Plus className="h-6 w-6 mr-3 text-green-500" /> Add New Task
                 </CardTitle>
               </CardHeader>
@@ -332,22 +332,22 @@ const Index = () => {
                 {/* Title & Description - Perfectly Aligned */}
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg">Task Title</Label>
+                    <Label className="font-medium text-lg select-none">Task Title</Label>
                     <Input
                       placeholder="What needs to be done?"
                       value={taskTitle}
                       onChange={(e) => setTaskTitle(e.target.value)}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4"
+                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg">Description</Label>
+                    <Label className="font-medium text-lg select-none">Description</Label>
                     <Input
                       placeholder="Add details (optional)"
                       value={taskDescription}
                       onChange={(e) => setTaskDescription(e.target.value)}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4"
+                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
                     />
                   </div>
                 </div>
@@ -355,25 +355,25 @@ const Index = () => {
                 {/* Priority & Date - Perfectly Balanced */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg">Priority</Label>
+                    <Label className="font-medium text-lg select-none">Priority</Label>
                     <div className="space-y-3">
                       {/* Поле ввода текста приоритета */}
                       <Input
                         placeholder="Enter priority (e.g., High, Urgent, Important)"
                         value={taskPriority}
                         onChange={handlePriorityChange}
-                        className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 select-text"
                       />
 
                       {/* Палитра цветов (всегда доступна) */}
                       <div className="space-y-2">
-                        <Label className="text-sm font-medium text-muted-foreground">Choose Color</Label>
+                        <Label className="text-sm font-medium text-muted-foreground select-none">Choose Color</Label>
                         <div className="flex flex-wrap gap-2">
                           {customPriorityColors.map((color, index) => (
                             <motion.div
                               key={index}
                               whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.95 }}
+                              whileTap={{ scale: 0.9 }}
                               transition={{ type: "spring", stiffness: 400, damping: 10 }}
                             >
                               <Button
@@ -396,18 +396,18 @@ const Index = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg">Due Date</Label>
+                    <Label className="font-medium text-lg select-none">Due Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-full justify-start text-left font-normal border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 py-6",
+                            "w-full justify-start text-left font-normal border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 py-6 select-none",
                             !taskDueDate && "text-muted-foreground"
                           )}
                         >
                           <Calendar className="mr-3 h-5 w-5" />
-                          {taskDueDate ? format(taskDueDate, "PPP") : <span>Pick a date</span>}
+                          {taskDueDate ? format(taskDueDate, "PPP") : <span className="select-none">Pick a date</span>}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
@@ -424,21 +424,21 @@ const Index = () => {
 
                 {/* Tags Section - Perfectly Centered */}
                 <div className="space-y-3">
-                  <Label className="font-medium text-lg">Tags</Label>
+                  <Label className="font-medium text-lg select-none">Tags</Label>
                   <div className="flex gap-3">
                     <Input
                       placeholder="Add tag and press Enter"
                       value={newTag}
                       onChange={(e) => setNewTag(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && addTag()}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1"
+                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1 select-text"
                     />
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                      <Button onClick={addTag} className="btn-secondary px-6">
+                      <Button onClick={addTag} className="btn-secondary px-6 select-none">
                         <Tag className="h-5 w-5 mr-2" /> Add
                       </Button>
                     </motion.div>
@@ -457,12 +457,12 @@ const Index = () => {
                         >
                           <Badge
                             variant="secondary"
-                            className="flex items-center gap-2 bg-secondary text-secondary-foreground px-3 py-2 text-sm"
+                            className="flex items-center gap-2 bg-secondary text-secondary-foreground px-3 py-2 text-sm select-none"
                           >
-                            <span className="font-medium">{tag}</span>
+                            <span className="font-medium select-none">{tag}</span>
                             <button 
                               onClick={() => removeTag(tag)} 
-                              className="text-xs hover:text-red-500 font-bold"
+                              className="text-xs hover:text-red-500 font-bold select-none"
                             >
                               ×
                             </button>
@@ -482,7 +482,7 @@ const Index = () => {
                 >
                   <Button 
                     onClick={addTask} 
-                    className="btn-primary w-full max-w-md text-lg font-medium py-6"
+                    className="btn-primary w-full max-w-md text-lg font-medium py-6 select-none"
                   >
                     <Plus className="h-6 w-6 mr-3" /> Create Task
                   </Button>
@@ -503,10 +503,11 @@ const Index = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, x: -100, scale: 0.9 }}
                   transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+                  className="task-card"
                 >
                   <Card 
                     className={cn(
-                      "custom-card border-2",
+                      "custom-card border-2 select-none",
                       task.subtasks.length > 0 
                         ? "border-blue-500/30" 
                         : "border-yellow-500/30"
@@ -530,14 +531,14 @@ const Index = () => {
                         <div className="flex-1 space-y-1">
                           <CardTitle
                             className={cn(
-                              "text-xl font-bold leading-tight",
+                              "text-xl font-bold leading-tight select-none",
                               task.completed && "line-through text-gray-400"
                             )}
                           >
                             {task.title}
                           </CardTitle>
                           {task.description && (
-                            <CardDescription className="text-base leading-relaxed card-description">
+                            <CardDescription className="text-base leading-relaxed card-description select-none">
                               {task.description}
                             </CardDescription>
                           )}
@@ -553,7 +554,7 @@ const Index = () => {
                           variant="destructive"
                           size="sm"
                           onClick={() => deleteTask(task.id)}
-                          className="flex-shrink-0 px-4 py-2"
+                          className="flex-shrink-0 px-4 py-2 select-none"
                         >
                           <Trash2 className="h-4 w-4 mr-2" /> Delete
                         </Button>
@@ -566,7 +567,7 @@ const Index = () => {
                       <div className="flex flex-wrap items-center gap-4 pb-4 border-b border-primary/20">
                         <div className="flex items-center space-x-3">
                           <AlertCircle className="h-5 w-5 text-primary" />
-                          <span className="font-semibold text-sm">Priority:</span>
+                          <span className="font-semibold text-sm select-none">Priority:</span>
                           <Badge className={cn("text-white px-3 py-1.5", task.priorityColor)}>
                             {task.priority}
                           </Badge>
@@ -575,7 +576,7 @@ const Index = () => {
                         {task.dueDate && (
                           <div className="flex items-center space-x-3">
                             <Calendar className="h-5 w-5 text-primary" />
-                            <span className="text-sm font-medium text-muted-foreground">
+                            <span className="text-sm font-medium text-muted-foreground select-none">
                               {format(task.dueDate, "PPP")}
                             </span>
                           </div>
@@ -589,7 +590,7 @@ const Index = () => {
                             <Badge 
                               key={tag} 
                               variant="outline" 
-                              className="bg-secondary text-secondary-foreground px-3 py-1.5"
+                              className="bg-secondary text-secondary-foreground px-3 py-1.5 select-none"
                             >
                               {tag}
                             </Badge>
@@ -600,7 +601,7 @@ const Index = () => {
                       {/* Subtasks Section */}
                       {task.subtasks.length > 0 && (
                         <div className="space-y-3 pt-3 border-t border-blue-500/20">
-                          <h4 className="font-bold flex items-center text-lg">
+                          <h4 className="font-bold flex items-center text-lg select-none">
                             <CheckCircle className="h-5 w-5 mr-2 text-blue-500" /> 
                             Subtasks ({task.subtasks.filter(s => s.completed).length}/{task.subtasks.length})
                           </h4>
@@ -629,7 +630,7 @@ const Index = () => {
                                     </motion.div>
                                     <span
                                       className={cn(
-                                        "text-sm font-medium",
+                                        "text-sm font-medium select-none",
                                         subtask.completed && "line-through text-gray-400"
                                       )}
                                     >
@@ -645,7 +646,7 @@ const Index = () => {
                                   >
                                     <button 
                                       onClick={() => deleteSubtask(task.id, subtask.id)}
-                                      className="text-red-500 hover:text-red-700 p-1"
+                                      className="text-red-500 hover:text-red-700 p-1 select-none"
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
@@ -664,7 +665,7 @@ const Index = () => {
                           value={newSubtask[task.id] || ""}
                           onChange={(e) => handleNewSubtaskChange(task.id, e.target.value)}
                           onKeyPress={(e) => handleAddSubtaskKeyPress(task.id, e)}
-                          className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1"
+                          className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1 select-text"
                         />
                         <motion.div
                           whileHover={{ scale: 1.05 }}
@@ -673,7 +674,7 @@ const Index = () => {
                         >
                           <Button 
                             onClick={() => addSubtask(task.id)}
-                            className="btn-secondary px-5"
+                            className="btn-secondary px-5 select-none"
                           >
                             <Plus className="h-4 w-4 mr-2" /> Add
                           </Button>
