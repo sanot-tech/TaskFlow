@@ -47,7 +47,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
 
   return (
     <div className={cn("fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3", className)}>
-      {/* Вверх (предыдущий) - оранжевый */}
+      {/* Вверх (предыдущий) - оранжевая */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -63,7 +63,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
         </Button>
       </motion.div>
       
-      {/* Наверх (в начало) - голубой */}
+      {/* Наверх (в начало) - голубая */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -80,7 +80,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
         </Button>
       </motion.div>
 
-      {/* Вниз (следующий) - зеленый */}
+      {/* Вниз (следующий) - зеленая */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
