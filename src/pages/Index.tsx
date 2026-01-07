@@ -7,7 +7,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { BookOpen, Plus, Trash2, Tag, Calendar, AlertCircle, CheckCircle, Layout, Zap, Target, Palette } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -34,12 +33,6 @@ interface Subtask {
   title: string;
   completed: boolean;
 }
-
-const standardPriorities = [
-  { name: "High", color: "bg-red-500", value: "high" },
-  { name: "Medium", color: "bg-yellow-500", value: "medium" },
-  { name: "Low", color: "bg-green-500", value: "low" },
-];
 
 const customPriorityColors = [
   { color: "bg-red-500", name: "Red" },
@@ -75,7 +68,6 @@ const Index = () => {
   const [taskDueDate, setTaskDueDate] = useState<Date | undefined>(undefined);
   const [taskTags, setTaskTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
-  const [showColorPicker, setShowColorPicker] = useState(false);
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
   const { toast } = useToast();
@@ -277,36 +269,14 @@ const Index = () => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
-  // LOGIC CYCLE: Priority selection - NEW APPROACH
-  // Выбор приоритета из списка (High/Medium/Low/Custom)
-  const handlePrioritySelect = (value: string) => {
-    if (value === "custom") {
-      // Для кастомного приоритета — просто ставим текст, цвет остаётся как был
-      setTaskPriority("");
-    } else {
-      // Для стандартных — находим цвет и ставим
-      const selected = standardPriorities.find((p) => p.value === value);
-      if (selected) {
-        setTaskPriority(selected.name);
-        setTaskPriorityColor(selected.color);
-      } else {
-        setTaskPriority(value);
-      }
-    }
-  };
-
-  // LOGIC CYCLE: Custom priority text - NEW
-  // Пользователь вводит свой текст приоритета
-  const handleCustomPriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setTaskPriority(value);
+  // LOGIC CYCLE: Priority text change - NEW
+  const handlePriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskPriority(e.target.value);
   };
 
   // LOGIC CYCLE: Color selection - NEW
-  // Выбор цвета из палитры (всегда доступен)
   const handleColorSelect = (color: string) => {
     setTaskPriorityColor(color);
-    setShowColorPicker(false);
   };
 
   // LOGIC CYCLE: Subtask input change - COMPLETE
@@ -425,75 +395,41 @@ const Index = () => {
                   <div className="space-y-2">
                     <Label className="font-medium text-lg">Priority</Label>
                     <div className="space-y-3">
-                      {/* Select с приоритетами (включая кастомный) */}
-                      <Select
-                        value={taskPriority || "custom"}
-                        onValueChange={handlePrioritySelect}
-                      >
-                        <SelectTrigger className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20">
-                          <SelectValue placeholder="Select priority">
-                            {taskPriority || "Custom"}
-                          </SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {standardPriorities.map((priority) => (
-                            <SelectItem key={priority.value} value={priority.value}>
-                              <div className="flex items-center space-x-2">
-                                <div className={cn("w-4 h-4 rounded-sm", priority.color)}></div>
-                                <span>{priority.name}</span>
-                              </div>
-                            </SelectItem>
-                          ))}
-                          <SelectItem value="custom">
-                            <div className="flex items-center space-x-2">
-                              <div className={cn("w-4 h-4 rounded-sm", taskPriorityColor)}></div>
-                              <span>Custom (type below)</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-
-                      {/* Поле для кастомного текста (всегда доступно) */}
+                      {/* Поле ввода текста приоритета */}
                       <Input
-                        placeholder="Enter custom priority (optional)"
+                        placeholder="Enter priority (e.g., High, Urgent, Important)"
                         value={taskPriority}
-                        onChange={handleCustomPriorityChange}
+                        onChange={handlePriorityChange}
                         className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       />
 
-                      {/* Кнопка выбора цвета (всегда доступна) */}
-                      <Popover open={showColorPicker} onOpenChange={setShowColorPicker}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="w-full justify-start border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
-                          >
-                            <Palette className="h-5 w-5 mr-2" />
-                            <span className="flex items-center gap-2">
-                              Color: 
-                              <div className={cn("w-5 h-5 rounded-sm", taskPriorityColor)}></div>
-                              {customPriorityColors.find(c => c.color === taskPriorityColor)?.name || "Custom"}
-                            </span>
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-2" align="start">
-                          <div className="grid grid-cols-3 gap-2">
-                            {customPriorityColors.map((color, index) => (
+                      {/* Палитра цветов (всегда доступна) */}
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium text-muted-foreground">Choose Color</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {customPriorityColors.map((color, index) => (
+                            <motion.div
+                              key={index}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                            >
                               <Button
-                                key={index}
                                 onClick={() => handleColorSelect(color.color)}
                                 className={cn(
-                                  "w-10 h-10 p-1",
-                                  taskPriorityColor === color.color ? "ring-2 ring-primary" : ""
+                                  "w-12 h-12 p-0 border-2",
+                                  taskPriorityColor === color.color 
+                                    ? "border-primary ring-2 ring-primary/30" 
+                                    : "border-gray-300 hover:border-primary"
                                 )}
                                 title={color.name}
                               >
                                 <div className={cn("w-full h-full rounded-sm", color.color)}></div>
                               </Button>
-                            ))}
-                          </div>
-                        </PopoverContent>
-                      </Popover>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
