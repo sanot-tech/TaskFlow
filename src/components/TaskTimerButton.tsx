@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Clock, Play, StopCircle, Timer } from "lucide-react";
+import { Clock, Play, StopCircle as StopCircleIcon, Timer } from "lucide-react";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,16 +35,16 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 flex-center-all quantum-symmetry"
       >
         <Button
           size="sm"
           variant="destructive"
           onClick={() => stopTimer(taskId)}
-          className="px-3 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 shadow-md shadow-red-500/20"
+          className="px-3 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 shadow-md shadow-red-500/20 flex-center-all quantum-symmetry"
         >
-          <StopCircle className="h-3.5 w-3.5 mr-1.5" /> 
-          <span className="font-mono font-bold">{remainingTime}</span>
+          <StopCircleIcon className="h-3.5 w-3.5 mr-1.5 flex-center-all" />
+          <span className="font-mono font-bold flex-center-all">{remainingTime}</span>
         </Button>
       </motion.div>
     );
@@ -56,61 +56,62 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         <motion.div
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          className="flex-center-all"
         >
           <Button
             size="sm"
             variant="outline"
-            className="px-3 py-1.5 rounded-lg border-blue-400/30 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all"
+            className="px-3 py-1.5 rounded-lg border-blue-400/30 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all flex-center-all quantum-symmetry"
           >
-            <Timer className="h-3.5 w-3.5 mr-1.5" /> Таймер
+            <Timer className="h-3.5 w-3.5 mr-1.5 flex-center-all" /> Timer
           </Button>
         </motion.div>
       </DialogTrigger>
       
-      <DialogContent className="sm:max-w-[360px] rounded-xl">
+      <DialogContent className="sm:max-w-[360px] rounded-xl quantum-symmetry">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-lg">
-            <Clock className="h-5 w-5 text-blue-500" /> 
-            <span>Запустить таймер</span>
+          <DialogTitle className="flex items-center gap-2 text-lg flex-center-all">
+            <Clock className="h-5 w-5 text-blue-500 flex-center-all" />
+            <span className="flex-center-all">Start Timer</span>
           </DialogTitle>
-          <DialogDescription className="text-sm">
-            Задача: <strong className="text-gray-900">{taskTitle}</strong>
+          <DialogDescription className="text-sm flex-center-all">
+            Task: <strong className="text-gray-900 flex-center-all">{taskTitle}</strong>
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">Длительность (минуты)</Label>
+        <div className="space-y-4 py-4 flex-center-all">
+          <div className="space-y-2 flex-center-all">
+            <Label className="text-sm font-medium flex-center-all">Duration (minutes)</Label>
             <Input
               type="number"
               min="1"
               max="180"
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              className="h-10"
+              className="h-10 flex-center-all quantum-symmetry"
             />
           </div>
           
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2 flex-center-all">
             {[5, 25, 45].map((min) => (
               <Button
                 key={min}
                 onClick={() => setDuration(min)}
                 variant={duration === min ? "default" : "secondary"}
-                className="h-9 text-sm font-medium"
+                className="h-9 text-sm font-medium flex-center-all quantum-symmetry"
               >
-                {min} мин
+                {min} min
               </Button>
             ))}
           </div>
         </div>
         
-        <div className="flex gap-2">
-          <Button onClick={handleStart} className="flex-1 bg-blue-500 hover:bg-blue-600 h-10">
-            <Play className="h-4 w-4 mr-2" /> Запустить
+        <div className="flex gap-2 flex-center-all">
+          <Button onClick={handleStart} className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 flex-center-all quantum-symmetry">
+            <Play className="h-4 w-4 mr-2 flex-center-all" /> Start
           </Button>
-          <Button onClick={() => setIsOpen(false)} variant="outline" className="flex-1 h-10">
-            Отмена
+          <Button onClick={() => setIsOpen(false)} variant="outline" className="flex-1 h-10 flex-center-all quantum-symmetry">
+            Cancel
           </Button>
         </div>
       </DialogContent>

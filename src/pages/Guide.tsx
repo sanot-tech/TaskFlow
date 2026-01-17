@@ -48,11 +48,11 @@ const Guide = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Load fonts using WebFontLoader
+  // Load fonts using WebFontLoader with Inter as backup
   useEffect(() => {
     WebFont.load({
       google: {
-        families: fontList
+        families: [...fontList, 'Inter:300,400,500,600,700']
       }
     });
   }, []);
@@ -71,8 +71,8 @@ const Guide = () => {
             <h1 className="text-3xl font-bold text-primary flex">
               Simple Guide for&nbsp;
               {"TodoList".split("").map((letter, index) => (
-                <span 
-                  key={index} 
+                <span
+                  key={index}
                   style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
                   className="transition-all duration-500 ease-in-out"
                 >
@@ -489,7 +489,7 @@ const Guide = () => {
                       <TabsTrigger value="remote">Remote</TabsTrigger>
                     </TabsList>
                     <TabsContent value="office">
-                      <ul className="text-sm text-muted-foreground space-y-2 pl-4 mt-2">
+                      <ul className="text-sm text-muted-foreground space-y-2 pl-4">
                         <li>• Meetings</li>
                         <li>• Reports</li>
                         <li>• Emails</li>
@@ -497,7 +497,7 @@ const Guide = () => {
                       </ul>
                     </TabsContent>
                     <TabsContent value="remote">
-                      <ul className="text-sm text-muted-foreground space-y-2 pl-4 mt-2">
+                      <ul className="text-sm text-muted-foreground space-y-2 pl-4">
                         <li>• Video calls</li>
                         <li>• Online meetings</li>
                         <li>• Digital documents</li>

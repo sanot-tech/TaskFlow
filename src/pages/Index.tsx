@@ -3,7 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { showSuccess, showError } from "@/utils/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardDescription, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,8 @@ import { AlarmControl } from "@/components/AlarmControl";
 import { TaskTimerButton } from "@/components/TaskTimerButton";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { ProfileComponentsWrapper } from "@/components/ProfileComponentsWrapper";
+import { AdaptiveCardTitle } from "@/components/AdaptiveCardTitle";
+import { PremiumHeader } from "@/components/PremiumHeader";
 
 interface Task {
   id: string;
@@ -82,7 +84,7 @@ const Index = () => {
 
   // LOGIC CYCLE: Font initialization - COMPLETE
   useEffect(() => {
-    const initialFonts = "TodoList".split("").map(() => 
+    const initialFonts = "TodoList".split("").map(() =>
       fontList[Math.floor(Math.random() * fontList.length)]
     );
     setLetterFonts(initialFonts);
@@ -91,7 +93,7 @@ const Index = () => {
   // LOGIC CYCLE: Font rotation - COMPLETE
   useEffect(() => {
     const interval = setInterval(() => {
-      setLetterFonts("TodoList".split("").map(() => 
+      setLetterFonts("TodoList".split("").map(() =>
         fontList[Math.floor(Math.random() * fontList.length)]
       ));
     }, 2000);
@@ -102,7 +104,7 @@ const Index = () => {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: fontList
+        families: [...fontList, 'Inter:300,400,500,600,700']
       }
     });
   }, []);
@@ -282,7 +284,7 @@ const Index = () => {
           ? {
               ...task,
               subtasks: task.subtasks.map((subtask) =>
-                subtask.id === taskId
+                subtask.id === subtaskId
                   ? { ...subtask, completed: !subtask.completed }
                   : subtask
               ),
@@ -336,52 +338,13 @@ const Index = () => {
   };
 
   return (
-    // Добавляем user-select-none для всего приложения
-    <div className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable">
+    // Add user-select-none for the entire application
+    <div className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable flex flex-col items-center">
       {profile && !isLoading && <ScrollNav />}
-      <div className="max-w-6xl mx-auto">
-        {/* Header Section - Perfectly Centered */}
-        <div className="flex justify-center items-center mb-8">
-          <div className="flex items-center space-x-6">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-            >
-              <h1 className="text-4xl font-bold text-primary flex items-center space-x-2 select-none">
-                <motion.span
-                  animate={{ rotate: [0, 5, 0, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}
-                >
-                  <Zap className="h-8 w-8 text-yellow-500" />
-                </motion.span>
-                <span className="flex">
-                  {"TodoList".split("").map((letter, index) => (
-                    <motion.span 
-                      key={index} 
-                      style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
-                      className="transition-all duration-500 ease-in-out inline-block select-none"
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                    >
-                      {letter}
-                    </motion.span>
-                  ))}
-                </span>
-                <motion.span
-                  animate={{ rotate: [0, -5, 0, 5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}
-                >
-                  <Target className="h-8 w-8 text-blue-500" />
-                </motion.span>
-              </h1>
-            </motion.div>
-            
-            {/* Profile Section */}
-            <ProfileComponentsWrapper profile={profile} isLoading={isLoading} />
-          </div>
-        </div>
+      
+      <PremiumHeader profile={profile} isLoading={isLoading} letterFonts={letterFonts} />
+      
+      <div className="max-w-6xl mx-auto w-full">
 
         {/* Alarm Control Section - COMPACT */}
         <motion.div
@@ -404,7 +367,7 @@ const Index = () => {
           <div className="flex justify-center mb-8">
             <Card className="custom-card w-full max-w-3xl select-none">
               <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl font-bold flex items-center justify-center select-none">
+                <CardTitle className="text-2xl font-bold flex items-center justify-center select-none flex-center-all quantum-symmetry">
                   <Plus className="h-6 w-6 mr-3 text-green-500" /> Add New Task
                 </CardTitle>
               </CardHeader>
@@ -586,45 +549,43 @@ const Index = () => {
                   transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
                   className="task-card"
                 >
-                  <Card 
+                  <Card
                     className={cn(
                       "custom-card border-2 select-none",
-                      task.subtasks.length > 0 
-                        ? "border-blue-500/30" 
+                      task.subtasks.length > 0
+                        ? "border-blue-500/30"
                         : "border-yellow-500/30"
                     )}
                   >
                     {/* Task Header - Perfectly Balanced */}
                     <CardHeader className="flex-row justify-between items-start pb-4 space-y-0">
-                      <div className="flex items-start space-x-4 flex-1">
-                        <motion.div
-                          whileHover={{ scale: 1.15 }}
-                          whileTap={{ scale: 0.9 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      <div className="flex items-start space-x-1 flex-1"> {/* Reduced space to bring checkbox closer to title */}
+                      <motion.div
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.8 }}
+                        transition={{ type: "spring", stiffness: 700, damping: 15 }}
+                        className="relative top-[-1px]" /* Slightly elevate the checkbox */
+                      >
+                        <Checkbox
+                          checked={task.completed}
+                          onCheckedChange={() => toggleTaskCompletion(task.id)}
+                          className="mt-3 w-3.5 h-3.5" /* Adjusted size and margin to be closer to title */
+                        />
+                      </motion.div>
+                      
+                      <div className="flex-1 space-y-1">
+                        <AdaptiveCardTitle
+                          completed={task.completed}
                         >
-                          <Checkbox
-                            checked={task.completed}
-                            onCheckedChange={() => toggleTaskCompletion(task.id)}
-                            className="mt-1.5 w-5 h-5"
-                          />
-                        </motion.div>
-                        
-                        <div className="flex-1 space-y-1">
-                          <CardTitle
-                            className={cn(
-                              "text-xl font-bold leading-tight select-none",
-                              task.completed && "line-through text-gray-400"
-                            )}
-                          >
-                            {task.title}
-                          </CardTitle>
-                          {task.description && (
-                            <CardDescription className="text-base leading-relaxed card-description select-none">
-                              {task.description}
-                            </CardDescription>
-                          )}
-                        </div>
+                          {task.title}
+                        </AdaptiveCardTitle>
+                        {task.description && (
+                          <CardDescription className="text-base leading-relaxed card-description select-none quantum-symmetry quantum-depth quantum-metallographic bg-primary/5 p-3 rounded-lg">
+                            {task.description}
+                          </CardDescription>
+                        )}
                       </div>
+                    </div>
 
                       {/* Кнопка удаления - ВСЕГДА ВИДНАЯ */}
                       <motion.div
@@ -698,16 +659,17 @@ const Index = () => {
                                   transition={{ duration: 0.2 }}
                                   className="flex items-center justify-between group"
                                 >
-                                  <div className="flex items-center space-x-3 flex-1">
+                                  <div className="flex items-center space-x-1 flex-1"> {/* Reduced space to bring checkbox closer to title */}
                                     <motion.div
-                                      whileHover={{ scale: 1.1 }}
-                                      whileTap={{ scale: 0.9 }}
-                                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                      whileHover={{ scale: 1.2 }}
+                                      whileTap={{ scale: 0.8 }}
+                                      transition={{ type: "spring", stiffness: 700, damping: 15 }}
+                                      className="relative top-[-1px]" /* Slightly elevate the checkbox */
                                     >
                                       <Checkbox
                                         checked={subtask.completed}
                                         onCheckedChange={() => toggleSubtaskCompletion(task.id, subtask.id)}
-                                        className="w-4 h-4"
+                                        className="w-3 h-3 mt-0.5" /* Adjusted size and minimal margin */
                                       />
                                     </motion.div>
                                     <span
