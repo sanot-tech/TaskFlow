@@ -186,20 +186,20 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         {/* Neuro-Adaptive Header */}
         <DialogHeader className="flex-center-all w-full">
           <DialogTitle 
-            className="flex items-center gap-2 flex-center-all font-bold text-gray-900"
+            className="flex items-center gap-2 flex-center-all font-bold text-gray-800"
             style={{ fontSize: `${textSize * 1.5}px` }}
           >
             <Clock 
-              className="text-blue-600 flex-center-all" 
+              className="text-blue-500 flex-center-all" 
               style={{ width: `${iconSize * 1.2}px`, height: `${iconSize * 1.2}px` }} 
             />
-            <span className="flex-center-all">Start Timer</span>
+            <span className="flex-center-all text-gray-700">Start Timer</span>
           </DialogTitle>
           <DialogDescription 
-            className="text-sm flex-center-all text-gray-600"
+            className="text-sm flex-center-all text-gray-500"
             style={{ fontSize: `${textSize}px` }}
           >
-            Task: <strong className="text-blue-600 flex-center-all ml-1">{taskTitle}</strong>
+            Task: <strong className="text-blue-500 flex-center-all ml-1">{taskTitle}</strong>
           </DialogDescription>
         </DialogHeader>
         
@@ -210,7 +210,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         >
           <div className="space-y-2 flex-center-all w-full">
             <Label 
-              className="text-sm font-medium flex-center-all text-gray-700"
+              className="text-sm font-medium flex-center-all text-gray-600"
               style={{ fontSize: `${textSize}px` }}
             >
               Duration (minutes)
@@ -221,7 +221,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
               max="180"
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              className="h-10 flex-center-all quantum-symmetry w-full text-gray-900"
+              className="h-10 flex-center-all quantum-symmetry w-full text-gray-800"
               style={{ 
                 fontSize: `${textSize}px`,
                 padding: `${padding / 2}px ${padding}px`
@@ -274,7 +274,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
           <Button 
             onClick={() => setIsOpen(false)} 
             variant="outline" 
-            className="flex-1 h-10 flex-center-all quantum-symmetry text-gray-700"
+            className="flex-1 h-10 flex-center-all quantum-symmetry text-gray-600"
             style={{ 
               fontSize: `${textSize}px`,
               padding: `${padding / 2}px ${padding}px`,
