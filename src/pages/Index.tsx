@@ -471,34 +471,37 @@ const Index = () => {
                       </Button>
                     </motion.div>
                   </div>
-                  <div className="flex flex-wrap gap-2 mt-2 min-h-[40px] items-center">
-                    <AnimatePresence>
-                      {taskTags.map((tag) => (
-                        <motion.div
-                          key={tag}
-                          initial={{ opacity: 0, scale: 0.8, y: -10 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.8, y: 10 }}
-                          transition={{ duration: 0.2 }}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Badge
-                            variant="secondary"
-                            className="flex items-center gap-2 bg-gray-800 text-gray-200 border-gray-700 px-3 py-2 text-sm select-none"
+                  {/* Only show tags display area when tags exist */}
+                  {taskTags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2 min-h-[40px] items-center">
+                      <AnimatePresence>
+                        {taskTags.map((tag) => (
+                          <motion.div
+                            key={tag}
+                            initial={{ opacity: 0, scale: 0.8, y: -10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                            transition={{ duration: 0.2 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                           >
-                            <span className="font-medium select-none">{tag}</span>
-                            <button 
-                              onClick={() => removeTag(tag)} 
-                              className="text-xs hover:text-red-400 font-bold select-none"
+                            <Badge
+                              variant="secondary"
+                              className="flex items-center gap-2 bg-gray-800 text-gray-200 border-gray-700 px-3 py-2 text-sm select-none"
                             >
-                              ×
-                            </button>
-                          </Badge>
-                        </motion.div>
-                      ))}
-                    </AnimatePresence>
-                  </div>
+                              <span className="font-medium select-none">{tag}</span>
+                              <button 
+                                onClick={() => removeTag(tag)} 
+                                className="text-xs hover:text-red-400 font-bold select-none"
+                              >
+                                ×
+                              </button>
+                            </Badge>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </div>
+                  )}
                 </div>
 
                 {/* Add Task Button - Autoresponsive Premium Flex */}
