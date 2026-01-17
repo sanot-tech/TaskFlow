@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { RefreshCw, User, Save, Palette, Type, Shirt, Glasses, Sparkles, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -311,21 +310,6 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
             value={params.accessories}
             onChange={(val) => setParams({ ...params, accessories: val })}
           />
-
-          {/* Radius Slider */}
-          <div className="space-y-1 col-span-2">
-            <Label className="text-xs font-bold flex items-center gap-1">
-              <Sparkles className="h-3 w-3" /> Roundness: {params.radius}%
-            </Label>
-            <Slider
-              value={[params.radius]}
-              onValueChange={([value]) => setParams({ ...params, radius: value })}
-              min={0}
-              max={50}
-              step={1}
-              className="w-full"
-            />
-          </div>
         </div>
 
         {/* Close button */}
