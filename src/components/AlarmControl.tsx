@@ -82,13 +82,13 @@ export const AlarmControl: React.FC = () => {
           exit={{ opacity: 0, height: 0 }}
           className="overflow-hidden"
         >
-          <Card className="border-0 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl shadow-md">
+          <Card className="border-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-xl shadow-md">
             <CardContent className="p-3">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-slate-600 flex items-center gap-1">
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1">
                   <Volume2 className="h-3 w-3" /> Выберите звук
                 </span>
-                <span className="text-xs text-slate-500">
+                <span className="text-xs text-slate-600">
                   {ALARM_SOUNDS.find(s => s.id === selectedSound)?.name}
                 </span>
               </div>
@@ -110,8 +110,8 @@ export const AlarmControl: React.FC = () => {
                       className={cn(
                         "w-full h-10 p-0 rounded-lg border-2 transition-all flex items-center justify-center",
                         selectedSound === sound.id
-                          ? "border-slate-400 bg-slate-200 shadow-md"
-                          : "border-slate-200 bg-white hover:border-slate-300"
+                          ? "border-slate-600 bg-slate-400 shadow-md"
+                          : "border-slate-300 bg-white hover:border-slate-400"
                       )}
                       title={sound.name}
                     >
@@ -133,10 +133,10 @@ export const AlarmControl: React.FC = () => {
           exit={{ opacity: 0, height: 0 }}
           className="overflow-hidden"
         >
-          <Card className="border-0 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl shadow-md">
+          <Card className="border-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-xl shadow-md">
             <CardContent className="p-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-600 flex items-center gap-1">
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1">
                   <Clock className="h-3 w-3" /> Активные ({alarms.length})
                 </span>
               </div>
