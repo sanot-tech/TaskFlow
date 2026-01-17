@@ -22,6 +22,7 @@ import {
 import { format } from "date-fns";
 import { TaskTimerButton } from "./TaskTimerButton";
 
+// Task interface definition
 interface Task {
   id: string;
   title: string;
@@ -34,12 +35,14 @@ interface Task {
   subtasks: Subtask[];
 }
 
+// Subtask interface definition
 interface Subtask {
   id: string;
   title: string;
   completed: boolean;
 }
 
+// TaskCard component props interface
 interface TaskCardProps {
   task: Task;
   onToggleCompletion: (id: string) => void;

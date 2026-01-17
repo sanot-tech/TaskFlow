@@ -6,11 +6,13 @@ import { Bell, BellOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// AlarmToggle component props interface
 interface AlarmToggleProps {
   isAlarmEnabled: boolean;
   toggleAlarmSystem: () => void;
 }
 
+// AlarmToggle Component
 export const AlarmToggle: React.FC<AlarmToggleProps> = ({
   isAlarmEnabled,
   toggleAlarmSystem,

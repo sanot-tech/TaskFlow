@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// TaskTimerButton component props interface
 interface TaskTimerButtonProps {
   taskId: string;
   taskTitle: string;
@@ -95,6 +96,7 @@ const useNeuroAdaptiveSizing = () => {
   return viewport;
 };
 
+// TaskTimerButton Component
 export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTitle }) => {
   const { startTimer, stopTimer, isTimerActive, getTimeForTask } = useAlarmTimer();
   const [duration, setDuration] = useState(25);

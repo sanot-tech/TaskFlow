@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { showError } from "@/utils/toast";
 
+// AlarmTimer interface definition
 interface AlarmTimer {
   taskId: string;
   taskTitle: string;
@@ -9,15 +10,16 @@ interface AlarmTimer {
   remainingTime: number;
 }
 
-// Локальные звуки из папки public/sounds
+// Local sounds from public/sounds folder
 const ALARM_SOUNDS = [
-  { id: 'bell', name: '🔔 Восход', url: '/sounds/bell.mp3' },
-  { id: 'chime', name: '✨ Мелодия', url: '/sounds/chime.mp3' },
-  { id: 'siren', name: '🚨 Сирена', url: '/sounds/siren.mp3' },
-  { id: 'beep', name: '🔊 Бип', url: '/sounds/beep.mp3' },
-  { id: 'soft', name: '🎵 Нежный', url: '/sounds/soft.mp3' },
+  { id: 'bell', name: '🔔 Sunrise', url: '/sounds/bell.mp3' },
+  { id: 'chime', name: '✨ Melody', url: '/sounds/chime.mp3' },
+  { id: 'siren', name: '🚨 Siren', url: '/sounds/siren.mp3' },
+  { id: 'beep', name: '🔊 Beep', url: '/sounds/beep.mp3' },
+  { id: 'soft', name: '🎵 Soft', url: '/sounds/soft.mp3' },
 ];
 
+// useAlarmTimer Hook
 export const useAlarmTimer = () => {
   const [alarms, setAlarms] = useState<AlarmTimer[]>([]);
   const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
@@ -27,13 +29,13 @@ export const useAlarmTimer = () => {
 
   const startTimer = (taskId: string, taskTitle: string, duration: number) => {
     if (!isAlarmEnabled) {
-      showError("Сначала включите систему будильников!");
+      showError("Please enable the alarm system first!");
       return;
     }
 
     const existingAlarm = alarms.find(a => a.taskId === taskId);
     if (existingAlarm) {
-      showError("Таймер для этой задачи уже запущен!");
+      showError("Timer for this task is already running!");
       return;
     }
 
@@ -64,7 +66,7 @@ export const useAlarmTimer = () => {
     });
   };
 
-  // Проигрывание звука
+  // Sound playback
   const playSound = () => {
     const sound = ALARM_SOUNDS.find(s => s.id === selectedSound);
     if (!sound) {
@@ -74,7 +76,7 @@ export const useAlarmTimer = () => {
 
     console.log("Playing sound:", sound.name, sound.url);
 
-    // Останавливаем предыдущий звук
+    // Stop previous sound
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -86,17 +88,17 @@ export const useAlarmTimer = () => {
       audioRef.current.loop = true;
       audioRef.current.volume = 1.0;
       
-      // Пробуем проиграть
+      // Try to play
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
           console.error("Audio play error:", error);
-          showError("Не удалось проиграть звук. Попробуйте другой.");
+          showError("Could not play sound. Please try another one.");
         });
       }
     } catch (error) {
       console.error("Audio creation error:", error);
-      showError("Ошибка аудио: " + error);
+      showError("Audio error: " + error);
     }
   };
 
@@ -108,24 +110,24 @@ export const useAlarmTimer = () => {
     }
   };
 
-  // Триггер будильника
+  // Alarm trigger
   const triggerAlarm = (alarm: AlarmTimer) => {
-    // 1. Звуковое уведомление
+    // 1. Sound notification
     playSound();
 
-    // 2. Браузерное уведомление (системное)
+    // 2. Browser notification (system)
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
-        new Notification("⏰ Будильник сработал!", {
-          body: `Задача "${alarm.taskTitle}" требует внимания!`,
+        new Notification("⏰ Alarm triggered!", {
+          body: `Task "${alarm.taskTitle}" requires attention!`,
           icon: "/favicon.ico",
           tag: alarm.taskId,
         });
       } else if (Notification.permission !== "denied") {
         Notification.requestPermission().then(permission => {
           if (permission === "granted") {
-            new Notification("⏰ Будильник сработал!", {
-              body: `Задача "${alarm.taskTitle}" требует внимания!`,
+            new Notification("⏰ Alarm triggered!", {
+              body: `Task "${alarm.taskTitle}" requires attention!`,
               icon: "/favicon.ico",
             });
           }
@@ -133,16 +135,16 @@ export const useAlarmTimer = () => {
       }
     }
 
-    // 3. Вибрация (мобильные устройства)
+    // 3. Vibration (mobile devices)
     if ("vibrate" in navigator) {
       navigator.vibrate([200, 100, 200, 100, 400, 200, 200]);
     }
 
-    // 4. Мигание заголовком страницы
+    // 4. Page title flashing
     let flashCount = 0;
     const originalTitle = document.title;
     const flashInterval = setInterval(() => {
-      document.title = flashCount % 2 === 0 ? "⏰ ВРЕМЯ ВЫШЛО!" : originalTitle;
+      document.title = flashCount % 2 === 0 ? "⏰ TIME IS UP!" : originalTitle;
       flashCount++;
       if (flashCount > 15) {
         clearInterval(flashInterval);
@@ -150,9 +152,9 @@ export const useAlarmTimer = () => {
       }
     }, 600);
 
-    // 5. Всплывающее окно (alert) — как последний резервный вариант
+    // 5. Popup alert - as last resort
     setTimeout(() => {
-      alert(`⏰ ВРЕМЯ ВЫШЛО!\n\nЗадача: "${alarm.taskTitle}"\n\nНажмите OK для подтверждения.`);
+      alert(`⏰ TIME IS UP!\n\nTask: "${alarm.taskTitle}"\n\nClick OK to confirm.`);
     }, 500);
   };
 

@@ -1,3 +1,6 @@
+"use client";
+
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,8 +14,10 @@ import { motion } from "framer-motion";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useEffect } from "react";
 
+// Initialize React Query client for data fetching and caching
 const queryClient = new QueryClient();
 
+// Component to initialize user profile on app load
 const UserProfileInitializer = () => {
   const { profile, isLoading } = useUserProfile();
 
@@ -25,6 +30,7 @@ const UserProfileInitializer = () => {
   return null;
 };
 
+// Animated routes component for smooth page transitions
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -48,6 +54,7 @@ const AnimatedRoutes = () => {
   );
 };
 
+// Main application component
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

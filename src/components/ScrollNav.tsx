@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
+// ScrollNav component props interface
 interface ScrollNavProps {
   className?: string;
 }
 
+// ScrollNav Component
 export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
   const scrollToNext = () => {
     const sections = document.querySelectorAll('section, .task-card');

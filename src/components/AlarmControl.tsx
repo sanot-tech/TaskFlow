@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { AlarmToggle } from "./AlarmToggle";
 import { AlarmStatusBadge } from "./AlarmStatusBadge";
 
+// Alarm Control Component
 export const AlarmControl: React.FC = () => {
   const {
     alarms,
@@ -22,7 +23,7 @@ export const AlarmControl: React.FC = () => {
     ALARM_SOUNDS,
   } = useAlarmTimer();
 
-  // Тест звука
+  // Test sound function
   const testSound = (soundId: string) => {
     const sound = ALARM_SOUNDS.find(s => s.id === soundId);
     if (sound) {

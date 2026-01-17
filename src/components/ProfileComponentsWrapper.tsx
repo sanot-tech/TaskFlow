@@ -5,11 +5,13 @@ import { ProfileBadge } from "@/components/ProfileBadge";
 import { ProfileSettings } from "@/components/ProfileSettings";
 import { motion } from "framer-motion";
 
+// ProfileComponentsWrapper component props interface
 interface ProfileComponentsWrapperProps {
   profile: any;
   isLoading: boolean;
 }
 
+// ProfileComponentsWrapper Component
 export const ProfileComponentsWrapper: React.FC<ProfileComponentsWrapperProps> = ({ 
   profile, 
   isLoading 

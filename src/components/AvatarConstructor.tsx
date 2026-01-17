@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -9,11 +9,13 @@ import { Input } from "@/components/ui/input";
 import { RefreshCw, User, Save, Palette, Type, Shirt, Glasses, Sparkles, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useAvatarSync } from "@/hooks/useAvatarSync";
 
+// AvatarConstructor component props interface
 interface AvatarConstructorProps {
-  currentAvatar: string;
-  onApply: (avatarUrl: string) => void;
-  onClose: () => void;
+  currentAvatar?: string;
+  onApply?: (avatarUrl: string) => void;
+  onClose?: () => void;
 }
 
 // Параметры для конструктора
@@ -78,9 +80,13 @@ const CONSTRUCTOR_PARAMS = {
   ],
 };
 
+// AvatarConstructor Component
 export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAvatar, onApply, onClose }) => {
+  const { avatar, updateAvatar } = useAvatarSync();
   const [seed, setSeed] = useState(`constructor_${Date.now()}`);
-  const [params, setParams] = useState({
+  
+  // Используем синхронизированный аватар как начальное значение, если доступен
+  const initialParams = {
     backgroundColor: "b6e3f4",
     skinColor: "edb98a",
     topType: "shortHairShortFlat",
@@ -89,11 +95,22 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     clothingColor: "25557c",
     accessories: "round",
     radius: 50,
-  });
-
+  };
+  
+  const [params, setParams] = useState(initialParams);
+  
   const generateAvatarUrl = () => {
     return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=${params.backgroundColor}&accessories=${params.accessories}&accessoriesProbability=100&skinColor=${params.skinColor}&topType=${params.topType}&hairColor=${params.hairColor}&facialHairType=blank&clothingType=${params.clothingType}&clothingColor=${params.clothingColor}&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=${params.radius}`;
   };
+
+  // Локальное состояние для превью аватара
+  const [previewAvatar, setPreviewAvatar] = useState<string | null>(null);
+  
+  // Инициализируем preview аватар при первом рендере
+  useEffect(() => {
+    setPreviewAvatar(generateAvatarUrl());
+  }, []);
+  
 
   const handleRandomize = () => {
     const randomParams = {
@@ -108,10 +125,19 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     };
     setParams(randomParams);
     setSeed(`constructor_${Date.now()}_${Math.random()}`);
+    
+    // Обновляем синхронизированный аватар при рандомизации
+    const avatarUrl = generateAvatarUrl();
+    updateAvatar(avatarUrl);
   };
 
   const handleApply = () => {
-    onApply(generateAvatarUrl());
+    const avatarUrl = generateAvatarUrl();
+    // Обновляем синхронизированный аватар при применении
+    updateAvatar(avatarUrl);
+    if (onApply) {
+      onApply(avatarUrl);
+    }
   };
 
   const handleReset = () => {
@@ -210,7 +236,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     <Card className="border-0 bg-gradient-to-br from-purple-900/90 via-pink-900/90 to-blue-900/90 rounded-xl shadow-lg backdrop-blur-xl border border-white/10">
       <CardHeader className="pb-3 bg-gradient-to-r from-purple-600/90 via-pink-600/90 to-blue-600/90 rounded-t-xl -mx-px -mt-px px-6 pt-6">
         <CardTitle className="text-lg font-bold flex items-center gap-2 text-white">
-          <Palette className="h-5 w-5 text-purple-300" /> Конструктор аватарки
+          <Palette className="h-5 w-5 text-purple-300" /> Avatar Constructor
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 p-6">
@@ -226,7 +252,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <Avatar className="w-32 h-32 border-4 border-purple-300/50 rounded-full overflow-hidden shadow-xl bg-white/10">
-              <AvatarImage src={generateAvatarUrl()} alt="Preview" className="rounded-full" />
+              <AvatarImage src={previewAvatar || avatar.url} alt="Preview" className="rounded-full" />
               <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white">
                 <User className="h-8 w-8" />
               </AvatarFallback>

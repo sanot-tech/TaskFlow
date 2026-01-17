@@ -1,12 +1,14 @@
 import { cn } from '@/lib/utils';
 import { CardTitle as CardTitlePrimitive } from '@/components/ui/card';
 
+// AdaptiveCardTitle component props interface
 interface AdaptiveCardTitleProps {
   children: React.ReactNode;
   className?: string;
   completed?: boolean;
 }
 
+// AdaptiveCardTitle Component
 export const AdaptiveCardTitle = ({
   children,
   className,

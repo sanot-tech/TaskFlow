@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { User, Settings, Bell, Volume2, Edit, Save, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAvatarSync } from "@/hooks/useAvatarSync";
 
 interface UserProfileCardProps {
   profile: {
@@ -21,6 +22,7 @@ interface UserProfileCardProps {
 }
 
 export const UserProfileCard: React.FC<UserProfileCardProps> = ({ profile, onUpdateProfile }) => {
+  const { avatar } = useAvatarSync();
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(profile.name);
   const [editedEmail, setEditedEmail] = useState(profile.email);
@@ -62,7 +64,7 @@ export const UserProfileCard: React.FC<UserProfileCardProps> = ({ profile, onUpd
         {/* Avatar Section */}
         <div className="flex justify-center">
           <Avatar className="w-24 h-24 border-4 border-blue-300 rounded-full overflow-hidden shadow-xl">
-            <AvatarImage src={profile.avatar} alt={profile.name} className="rounded-full" />
+            <AvatarImage src={avatar.url || profile.avatar} alt={profile.name} className="rounded-full" />
             <AvatarFallback>
               <User className="h-10 w-10" />
             </AvatarFallback>

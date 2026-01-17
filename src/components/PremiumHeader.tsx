@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { BookOpen, Zap, Target, Settings, User, Smile, HelpCircle } from "lucide-react";
 import { ProfileComponentsWrapper } from "./ProfileComponentsWrapper";
 
+// PremiumHeader component props interface
 interface PremiumHeaderProps {
   profile: any;
   isLoading: boolean;
   letterFonts: string[];
 }
 
+// PremiumHeader Component
 export const PremiumHeader: React.FC<PremiumHeaderProps> = ({ 
   profile, 
   isLoading, 

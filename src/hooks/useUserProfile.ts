@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { showSuccess } from "@/utils/toast";
+import { useAvatarSync } from "./useAvatarSync";
 
+// UserProfile interface definition
 interface UserProfile {
   id: string;
   username: string;
@@ -16,11 +18,12 @@ interface UserProfile {
   };
 }
 
+// Generate unique user ID
 const generateUserId = () => {
   return `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-// Параметры для рандомной генерации аватарок
+// Parameters for random avatar generation
 const AVATAR_PARAMS = {
   backgroundColors: ["b6e3f4", "c0aede", "d1d4f9", "f0e68c", "ffd700", "ff69b4", "a8e6cf", "f0e68c", "ffd700", "ff69b4"],
   skinColors: ["edb98a", "ffdbac", "f1c27d", "f6c7b6", "edb98a", "ffdbac"],
@@ -31,7 +34,7 @@ const AVATAR_PARAMS = {
   accessories: ["round", "prescription01", "sunglasses", "wayfarers"],
 };
 
-// Функция для рандомной генерации аватарки
+// Function for random avatar generation
 const generateRandomAvatar = () => {
   const seed = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   const backgroundColor = AVATAR_PARAMS.backgroundColors[Math.floor(Math.random() * AVATAR_PARAMS.backgroundColors.length)];
@@ -45,6 +48,7 @@ const generateRandomAvatar = () => {
   return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=${backgroundColor}&accessories=${accessory}&accessoriesProbability=100&skinColor=${skinColor}&topType=${topType}&hairColor=${hairColor}&facialHairType=blank&clothingType=${clothingType}&clothingColor=${clothingColor}&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=50`;
 };
 
+// Get random username
 const getRandomUsername = () => {
   const adjectives = ["Happy", "Bright", "Swift", "Calm", "Brave", "Smart", "Cool", "Warm", "Joyful", "Sunny"];
   const nouns = ["Panda", "Fox", "Eagle", "Tiger", "Dolphin", "Wolf", "Bear", "Hawk", "Koala", "Lion"];
@@ -53,7 +57,9 @@ const getRandomUsername = () => {
   return `${adj}${noun}${Math.floor(Math.random() * 1000)}`;
 };
 
+// useUserProfile Hook
 export const useUserProfile = () => {
+  const { updateAvatar } = useAvatarSync();
   const [profile, setProfile] = useLocalStorage<UserProfile | null>("user_profile", null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,6 +70,8 @@ export const useUserProfile = () => {
           ...profile,
           lastVisit: new Date().toISOString(),
         });
+        // Синхронизируем аватар при инициализации
+        updateAvatar(profile.avatar);
         setIsLoading(false);
         return;
       }
@@ -87,7 +95,9 @@ export const useUserProfile = () => {
       };
 
       setProfile(newProfile);
-      showSuccess(`Добро пожаловать, ${username}! 🎉`);
+      // Синхронизируем аватар при создании нового профиля
+      updateAvatar(randomAvatar);
+      showSuccess(`Welcome, ${username}! 🎉`);
       setIsLoading(false);
     };
 
@@ -97,6 +107,10 @@ export const useUserProfile = () => {
   const updateProfile = (updates: Partial<UserProfile>) => {
     if (profile) {
       const updatedProfile = { ...profile, ...updates };
+      // Если обновляется аватар, синхронизируем его
+      if (updates.avatar) {
+        updateAvatar(updates.avatar);
+      }
       setProfile(updatedProfile);
       return updatedProfile;
     }
@@ -121,6 +135,7 @@ export const useUserProfile = () => {
   const regenerateAvatar = () => {
     if (profile) {
       const newAvatar = generateRandomAvatar();
+      updateAvatar(newAvatar); // Синхронизируем аватар
       const updatedProfile = updateProfile({ avatar: newAvatar });
       return updatedProfile;
     }

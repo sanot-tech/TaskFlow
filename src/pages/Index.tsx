@@ -27,6 +27,7 @@ import { AdaptiveCardTitle } from "@/components/AdaptiveCardTitle";
 import { PremiumHeader } from "@/components/PremiumHeader";
 import { TaskCard } from "@/components/TaskCard";
 
+// Task interface definition
 interface Task {
   id: string;
   title: string;
@@ -39,12 +40,14 @@ interface Task {
   subtasks: Subtask[];
 }
 
+// Subtask interface definition
 interface Subtask {
   id: string;
   title: string;
   completed: boolean;
 }
 
+// Priority color configuration
 const customPriorityColors = [
   { color: "bg-red-500", name: "Red" },
   { color: "bg-yellow-500", name: "Yellow" },
@@ -57,6 +60,7 @@ const customPriorityColors = [
   { color: "bg-indigo-500", name: "Indigo" },
 ];
 
+// Font list for dynamic typography
 const fontList = [
   "Poppins", "Montserrat", "Open Sans", "Lato", "Roboto", 
   "Source Sans Pro", "Nunito", "Raleway", "Quicksand", "Work Sans",
@@ -70,6 +74,7 @@ const fontList = [
   "Questrial", "Rajdhani", "Sora", "Telex", "Zilla Slab"
 ];
 
+// Main page component
 const Index = () => {
   // ALL HOOKS MUST BE CALLED UNCONDITIONALLY AT THE TOP LEVEL
   const [tasks, setTasks] = useLocalStorage<Task[]>("todo_tasks", []);
@@ -209,6 +214,7 @@ const Index = () => {
     }
   }, []);
 
+  // Function to add a new task
   const addTask = () => {
     if (!taskTitle.trim()) {
       showError("Task title cannot be empty.");
@@ -237,6 +243,7 @@ const Index = () => {
     showSuccess("Task added successfully!");
   };
 
+  // Function to toggle task completion
   const toggleTaskCompletion = (taskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -245,11 +252,13 @@ const Index = () => {
     );
   };
 
+  // Function to delete a task
   const deleteTask = (taskId: string) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
     showSuccess("Task deleted successfully!");
   };
 
+  // Function to add a subtask
   const addSubtask = (taskId: string, subtaskTitle: string) => {
     setTasks(
       tasks.map((task) =>
@@ -271,6 +280,7 @@ const Index = () => {
     showSuccess("Subtask added successfully!");
   };
 
+  // Function to toggle subtask completion
   const toggleSubtaskCompletion = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -288,6 +298,7 @@ const Index = () => {
     );
   };
 
+  // Function to delete a subtask
   const deleteSubtask = (taskId: string, subtaskId: string) => {
     setTasks(
       tasks.map((task) =>
@@ -302,6 +313,7 @@ const Index = () => {
     showSuccess("Subtask deleted successfully!");
   };
 
+  // Function to add a tag
   const addTag = () => {
     if (newTag.trim() && !taskTags.includes(newTag)) {
       setTaskTags([...taskTags, newTag]);
@@ -309,14 +321,17 @@ const Index = () => {
     }
   };
 
+  // Function to remove a tag
   const removeTag = (tagToRemove: string) => {
     setTaskTags(taskTags.filter((tag) => tag !== tagToRemove));
   };
 
+  // Function to handle priority change
   const handlePriorityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskPriority(e.target.value);
   };
 
+  // Function to handle color selection
   const handleColorSelect = (color: string) => {
     setTaskPriorityColor(color);
   };

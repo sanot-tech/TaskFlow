@@ -5,8 +5,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
+import { useAvatarSync } from "@/hooks/useAvatarSync";
 
+// ProfileBadge Component
 export const ProfileBadge: React.FC = () => {
+  const { avatar } = useAvatarSync();
   const { profile, isLoading } = useUserProfile();
 
   if (isLoading) {
@@ -29,7 +32,7 @@ export const ProfileBadge: React.FC = () => {
       whileTap={{ scale: 0.95 }}
     >
       <Avatar className="w-16 h-16 border-2 border-primary/30 cursor-pointer rounded-full overflow-hidden">
-        <AvatarImage src={profile.avatar} alt={profile.username} className="rounded-full" />
+        <AvatarImage src={avatar.url || profile.avatar} alt={profile.username} className="rounded-full" />
         <AvatarFallback>
           <User className="h-6 w-6" />
         </AvatarFallback>

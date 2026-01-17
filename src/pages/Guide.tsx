@@ -26,6 +26,7 @@ const fontList = [
   "Questrial", "Rajdhani", "Sora", "Telex", "Zilla Slab"
 ];
 
+// Main guide page component
 const Guide = () => {
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
 
@@ -600,17 +601,17 @@ const Guide = () => {
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-3">
         <Link to="/">
           <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-lg rounded-full px-6 h-12 font-bold">
-            <ChevronRight className="h-5 w-5 mr-2" /> К задачам
+            <ChevronRight className="h-5 w-5 mr-2" /> To Tasks
           </Button>
         </Link>
         <Link to="/" onClick={scrollToTop}>
           <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg rounded-full px-6 h-12 font-bold">
-            <BookOpen className="h-5 w-5 mr-2" /> На главную
+            <BookOpen className="h-5 w-5 mr-2" /> To Home
           </Button>
         </Link>
         <Link to="/">
           <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg rounded-full px-6 h-12 font-bold">
-            <HelpCircle className="h-5 w-5 mr-2" /> Вернуться
+            <HelpCircle className="h-5 w-5 mr-2" /> Go Back
           </Button>
         </Link>
       </div>

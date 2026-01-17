@@ -4,10 +4,12 @@ import React from "react";
 import { Zap, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// AlarmStatusBadge component props interface
 interface AlarmStatusBadgeProps {
   isAlarmEnabled: boolean;
 }
 
+// AlarmStatusBadge Component
 export const AlarmStatusBadge: React.FC<AlarmStatusBadgeProps> = ({
   isAlarmEnabled,
 }) => {

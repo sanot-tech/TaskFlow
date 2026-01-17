@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { cn } from "@/lib/utils";
 import { AvatarConstructor } from "./AvatarConstructor";
+import { useAvatarSync } from "@/hooks/useAvatarSync";
 
 // Wrapper component to handle the conditional rendering properly
 const ProfileSettingsContent: React.FC<{
@@ -23,6 +24,7 @@ const ProfileSettingsContent: React.FC<{
   resetProfile: any,
   regenerateAvatar: any
 }> = ({ profile, updateProfile, updateSettings, resetProfile, regenerateAvatar }) => {
+  const { avatar, updateAvatar } = useAvatarSync();
   const { ALARM_SOUNDS, selectedSound, setSelectedSound } = useAlarmTimer();
   const [isOpen, setIsOpen] = useState(false);
   const [tempUsername, setTempUsername] = useState(profile?.username || "");
@@ -41,16 +43,20 @@ const ProfileSettingsContent: React.FC<{
     if (isRegenerating) return;
     
     setIsRegenerating(true);
-    regenerateAvatar();
+    const newProfile = regenerateAvatar(); // Получаем обновленный профиль
+    if (newProfile && newProfile.avatar) {
+      updateAvatar(newProfile.avatar); // Обновляем синхронизированный аватар напрямую
+    }
     
     // Reset regeneration state after a short delay
     setTimeout(() => {
       setIsRegenerating(false);
     }, 500);
-  }, [regenerateAvatar, isRegenerating]);
+  }, [regenerateAvatar, updateAvatar, isRegenerating]);
 
   const handleApplyAvatar = (avatarUrl: string) => {
-    updateProfile({ avatar: avatarUrl });
+    // Обновляем синхронизированный аватар
+    updateAvatar(avatarUrl);
     setShowConstructor(false);
   };
 
@@ -68,7 +74,7 @@ const ProfileSettingsContent: React.FC<{
           whileTap={{ scale: 0.98 }}
         >
           <Button variant="outline" className="gap-2">
-            <Settings className="h-4 w-4" /> Профиль
+            <Settings className="h-4 w-4" /> Profile
           </Button>
         </motion.div>
       </DialogTrigger>
@@ -83,11 +89,11 @@ const ProfileSettingsContent: React.FC<{
             <DialogTitle className="text-2xl font-bold flex items-center gap-2">
               <Settings className="h-6 w-6 text-white/90" />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-100">
-                Профиль
+                Profile
               </span>
             </DialogTitle>
             <DialogDescription className="text-purple-100/80 opacity-90">
-              Управляйте своим профилем и предпочтениями
+              Manage your profile and preferences
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -109,7 +115,7 @@ const ProfileSettingsContent: React.FC<{
                 className="relative flex-shrink-0"
               >
                 <Avatar className="w-20 h-20 sm:w-24 sm:h-24 border-3 border-white/30 rounded-full overflow-hidden shadow-2xl ring-4 ring-purple-500/20">
-                  <AvatarImage src={profile.avatar} alt={profile.username} className="rounded-full" />
+                  <AvatarImage src={avatar.url || profile.avatar} alt={profile.username} className="rounded-full" />
                   <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white font-bold text-xl">
                     {profile.username[0]}
                   </AvatarFallback>
@@ -139,7 +145,7 @@ const ProfileSettingsContent: React.FC<{
               <div className="flex-1 space-y-3 min-w-0 w-full">
                 <div className="space-y-1">
                   <Label className="text-sm font-bold text-purple-200 flex items-center gap-2">
-                    <User className="h-3 w-3" /> Имя пользователя
+                    <User className="h-3 w-3" /> Username
                   </Label>
                   <Input
                     placeholder={profile.username}
@@ -155,7 +161,7 @@ const ProfileSettingsContent: React.FC<{
                       onClick={() => setShowConstructor(!showConstructor)}
                       className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-white/20 shadow-lg h-10"
                     >
-                      <Palette className="h-4 w-4 mr-2" /> Конструктор
+                      <Palette className="h-4 w-4 mr-2" /> Constructor
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -182,7 +188,7 @@ const ProfileSettingsContent: React.FC<{
                   className="overflow-hidden"
                 >
                   <AvatarConstructor
-                    currentAvatar={profile.avatar}
+                    currentAvatar={avatar.url}
                     onApply={handleApplyAvatar}
                     onClose={() => setShowConstructor(false)}
                   />
@@ -194,12 +200,12 @@ const ProfileSettingsContent: React.FC<{
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg overflow-hidden">
               <div className="p-4 border-b border-white/10 bg-gradient-to-r from-amber-500/20 to-yellow-500/20">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-amber-300" /> Уведомления
+                  <Sparkles className="h-5 w-5 text-amber-300" /> Notifications
                 </h3>
               </div>
               <div className="p-4 space-y-3">
                 <div className="flex items-center justify-between p-3 bg-white/10 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
-                  <Label className="font-medium text-white/90">Браузерные уведомления</Label>
+                  <Label className="font-medium text-white/90">Browser notifications</Label>
                   <Switch
                     checked={profile.settings.notifications}
                     onCheckedChange={(checked) => updateSettings({ notifications: checked })}
@@ -207,7 +213,7 @@ const ProfileSettingsContent: React.FC<{
                   />
                 </div>
                 <div className="flex items-center justify-between p-3 bg-white/10 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
-                  <Label className="font-medium text-white/90">Звук будильника</Label>
+                  <Label className="font-medium text-white/90">Alarm sound</Label>
                   <Switch
                     checked={profile.settings.soundEnabled}
                     onCheckedChange={(checked) => updateSettings({ soundEnabled: checked })}
@@ -221,7 +227,7 @@ const ProfileSettingsContent: React.FC<{
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-red-500/30 shadow-lg overflow-hidden">
               <div className="p-4 border-b border-red-500/20 bg-gradient-to-r from-red-500/20 to-rose-500/20">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Trash2 className="h-5 w-5 text-red-300" /> Опасная зона
+                  <Trash2 className="h-5 w-5 text-red-300" /> Danger Zone
                 </h3>
               </div>
               <div className="p-4">
@@ -235,7 +241,7 @@ const ProfileSettingsContent: React.FC<{
                     className="w-full h-12 text-lg font-bold bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 border-2 border-red-400/30 shadow-lg"
                     onClick={handleReset}
                   >
-                    <Trash2 className="h-5 w-5 mr-2" /> Сбросить профиль
+                    <Trash2 className="h-5 w-5 mr-2" /> Reset Profile
                   </Button>
                 </motion.div>
               </div>
@@ -248,12 +254,12 @@ const ProfileSettingsContent: React.FC<{
           <div className="flex gap-3">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
               <Button onClick={handleSave} className="w-full h-12 text-lg font-bold bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 border-2 border-white/20 shadow-lg">
-                <Save className="h-5 w-5 mr-2" /> Сохранить
+                <Save className="h-5 w-5 mr-2" /> Save
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
               <Button onClick={() => setIsOpen(false)} variant="outline" className="w-full h-12 text-lg font-bold border-2 border-white/20 bg-white/10 text-white hover:bg-white/20">
-                Отмена
+                Cancel
               </Button>
             </motion.div>
           </div>
@@ -263,13 +269,14 @@ const ProfileSettingsContent: React.FC<{
   );
 };
 
+// ProfileSettings Component
 export const ProfileSettings: React.FC = () => {
   const { profile, updateProfile, updateSettings, resetProfile, regenerateAvatar } = useUserProfile();
 
   // Render an empty button when profile is not loaded to maintain consistent hook calls
   if (!profile) {
     return <Button variant="outline" className="gap-2 opacity-0 pointer-events-none">
-      <Settings className="h-4 w-4" /> Профиль
+      <Settings className="h-4 w-4" /> Profile
     </Button>;
   }
 
