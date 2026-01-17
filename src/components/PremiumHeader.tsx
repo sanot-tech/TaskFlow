@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { BookOpen, Zap, Target, Settings, User, Smile, HelpCircle } from "lucide-react";
+import { Home, Zap, Target, Settings, User, Smile, HelpCircle, BookOpen } from "lucide-react";
 import { ProfileComponentsWrapper } from "./ProfileComponentsWrapper";
 
 // PremiumHeader component props interface
@@ -81,7 +81,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
                 whileTap={{ scale: 0.95 }}
                 className="flex-premium-button flex items-center px-4 py-2 text-sm flex-center-all"
               >
-                <BookOpen className="h-4 w-4 mr-2 flex-center-all" /> Home
+                <Home className="h-4 w-4 mr-2 flex-center-all" /> Home
               </motion.button>
             </Link>
             
