@@ -67,6 +67,7 @@ const fontList = [
 ];
 
 const Index = () => {
+  // ALL HOOKS MUST BE CALLED UNCONDITIONALLY AT THE TOP LEVEL
   const [tasks, setTasks] = useLocalStorage<Task[]>("todo_tasks", []);
   const [taskTitle, setTaskTitle] = useLocalStorage<string>("todo_title", "");
   const [taskDescription, setTaskDescription] = useLocalStorage<string>("todo_description", "");
@@ -282,7 +283,7 @@ const Index = () => {
           ? {
               ...task,
               subtasks: task.subtasks.map((subtask) =>
-                subtask.id === subtaskId
+                subtask.id === taskId
                   ? { ...subtask, completed: !subtask.completed }
                   : subtask
               ),
