@@ -6,8 +6,9 @@ import { Clock, Play, StopCircle as StopCircleIcon, Timer } from "lucide-react";
 import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
+import { AdaptiveDialog } from "./AdaptiveDialog";
 
 interface TaskTimerButtonProps {
   taskId: string;
@@ -35,16 +36,16 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        className="flex items-center gap-2 flex-center-all quantum-symmetry"
+        className="flex-center-all quantum-symmetry"
       >
         <Button
           size="sm"
           variant="destructive"
           onClick={() => stopTimer(taskId)}
-          className="px-3 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 shadow-md shadow-red-500/20 flex-center-all quantum-symmetry"
+          className="px-3 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 shadow-md shadow-red-500/20 flex-center-all quantum-symmetry neuro-button"
         >
-          <StopCircleIcon className="h-3.5 w-3.5 mr-1.5 flex-center-all" />
-          <span className="font-mono font-bold flex-center-all">{remainingTime}</span>
+          <StopCircleIcon className="neuro-icon flex-center-all" />
+          <span className="font-mono font-bold flex-center-all neuro-text">{remainingTime}</span>
         </Button>
       </motion.div>
     );
@@ -61,60 +62,77 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
           <Button
             size="sm"
             variant="outline"
-            className="px-3 py-1.5 rounded-lg border-blue-400/30 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all flex-center-all quantum-symmetry"
+            className="px-3 py-1.5 rounded-lg border-blue-400/30 text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-all flex-center-all quantum-symmetry neuro-button"
           >
-            <Timer className="h-3.5 w-3.5 mr-1.5 flex-center-all" /> Timer
+            <Timer className="neuro-icon flex-center-all" /> 
+            <span className="neuro-text">Timer</span>
           </Button>
         </motion.div>
       </DialogTrigger>
       
-      <DialogContent className="sm:max-w-[360px] rounded-xl quantum-symmetry">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-lg flex-center-all">
-            <Clock className="h-5 w-5 text-blue-500 flex-center-all" />
-            <span className="flex-center-all">Start Timer</span>
-          </DialogTitle>
-          <DialogDescription className="text-sm flex-center-all">
-            Task: <strong className="text-gray-900 flex-center-all">{taskTitle}</strong>
-          </DialogDescription>
-        </DialogHeader>
-        
-        <div className="space-y-4 py-4 flex-center-all">
-          <div className="space-y-2 flex-center-all">
-            <Label className="text-sm font-medium flex-center-all">Duration (minutes)</Label>
-            <Input
-              type="number"
-              min="1"
-              max="180"
-              value={duration}
-              onChange={(e) => setDuration(Number(e.target.value))}
-              className="h-10 flex-center-all quantum-symmetry"
-            />
+      <AdaptiveDialog baseWidth={360}>
+        <div className="auto-flex-dialog w-full">
+          {/* Header - Perfect Flex Symmetry */}
+          <div className="symmetry-header">
+            <DialogTitle className="flex items-center gap-2 text-lg flex-center-all neuro-text">
+              <Clock className="neuro-icon text-blue-500 flex-center-all" />
+              <span className="font-bold">Start Timer</span>
+            </DialogTitle>
           </div>
           
-          <div className="grid grid-cols-3 gap-2 flex-center-all">
-            {[5, 25, 45].map((min) => (
-              <Button
-                key={min}
-                onClick={() => setDuration(min)}
-                variant={duration === min ? "default" : "secondary"}
-                className="h-9 text-sm font-medium flex-center-all quantum-symmetry"
-              >
-                {min} min
-              </Button>
-            ))}
+          {/* Description */}
+          <DialogDescription className="text-sm flex-center-all adaptive-padding neuro-text">
+            Task: <strong className="text-gray-900 ml-1 font-semibold">{taskTitle}</strong>
+          </DialogDescription>
+          
+          {/* Content - Auto-Responsive */}
+          <div className="adaptive-content adaptive-padding auto-item flex-col">
+            <div className="auto-item flex-col w-full">
+              <Label className="neuro-text font-medium">Duration (minutes)</Label>
+              <Input
+                type="number"
+                min="1"
+                max="180"
+                value={duration}
+                onChange={(e) => setDuration(Number(e.target.value))}
+                className="h-10 text-center text-lg font-bold quantum-symmetry"
+              />
+            </div>
+            
+            {/* Quick Select Grid - Auto-Responsive */}
+            <div className="adaptive-grid auto-item w-full mt-3">
+              {[5, 25, 45].map((min) => (
+                <Button
+                  key={min}
+                  onClick={() => setDuration(min)}
+                  variant={duration === min ? "default" : "secondary"}
+                  className="neuro-button font-medium"
+                >
+                  {min}m
+                </Button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Actions - Perfect Flex Symmetry */}
+          <div className="auto-item w-full adaptive-padding border-t border-gray-200/20">
+            <Button 
+              onClick={handleStart} 
+              className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 neuro-button font-semibold"
+            >
+              <Play className="neuro-icon flex-center-all" /> 
+              <span className="neuro-text">Start</span>
+            </Button>
+            <Button 
+              onClick={() => setIsOpen(false)} 
+              variant="outline" 
+              className="flex-1 h-10 neuro-button"
+            >
+              Cancel
+            </Button>
           </div>
         </div>
-        
-        <div className="flex gap-2 flex-center-all">
-          <Button onClick={handleStart} className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 flex-center-all quantum-symmetry">
-            <Play className="h-4 w-4 mr-2 flex-center-all" /> Start
-          </Button>
-          <Button onClick={() => setIsOpen(false)} variant="outline" className="flex-1 h-10 flex-center-all quantum-symmetry">
-            Cancel
-          </Button>
-        </div>
-      </DialogContent>
+      </AdaptiveDialog>
     </Dialog>
   );
 };

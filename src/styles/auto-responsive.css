@@ -1,0 +1,191 @@
+/* Авто-адаптивная flex-система */
+.auto-responsive-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auto-flex-dialog {
+  /* Flex conception */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  /* Perfect symmetry */
+  gap: 0.5rem;
+  padding: 1rem;
+  
+  /* Auto-responsive typography */
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  line-height: 1.5;
+  
+  /* Neuro-adaptive spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+}
+
+/* Авто-адаптивные элементы внутри диалога */
+.auto-flex-dialog .auto-item {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* Нейро-адаптивные иконки */
+.auto-flex-dialog .neuro-icon {
+  width: auto;
+  height: 1.2em;
+  flex-shrink: 0;
+}
+
+/* Адаптивный текст */
+.auto-flex-dialog .neuro-text {
+  font-size: clamp(0.875rem, 1.2vw, 1.125rem);
+  line-height: 1.4;
+  text-align: center;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Адаптивные кнопки */
+.auto-flex-dialog .neuro-button {
+  padding: 0.5rem 1rem;
+  font-size: clamp(0.75rem, 1vw, 0.875rem);
+  border-radius: 0.5rem;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+/* Симметричные заголовки */
+.auto-flex-dialog .symmetry-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Адаптивная сетка для выбора */
+.auto-flex-dialog .adaptive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+}
+
+/* Нейро-подгонка размеров */
+.auto-flex-dialog .neuro-fit {
+  transform-origin: center;
+  transition: transform 0.2s ease-out;
+}
+
+/* Авто-центрирование всех элементов */
+.auto-flex-dialog .flex-center-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Адаптивные отступы */
+.auto-flex-dialog .adaptive-padding {
+  padding: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+/* Симметричные границы */
+.auto-flex-dialog .symmetry-border {
+  border-radius: 0.75rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+/* Адаптивная высота контента */
+.auto-flex-dialog .adaptive-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Нейро-анимации */
+@keyframes neuro-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.auto-flex-dialog .neuro-animate {
+  animation: neuro-pulse 2s ease-in-out infinite;
+}
+
+/* Адаптивные инпуты */
+.auto-flex-dialog input[type="number"] {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  padding: 0.5rem;
+  text-align: center;
+  min-height: 2.5rem;
+}
+
+/* Адаптивные иконки в кнопках */
+.auto-flex-dialog button svg {
+  width: auto;
+  height: 1em;
+}
+
+/* Медиа-запросы для крайних случаев */
+@media (max-width: 400px) {
+  .auto-flex-dialog {
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+  
+  .auto-flex-dialog .symmetry-header {
+    padding: 0.5rem;
+  }
+  
+  .auto-flex-dialog .adaptive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+  }
+}
+
+@media (max-height: 600px) {
+  .auto-flex-dialog {
+    max-height: 85vh;
+  }
+  
+  .auto-flex-dialog .adaptive-content {
+    max-height: 60vh;
+  }
+}
+
+/* Высокая контрастность для доступности */
+@media (prefers-contrast: high) {
+  .auto-flex-dialog {
+    border-width: 2px;
+  }
+}
+
+/* Уменьшение движения для доступности */
+@media (prefers-reduced-motion: reduce) {
+  .auto-responsive-container,
+  .auto-flex-dialog,
+  .neuro-animate {
+    transition: none !important;
+    animation: none !important;
+  }
+}
