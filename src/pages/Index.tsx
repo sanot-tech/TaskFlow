@@ -26,6 +26,7 @@ import { ProfileComponentsWrapper } from "@/components/ProfileComponentsWrapper"
 import { AdaptiveCardTitle } from "@/components/AdaptiveCardTitle";
 import { PremiumHeader } from "@/components/PremiumHeader";
 import { TaskCard } from "@/components/TaskCard";
+import { AutoFlexContainer, AutoResponsiveButton, AutoFlexCard, AutoFlexInput, AutoFlexBadge, useAutoFlex } from "@/components/AutoFlexSystem";
 
 interface Task {
   id: string;
@@ -83,6 +84,7 @@ const Index = () => {
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const { toast } = useToast();
   const { profile, isLoading, regenerateAvatar } = useUserProfile();
+  const { scale } = useAutoFlex();
 
   // LOGIC CYCLE: Font initialization - COMPLETE
   useEffect(() => {
@@ -323,8 +325,10 @@ const Index = () => {
 
   return (
     // Add user-select-none for the entire application
-    <div className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable flex flex-col items-center">
-      {profile && !isLoading && <ScrollNav />}
+    <AutoFlexContainer density="normal" centerAll={true} adaptiveScale={true} className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable">
+      <div className="w-full flex justify-center">
+        <ScrollNav isVisible={profile && !isLoading} />
+      </div>
       
       <PremiumHeader profile={profile} isLoading={isLoading} letterFonts={letterFonts} />
       
@@ -349,7 +353,7 @@ const Index = () => {
           transition={{ duration: 0.4 }}
         >
           <div className="flex justify-center mb-8">
-            <Card className="custom-card w-full max-w-3xl select-none">
+            <AutoFlexCard className="w-full max-w-3xl select-none">
               <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl font-bold flex items-center justify-center select-none flex-center-all quantum-symmetry">
                   <Plus className="h-6 w-6 mr-3 text-green-500" /> Add New Task
@@ -360,21 +364,19 @@ const Index = () => {
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
                     <Label className="font-medium text-lg select-none">Task Title</Label>
-                    <Input
+                    <AutoFlexInput
                       placeholder="What needs to be done?"
                       value={taskTitle}
                       onChange={(e) => setTaskTitle(e.target.value)}
-                      className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label className="font-medium text-lg select-none">Description</Label>
-                    <Input
+                    <AutoFlexInput
                       placeholder="Add details (optional)"
                       value={taskDescription}
                       onChange={(e) => setTaskDescription(e.target.value)}
-                      className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
                     />
                   </div>
                 </div>
@@ -385,11 +387,10 @@ const Index = () => {
                     <Label className="font-medium text-lg select-none">Priority</Label>
                     <div className="space-y-3">
                       {/* Поле ввода текста приоритета */}
-                      <Input
+                      <AutoFlexInput
                         placeholder="Enter priority (e.g., High, Urgent, Important)"
                         value={taskPriority}
                         onChange={handlePriorityChange}
-                        className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 select-text"
                       />
 
                       {/* Палитра цветов (всегда доступна) */}
@@ -454,21 +455,25 @@ const Index = () => {
                 <div className="space-y-3">
                   <Label className="font-medium text-lg select-none">Tags</Label>
                   <div className="flex gap-3">
-                    <Input
+                    <AutoFlexInput
                       placeholder="Add tag and press Enter"
                       value={newTag}
                       onChange={(e) => setNewTag(e.target.value)}
-                      onKeyPress={(e) => e.key === "Enter" && addTag()}
-                      className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1 select-text"
+                      className="flex-1"
                     />
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                      <Button onClick={addTag} className="btn-secondary px-6 select-none">
-                        <Tag className="h-5 w-5 mr-2" /> Add
-                      </Button>
+                      <AutoResponsiveButton 
+                        onClick={addTag} 
+                        variant="secondary"
+                        icon={<Tag className="h-5 w-5" />}
+                        iconPosition="left"
+                      >
+                        Add
+                      </AutoResponsiveButton>
                     </motion.div>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-2 min-h-[40px] items-center">
@@ -483,18 +488,15 @@ const Index = () => {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <Badge
-                            variant="secondary"
-                            className="flex items-center gap-2 bg-gray-800 text-gray-200 border-gray-700 px-3 py-2 text-sm select-none"
-                          >
+                          <AutoFlexBadge variant="default">
                             <span className="font-medium select-none">{tag}</span>
                             <button 
                               onClick={() => removeTag(tag)} 
-                              className="text-xs hover:text-red-400 font-bold select-none"
+                              className="ml-1 text-xs hover:text-red-400 font-bold select-none"
                             >
                               ×
                             </button>
-                          </Badge>
+                          </AutoFlexBadge>
                         </motion.div>
                       ))}
                     </AnimatePresence>
@@ -508,15 +510,20 @@ const Index = () => {
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
-                  <Button 
+                  <AutoResponsiveButton 
                     onClick={addTask} 
-                    className="btn-primary w-full max-w-md text-lg font-medium py-8 px-8 select-none"
+                    variant="primary"
+                    size="xl"
+                    icon={<Plus className="h-6 w-6" />}
+                    iconPosition="left"
+                    glow={true}
+                    className="w-full max-w-md"
                   >
-                    <Plus className="h-6 w-6 mr-3" /> Create Task
-                  </Button>
+                    Create Task
+                  </AutoResponsiveButton>
                 </motion.div>
               </CardContent>
-            </Card>
+            </AutoFlexCard>
           </div>
         </motion.div>
 
@@ -552,7 +559,7 @@ const Index = () => {
           </Button>
         </Link>
       </motion.div>
-    </div>
+    </AutoFlexContainer>
   );
 };
 

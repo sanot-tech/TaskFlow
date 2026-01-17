@@ -8,9 +8,14 @@ import { motion } from "framer-motion";
 
 interface ScrollNavProps {
   className?: string;
+  isVisible?: boolean;
 }
 
-export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
+export const ScrollNav: React.FC<ScrollNavProps> = ({ className, isVisible = true }) => {
+  if (!isVisible) {
+    return null;
+  }
+
   const scrollToNext = () => {
     const sections = document.querySelectorAll('section, .task-card');
     const currentScroll = window.scrollY;
