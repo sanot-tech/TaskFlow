@@ -384,7 +384,7 @@ const Index = () => {
                   <div className="space-y-2">
                     <Label className="font-medium text-lg select-none">Priority</Label>
                     <div className="space-y-3">
-                      {/* Поле ввода текста приоритета */}
+                      {/* Text input for priority */}
                       <Input
                         placeholder="Enter priority (e.g., High, Urgent, Important)"
                         value={taskPriority}
@@ -392,7 +392,7 @@ const Index = () => {
                         className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 select-text"
                       />
 
-                      {/* Палитра цветов (всегда доступна) */}
+                      {/* Color palette (always available) */}
                       <div className="space-y-2">
                         <Label className="text-sm font-medium text-muted-foreground select-none">Choose Color</Label>
                         <div className="flex flex-wrap gap-2">
@@ -541,7 +541,7 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Кнопка перехода на страницу гайда */}
+      {/* Button to navigate to guide page */}
       <motion.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
