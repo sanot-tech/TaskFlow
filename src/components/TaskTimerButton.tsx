@@ -112,7 +112,10 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         return;
       }
       
+      // Start the timer
       startTimer(taskId, taskTitle, duration);
+      
+      // Close the dialog
       setIsOpen(false);
     }
   };
