@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,7 @@ export const ProfileSettings: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [tempUsername, setTempUsername] = useState("");
   const [showConstructor, setShowConstructor] = useState(false);
+  const [isRegenerating, setIsRegenerating] = useState(false);
 
   if (!profile) return null;
 
@@ -31,9 +32,18 @@ export const ProfileSettings: React.FC = () => {
     setIsOpen(false);
   };
 
-  const handleRegenerateAvatar = () => {
+  // Debounced avatar regeneration to prevent rapid clicks
+  const handleRegenerateAvatar = useCallback(() => {
+    if (isRegenerating) return;
+    
+    setIsRegenerating(true);
     regenerateAvatar();
-  };
+    
+    // Reset regeneration state after a short delay
+    setTimeout(() => {
+      setIsRegenerating(false);
+    }, 500);
+  }, [regenerateAvatar, isRegenerating]);
 
   const handleApplyAvatar = (avatarUrl: string) => {
     updateProfile({ avatar: avatarUrl });
@@ -108,11 +118,15 @@ export const ProfileSettings: React.FC = () => {
                 >
                   <Button
                     size="icon"
-                    className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg border-2 border-white/30"
+                    className={cn(
+                      "w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg border-2 border-white/30 transition-all duration-200",
+                      isRegenerating && "opacity-50 cursor-not-allowed"
+                    )}
                     onClick={handleRegenerateAvatar}
+                    disabled={isRegenerating}
                     title="Случайная аватарка"
                   >
-                    <Sparkles className="h-4 w-4" />
+                    <Sparkles className={cn("h-4 w-4", isRegenerating && "animate-spin")} />
                   </Button>
                 </motion.div>
               </motion.div>
