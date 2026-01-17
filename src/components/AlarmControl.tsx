@@ -115,7 +115,7 @@ export const AlarmControl: React.FC = () => {
                       )}
                       title={sound.name}
                     >
-                      <span className="text-lg">{sound.name.split(' ')[0]}</span>
+                      <span className="text-lg font-bold tracking-wider">{sound.name}</span>
                     </Button>
                   </motion.div>
                 ))}
