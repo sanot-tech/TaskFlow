@@ -8,22 +8,8 @@ import Index from "./pages/Index";
 import Guide from "./pages/Guide";
 import NotFound from "./pages/NotFound";
 import { motion } from "framer-motion";
-import { useUserProfile } from "@/hooks/useUserProfile";
-import { useEffect } from "react";
 
 const queryClient = new QueryClient();
-
-const UserProfileInitializer = () => {
-  const { profile, isLoading } = useUserProfile();
-
-  useEffect(() => {
-    if (!isLoading && profile) {
-      console.log("User profile initialized:", profile);
-    }
-  }, [profile, isLoading]);
-
-  return null;
-};
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -54,7 +40,6 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <UserProfileInitializer />
         <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>

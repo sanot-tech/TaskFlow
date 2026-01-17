@@ -67,6 +67,8 @@ const fontList = [
 ];
 
 const Index = () => {
+  // ВАЖНО: useUserProfile вызывается ПЕРВЫМ в компоненте
+  const { profile, isLoading, regenerateAvatar } = useUserProfile();
   const [tasks, setTasks] = useLocalStorage<Task[]>("todo_tasks", []);
   const [taskTitle, setTaskTitle] = useLocalStorage<string>("todo_title", "");
   const [taskDescription, setTaskDescription] = useLocalStorage<string>("todo_description", "");
@@ -78,7 +80,6 @@ const Index = () => {
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
   const { toast } = useToast();
-  const { profile, isLoading, regenerateAvatar } = useUserProfile();
 
   // LOGIC CYCLE: Font initialization - COMPLETE
   useEffect(() => {
