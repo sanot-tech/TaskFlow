@@ -1,133 +1,150 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Settings, LogOut, User, Calendar, Clock, Smile } from "lucide-react";
-import { useUserProfile } from "@/hooks/useUserProfile";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { User, Settings, Bell, Volume2, Edit, Save, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { format } from "date-fns";
-import { ru } from "date-fns/locale";
-import { cn } from "@/lib/utils";
 
 interface UserProfileCardProps {
-  compact?: boolean;
+  profile: {
+    name: string;
+    email: string;
+    avatar: string;
+    settings: {
+      notifications: boolean;
+      soundEnabled: boolean;
+    };
+  };
+  onUpdateProfile: (updatedProfile: any) => void;
 }
 
-export const UserProfileCard: React.FC<UserProfileCardProps> = ({ compact = false }) => {
-  const { profile, isLoading, resetProfile, regenerateAvatar } = useUserProfile();
+export const UserProfileCard: React.FC<UserProfileCardProps> = ({ profile, onUpdateProfile }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(profile.name);
+  const [editedEmail, setEditedEmail] = useState(profile.email);
 
-  if (isLoading) {
-    return (
-      <Card className="w-full max-w-md animate-pulse">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
-            <div className="flex-1 space-y-2">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
+  // Add the missing updateSettings function
+  const updateSettings = (newSettings: Partial<typeof profile.settings>) => {
+    onUpdateProfile({
+      ...profile,
+      settings: {
+        ...profile.settings,
+        ...newSettings,
+      },
+    });
+  };
 
-  if (!profile) return null;
+  const handleSave = () => {
+    onUpdateProfile({
+      ...profile,
+      name: editedName,
+      email: editedEmail,
+    });
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditedName(profile.name);
+    setEditedEmail(profile.email);
+    setIsEditing(false);
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <Card className={cn("w-full max-w-md", compact && "max-w-xs")}>
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-bold flex items-center gap-2">
-              <User className="h-4 w-4" /> Профиль
-            </CardTitle>
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={resetProfile}
-                className="h-7 w-7 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
-                title="Сбросить профиль"
-              >
-                <LogOut className="h-3 w-3" />
-              </Button>
-            </motion.div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-start gap-4">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <Avatar className="w-24 h-24 border-2 border-primary/30 rounded-full overflow-hidden">
-                <AvatarImage src={profile.avatar} alt={profile.username} className="rounded-full" />
-                <AvatarFallback>{profile.username[0]}</AvatarFallback>
-              </Avatar>
-            </motion.div>
-            
-            <div className="flex-1 space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="font-bold text-lg">{profile.username}</h3>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="h-7 px-2 gap-1"
-                    onClick={regenerateAvatar}
-                  >
-                    <Smile className="h-3 w-3" /> Новый
-                  </Button>
-                </motion.div>
-              </div>
-              
-              <div className="text-xs text-muted-foreground space-y-1">
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-3 w-3" />
-                  <span>Создан: {format(new Date(profile.createdAt), "dd.MM.yyyy", { locale: ru })}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  <span>Последний визит: {format(new Date(profile.lastVisit), "dd.MM.yyyy HH:mm", { locale: ru })}</span>
-                </div>
-              </div>
+    <Card className="w-full max-w-md mx-auto border-0 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg font-bold flex items-center gap-2">
+          <User className="h-5 w-5 text-blue-600" /> Profile
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Avatar Section */}
+        <div className="flex justify-center">
+          <Avatar className="w-24 h-24 border-4 border-blue-300 rounded-full overflow-hidden shadow-xl">
+            <AvatarImage src={profile.avatar} alt={profile.name} className="rounded-full" />
+            <AvatarFallback>
+              <User className="h-10 w-10" />
+            </AvatarFallback>
+          </Avatar>
+        </div>
 
-              {/* Быстрые настройки */}
-              <div className="flex gap-2 mt-3">
-                <Button
-                  size="sm"
-                  variant={profile.settings.notifications ? "default" : "secondary"}
-                  onClick={() => updateSettings({ notifications: !profile.settings.notifications })}
-                  className="text-xs h-7"
-                >
-                  {profile.settings.notifications ? "🔔 Вкл" : "🔕 Выкл"}
-                </Button>
-                <Button
-                  size="sm"
-                  variant={profile.settings.soundEnabled ? "default" : "secondary"}
-                  onClick={() => updateSettings({ soundEnabled: !profile.settings.soundEnabled })}
-                  className="text-xs h-7"
-                >
-                  {profile.settings.soundEnabled ? "🔊 Звук" : "🔇 Без звука"}
-                </Button>
-              </div>
+        {/* Name & Email */}
+        <div className="text-center space-y-1">
+          {isEditing ? (
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg text-center font-medium"
+                placeholder="Name"
+              />
+              <input
+                type="email"
+                value={editedEmail}
+                onChange={(e) => setEditedEmail(e.target.value)}
+                className="w-full px-3 py-2 border rounded-lg text-center text-sm text-gray-600"
+                placeholder="Email"
+              />
             </div>
+          ) : (
+            <>
+              <h3 className="font-bold text-lg">{profile.name}</h3>
+              <p className="text-sm text-gray-600">{profile.email}</p>
+            </>
+          )}
+        </div>
+
+        {/* Settings Section */}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Bell className="h-4 w-4 text-gray-500" />
+              <span className="text-sm font-medium">Notifications</span>
+            </div>
+            <Button
+              variant={profile.settings.notifications ? "default" : "secondary"}
+              onClick={() => updateSettings({ notifications: !profile.settings.notifications })}
+              className="text-xs h-7"
+            >
+              {profile.settings.notifications ? "On" : "Off"}
+            </Button>
           </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Volume2 className="h-4 w-4 text-gray-500" />
+              <span className="text-sm font-medium">Sound</span>
+            </div>
+            <Button
+              variant={profile.settings.soundEnabled ? "default" : "secondary"}
+              onClick={() => updateSettings({ soundEnabled: !profile.settings.soundEnabled })}
+              className="text-xs h-7"
+            >
+              {profile.settings.soundEnabled ? "On" : "Off"}
+            </Button>
+          </div>
+        </div>
+
+        {/* Edit/Save Buttons */}
+        <div className="flex gap-2 pt-2">
+          {isEditing ? (
+            <>
+              <Button onClick={handleSave} className="flex-1 bg-green-500 hover:bg-green-600 text-white">
+                <Save className="h-4 w-4 mr-2" /> Save
+              </Button>
+              <Button onClick={handleCancel} variant="outline" className="flex-1">
+                <X className="h-4 w-4 mr-2" /> Cancel
+              </Button>
+            </>
+          ) : (
+            <Button onClick={() => setIsEditing(true)} className="w-full">
+              <Edit className="h-4 w-4 mr-2" /> Edit Profile
+            </Button>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };

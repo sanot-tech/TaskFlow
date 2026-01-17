@@ -156,7 +156,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
             readOnly
             value={selectedOption?.label || "Select..."}
             onClick={() => setIsOpen(!isOpen)}
-            className="cursor-pointer h-8 text-xs pr-8 bg-white hover:bg-gray-50 transition-colors"
+            className="cursor-pointer h-8 text-xs pr-8 bg-white hover:bg-gray-50 transition-colors text-white"
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
             {isOpen ? <X className="h-3 w-3" /> : <Check className="h-3 w-3" />}
