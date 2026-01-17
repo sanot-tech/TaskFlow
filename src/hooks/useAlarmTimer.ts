@@ -28,6 +28,8 @@ export const useAlarmTimer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const startTimer = (taskId: string, taskTitle: string, duration: number) => {
+    console.log("startTimer called - isAlarmEnabled:", isAlarmEnabled);
+    
     // Check if alarm system is enabled
     if (!isAlarmEnabled) {
       showError("Please enable the alarm system first!");
@@ -49,6 +51,7 @@ export const useAlarmTimer = () => {
     };
 
     setAlarms(prev => [...prev, newAlarm]);
+    console.log("Timer started successfully for:", taskTitle);
     return true;
   };
 
@@ -60,6 +63,7 @@ export const useAlarmTimer = () => {
   const toggleAlarmSystem = () => {
     setIsAlarmEnabled(prev => {
       const newState = !prev;
+      console.log("Toggling alarm system to:", newState);
       if (!newState) {
         setAlarms([]);
         stopSound();
