@@ -156,8 +156,9 @@ export const useAlarmTimer = () => {
     }, 500);
   };
 
+  // FIX: Always run useEffect with same structure
   useEffect(() => {
-    if (!isAlarmEnabled || alarms.length === 0) {
+    if (!isAlarmEnabled) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -186,7 +187,7 @@ export const useAlarmTimer = () => {
         intervalRef.current = null;
       }
     };
-  }, [isAlarmEnabled, alarms.length, selectedSound]);
+  }, [isAlarmEnabled, selectedSound]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
