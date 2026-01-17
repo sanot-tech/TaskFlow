@@ -126,9 +126,12 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     setParams(randomParams);
     setSeed(`constructor_${Date.now()}_${Math.random()}`);
     
+    // Обновляем превью аватара сразу при рандомизации
+    const newAvatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=constructor_${Date.now()}_${Math.random()}&backgroundColor=${randomParams.backgroundColor}&accessories=${randomParams.accessories}&accessoriesProbability=100&skinColor=${randomParams.skinColor}&topType=${randomParams.topType}&hairColor=${randomParams.hairColor}&facialHairType=blank&clothingType=${randomParams.clothingType}&clothingColor=${randomParams.clothingColor}&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=${randomParams.radius}`;
+    setPreviewAvatar(newAvatarUrl);
+    
     // Обновляем синхронизированный аватар при рандомизации
-    const avatarUrl = generateAvatarUrl();
-    updateAvatar(avatarUrl);
+    updateAvatar(newAvatarUrl);
   };
 
   const handleApply = () => {
@@ -152,6 +155,8 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
       radius: 50,
     });
     setSeed(`constructor_${Date.now()}`);
+    // Reset preview to default
+    setPreviewAvatar(generateAvatarUrl());
   };
 
   // НОВАЯ ФУНКЦИЯ: Создание кастомного инпута с выбором
