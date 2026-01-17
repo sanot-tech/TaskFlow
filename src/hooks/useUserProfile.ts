@@ -54,6 +54,7 @@ const getRandomUsername = () => {
 };
 
 export const useUserProfile = () => {
+  // ВАЖНО: Все хуки должны вызываться в одном и том же порядке при каждом рендере
   const [profile, setProfile] = useLocalStorage<UserProfile | null>("user_profile", null);
   const [isLoading, setIsLoading] = useState(true);
 
