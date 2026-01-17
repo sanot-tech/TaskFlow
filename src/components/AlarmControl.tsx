@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { AlarmToggle } from "./AlarmToggle";
 import { AlarmStatusBadge } from "./AlarmStatusBadge";
 
-// Alarm Control Component
+// Alarm Control Component - Updated for Dark Theme Harmony
 export const AlarmControl: React.FC = () => {
   const {
     alarms,
@@ -44,7 +44,7 @@ export const AlarmControl: React.FC = () => {
         <AlarmStatusBadge isAlarmEnabled={isAlarmEnabled} />
       </div>
 
-      {/* Sound Selection Panel (compact) */}
+      {/* Sound Selection Panel (compact) - Dark Theme */}
       {isAlarmEnabled && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -52,18 +52,18 @@ export const AlarmControl: React.FC = () => {
           exit={{ opacity: 0, height: 0 }}
           className="overflow-hidden"
         >
-          <Card className="border-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-xl shadow-md quantum-symmetry">
-            <CardContent className="p-3">
+          <Card className="border-2 border-gray-700/50 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-lg quantum-symmetry">
+            <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3 flex-center-all">
-                <span className="text-xs font-bold text-slate-700 flex items-center gap-1 flex-center-all">
-                  <Volume2 className="h-3 w-3 flex-center-all" /> Select Sound
+                <span className="text-sm font-bold text-gray-300 flex items-center gap-2 flex-center-all">
+                  <Volume2 className="h-4 w-4 flex-center-all text-blue-400" /> Select Sound
                 </span>
-                <span className="text-xs text-slate-600 flex-center-all">
+                <span className="text-xs text-gray-400 flex-center-all font-mono">
                   {ALARM_SOUNDS.find(s => s.id === selectedSound)?.name}
                 </span>
               </div>
               
-              {/* Sound selection buttons */}
+              {/* Sound selection buttons - Improved spacing and contrast */}
               <div className="grid grid-cols-5 gap-2">
                 {ALARM_SOUNDS.map((sound) => (
                   <motion.div
@@ -78,14 +78,14 @@ export const AlarmControl: React.FC = () => {
                         testSound(sound.id);
                       }}
                       className={cn(
-                        "w-full h-10 p-0 rounded-lg border-2 transition-all flex items-center justify-center flex-center-all quantum-symmetry",
+                        "w-full h-10 p-0 rounded-lg border-2 transition-all flex items-center justify-center flex-center-all quantum-symmetry text-sm font-bold",
                         selectedSound === sound.id
-                          ? "border-slate-600 bg-slate-400 shadow-md"
-                          : "border-slate-300 bg-white hover:border-slate-400"
+                          ? "border-blue-500 bg-blue-500/20 shadow-lg shadow-blue-500/20 text-blue-300"
+                          : "border-gray-700 bg-gray-800 hover:border-gray-600 hover:bg-gray-700 text-gray-300"
                       )}
                       title={sound.name}
                     >
-                      <span className="text-lg font-bold tracking-wider flex-center-all">{sound.name}</span>
+                      <span className="flex-center-all">{sound.name}</span>
                     </Button>
                   </motion.div>
                 ))}
@@ -95,7 +95,7 @@ export const AlarmControl: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Active Timers */}
+      {/* Active Timers - Dark Theme with Improved Typography */}
       {isAlarmEnabled && alarms.length > 0 && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -103,11 +103,11 @@ export const AlarmControl: React.FC = () => {
           exit={{ opacity: 0, height: 0 }}
           className="overflow-hidden"
         >
-          <Card className="border-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-xl shadow-md quantum-symmetry">
-            <CardContent className="p-3">
-              <div className="flex items-center justify-between mb-2 flex-center-all">
-                <span className="text-xs font-bold text-slate-700 flex items-center gap-1 flex-center-all">
-                  <Clock className="h-3 w-3 flex-center-all" /> Active ({alarms.length})
+          <Card className="border-2 border-gray-700/50 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl shadow-lg quantum-symmetry">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between mb-3 flex-center-all">
+                <span className="text-sm font-bold text-gray-300 flex items-center gap-2 flex-center-all">
+                  <Clock className="h-4 w-4 flex-center-all text-green-400" /> Active ({alarms.length})
                 </span>
               </div>
               
@@ -119,13 +119,13 @@ export const AlarmControl: React.FC = () => {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 10 }}
-                      className="flex items-center justify-between bg-white/60 backdrop-blur-sm rounded-lg p-2 border border-slate-200/50 quantum-symmetry"
+                      className="flex items-center justify-between bg-gray-800/60 backdrop-blur-sm rounded-lg p-3 border border-gray-700/50 quantum-symmetry"
                     >
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs font-semibold truncate text-slate-800 flex-center-all">
+                        <div className="text-sm font-semibold truncate text-gray-200 flex-center-all">
                           {alarm.taskTitle}
                         </div>
-                        <div className="text-xs font-mono text-slate-600 font-bold flex-center-all">
+                        <div className="text-xs font-mono text-green-400 font-bold flex-center-all mt-1">
                           {formatTime(alarm.remainingTime)}
                         </div>
                       </div>
@@ -139,7 +139,7 @@ export const AlarmControl: React.FC = () => {
                           size="sm"
                           variant="ghost"
                           onClick={() => stopTimer(alarm.taskId)}
-                          className="h-7 w-7 p-0 text-rose-500 hover:text-rose-700 hover:bg-rose-50 flex-center-all quantum-symmetry"
+                          className="h-7 w-7 p-0 text-rose-400 hover:text-rose-300 hover:bg-rose-900/30 rounded-lg flex-center-all quantum-symmetry"
                         >
                           <X className="h-3 w-3 flex-center-all" />
                         </Button>
@@ -153,9 +153,9 @@ export const AlarmControl: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Hint */}
+      {/* Hint - Dark Theme */}
       {!isAlarmEnabled && (
-        <div className="text-center text-xs text-muted-foreground py-2 px-3 bg-gray-50/50 rounded-lg border border-gray-200/50 flex-center-all quantum-symmetry">
+        <div className="text-center text-xs text-gray-500 py-2 px-3 bg-gray-900/50 rounded-lg border border-gray-800/50 flex-center-all quantum-symmetry">
           Enable to use timers
         </div>
       )}
