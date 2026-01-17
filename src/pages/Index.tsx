@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { showSuccess, showError } from "@/utils/toast";
@@ -23,6 +25,7 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { ProfileComponentsWrapper } from "@/components/ProfileComponentsWrapper";
 import { AdaptiveCardTitle } from "@/components/AdaptiveCardTitle";
 import { PremiumHeader } from "@/components/PremiumHeader";
+import { TaskCard } from "@/components/TaskCard";
 
 interface Task {
   id: string;
@@ -78,7 +81,6 @@ const Index = () => {
   const [taskTags, setTaskTags] = useLocalStorage<string[]>("todo_tags", []);
   const [newTag, setNewTag] = useState("");
   const [letterFonts, setLetterFonts] = useState<string[]>([]);
-  const [newSubtask, setNewSubtask] = useState<{[key: string]: string}>({});
   const { toast } = useToast();
   const { profile, isLoading, regenerateAvatar } = useUserProfile();
 
@@ -248,13 +250,7 @@ const Index = () => {
     showSuccess("Task deleted successfully!");
   };
 
-  const addSubtask = (taskId: string) => {
-    const subtaskTitle = newSubtask[taskId];
-    if (!subtaskTitle?.trim()) {
-      showError("Subtask title cannot be empty.");
-      return;
-    }
-
+  const addSubtask = (taskId: string, subtaskTitle: string) => {
     setTasks(
       tasks.map((task) =>
         task.id === taskId
@@ -272,8 +268,6 @@ const Index = () => {
           : task
       )
     );
-    
-    setNewSubtask(prev => ({ ...prev, [taskId]: "" }));
     showSuccess("Subtask added successfully!");
   };
 
@@ -325,16 +319,6 @@ const Index = () => {
 
   const handleColorSelect = (color: string) => {
     setTaskPriorityColor(color);
-  };
-
-  const handleNewSubtaskChange = (taskId: string, value: string) => {
-    setNewSubtask(prev => ({ ...prev, [taskId]: value }));
-  };
-
-  const handleAddSubtaskKeyPress = (taskId: string, e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      addSubtask(taskId);
-    }
   };
 
   return (
@@ -538,200 +522,18 @@ const Index = () => {
 
         {/* Tasks List Section - Perfectly Centered */}
         <div className="flex justify-center">
-          <div className="w-full max-w-3xl space-y-6">
+          <div className="w-full max-w-3xl space-y-4">
             <AnimatePresence>
               {tasks.map((task) => (
-                <motion.div
+                <TaskCard
                   key={task.id}
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: -100, scale: 0.9 }}
-                  transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-                  className="task-card"
-                >
-                  <Card
-                    className={cn(
-                      "custom-card border-2 select-none",
-                      task.subtasks.length > 0
-                        ? "border-blue-500/30"
-                        : "border-yellow-500/30"
-                    )}
-                  >
-                    {/* Task Header - Perfectly Balanced */}
-                    <CardHeader className="flex-row justify-between items-start pb-4 space-y-0">
-                      <div className="flex items-start space-x-1 flex-1"> {/* Reduced space to bring checkbox closer to title */}
-                      <motion.div
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.8 }}
-                        transition={{ type: "spring", stiffness: 700, damping: 15 }}
-                        className="relative top-[-1px]" /* Slightly elevate the checkbox */
-                      >
-                        <Checkbox
-                          checked={task.completed}
-                          onCheckedChange={() => toggleTaskCompletion(task.id)}
-                          className="mt-3 w-3.5 h-3.5" /* Adjusted size and margin to be closer to title */
-                        />
-                      </motion.div>
-                      
-                      <div className="flex-1 space-y-1">
-                        <AdaptiveCardTitle
-                          completed={task.completed}
-                        >
-                          {task.title}
-                        </AdaptiveCardTitle>
-                        {task.description && (
-                          <CardDescription className="text-base leading-relaxed card-description select-none quantum-symmetry quantum-depth quantum-metallographic bg-primary/5 p-3 rounded-lg">
-                            {task.description}
-                          </CardDescription>
-                        )}
-                      </div>
-                    </div>
-
-                      {/* Кнопка удаления - ВСЕГДА ВИДНАЯ */}
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                      >
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => deleteTask(task.id)}
-                          className="flex-shrink-0 px-4 py-2 opacity-100"
-                        >
-                          <Trash2 className="h-4 w-4 mr-2" /> Delete
-                        </Button>
-                      </motion.div>
-                    </CardHeader>
-
-                    {/* Task Details - Perfectly Aligned */}
-                    <CardContent className="pt-4 space-y-4">
-                      {/* Priority & Date Row */}
-                      <div className="flex flex-wrap items-center gap-4 pb-4 border-b border-primary/20">
-                        <div className="flex items-center space-x-3">
-                          <AlertCircle className="h-5 w-5 text-primary" />
-                          <span className="font-semibold text-sm select-none">Priority:</span>
-                          <Badge className={cn("text-white px-3 py-1.5", task.priorityColor)}>
-                            {task.priority}
-                          </Badge>
-                        </div>
-                        
-                        {task.dueDate && (
-                          <div className="flex items-center space-x-3">
-                            <Calendar className="h-5 w-5 text-primary" />
-                            <span className="text-sm font-medium text-muted-foreground select-none">
-                              {format(task.dueDate, "PPP")}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Tags Row */}
-                      {task.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                          {task.tags.map((tag) => (
-                            <Badge 
-                              key={tag} 
-                              variant="outline" 
-                              className="bg-secondary text-secondary-foreground px-3 py-1.5 select-none"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Subtasks Section */}
-                      {task.subtasks.length > 0 && (
-                        <div className="space-y-3 pt-3 border-t border-blue-500/20">
-                          <h4 className="font-bold flex items-center text-lg select-none">
-                            <CheckCircle className="h-5 w-5 mr-2 text-blue-500" /> 
-                            Subtasks ({task.subtasks.filter(s => s.completed).length}/{task.subtasks.length})
-                          </h4>
-                          <div className="space-y-2 ml-7">
-                            <AnimatePresence>
-                              {task.subtasks.map((subtask) => (
-                                <motion.div
-                                  key={subtask.id}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: 20 }}
-                                  transition={{ duration: 0.2 }}
-                                  className="flex items-center justify-between group"
-                                >
-                                  <div className="flex items-center space-x-1 flex-1"> {/* Reduced space to bring checkbox closer to title */}
-                                    <motion.div
-                                      whileHover={{ scale: 1.2 }}
-                                      whileTap={{ scale: 0.8 }}
-                                      transition={{ type: "spring", stiffness: 700, damping: 15 }}
-                                      className="relative top-[-1px]" /* Slightly elevate the checkbox */
-                                    >
-                                      <Checkbox
-                                        checked={subtask.completed}
-                                        onCheckedChange={() => toggleSubtaskCompletion(task.id, subtask.id)}
-                                        className="w-3 h-3 mt-0.5" /* Adjusted size and minimal margin */
-                                      />
-                                    </motion.div>
-                                    <span
-                                      className={cn(
-                                        "text-sm font-medium select-none",
-                                        subtask.completed && "line-through text-gray-400"
-                                      )}
-                                    >
-                                      {subtask.title}
-                                    </span>
-                                  </div>
-                                  
-                                  <motion.div
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                                  >
-                                    <button 
-                                      onClick={() => deleteSubtask(task.id, subtask.id)}
-                                      className="text-red-500 hover:text-red-700 p-1 select-none"
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </button>
-                                  </motion.div>
-                                </motion.div>
-                              ))}
-                            </AnimatePresence>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Add Subtask Input */}
-                      <div className="flex gap-3 pt-3">
-                        <Input
-                          placeholder="Add subtask"
-                          value={newSubtask[task.id] || ""}
-                          onChange={(e) => handleNewSubtaskChange(task.id, e.target.value)}
-                          onKeyPress={(e) => handleAddSubtaskKeyPress(task.id, e)}
-                          className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1 select-text"
-                        />
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                        >
-                          <Button 
-                            onClick={() => addSubtask(task.id)}
-                            className="btn-secondary px-5 select-none"
-                          >
-                            <Plus className="h-4 w-4 mr-2" /> Add
-                          </Button>
-                        </motion.div>
-                      </div>
-
-                      {/* Timer Button */}
-                      <div className="pt-3 border-t border-primary/20">
-                        <TaskTimerButton taskId={task.id} taskTitle={task.title} />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                  task={task}
+                  onToggleCompletion={toggleTaskCompletion}
+                  onDelete={deleteTask}
+                  onAddSubtask={addSubtask}
+                  onToggleSubtask={toggleSubtaskCompletion}
+                  onDeleteSubtask={deleteSubtask}
+                />
               ))}
             </AnimatePresence>
           </div>
