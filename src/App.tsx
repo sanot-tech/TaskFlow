@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import { motion } from "framer-motion";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useEffect } from "react";
+import { AlarmProvider } from "@/contexts/AlarmContext";
 
 // Initialize React Query client for data fetching and caching
 const queryClient = new QueryClient();
@@ -60,10 +61,12 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <UserProfileInitializer />
-        <AnimatedRoutes />
-      </BrowserRouter>
+      <AlarmProvider>
+        <BrowserRouter>
+          <UserProfileInitializer />
+          <AnimatedRoutes />
+        </BrowserRouter>
+      </AlarmProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
