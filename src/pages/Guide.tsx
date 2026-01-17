@@ -79,7 +79,6 @@ const Guide = () => {
                   {letter}
                 </span>
               ))}
-              &nbsp;2025
             </h1>
           </div>
         </div>
@@ -91,7 +90,7 @@ const Guide = () => {
                 <BookOpen className="h-8 w-8 mr-3 text-primary" /> How to Start
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Learn the basics of TodoList 2025 in simple steps.
+                Learn the basics of TodoList in simple steps.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -102,7 +101,7 @@ const Guide = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-muted-foreground">Learn how to create your first task in TodoList 2025.</p>
+                  <p className="text-muted-foreground">Learn how to create your first task in TodoList.</p>
                   <Alert variant="default" className="border-l-4 border-primary">
                     <AlertCircle className="h-4 w-4" />
                     <AlertTitle>Tip</AlertTitle>
@@ -365,7 +364,7 @@ const Guide = () => {
                 <UsersIcon className="h-8 w-8 mr-3 text-blue-500" /> Working with Family and Friends
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Learn how to use TodoList 2025 together with others for shared tasks.
+                Learn how to use TodoList together with others for shared tasks.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -426,7 +425,7 @@ const Guide = () => {
                 <HelpCircle className="h-8 w-8 mr-3 text-green-500" /> Everyday Examples
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                How to use TodoList 2025 for common daily tasks.
+                How to use TodoList for common daily tasks.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
