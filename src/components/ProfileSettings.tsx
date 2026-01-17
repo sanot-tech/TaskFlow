@@ -218,45 +218,7 @@ export const ProfileSettings: React.FC = () => {
               </div>
             </div>
 
-            {/* Секция 3: Звук будильника - PREMIUM GRID */}
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg overflow-hidden">
-              <div className="p-4 border-b border-white/10 bg-gradient-to-r from-blue-500/20 to-cyan-500/20">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Glasses className="h-5 w-5 text-blue-300" /> Звук будильника
-                </h3>
-              </div>
-              <div className="p-4">
-                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                  {ALARM_SOUNDS.map((sound) => (
-                    <motion.div
-                      key={sound.id}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="relative"
-                    >
-                      <Button
-                        onClick={() => {
-                          setSelectedSound(sound.id);
-                          updateSettings({ selectedSound: sound.id });
-                        }}
-                        className={cn(
-                          "w-full h-12 p-0 rounded-xl border-2 transition-all flex flex-col items-center justify-center gap-1",
-                          selectedSound === sound.id
-                            ? "border-blue-400 bg-blue-500/30 shadow-lg ring-2 ring-blue-400/30"
-                            : "border-white/10 bg-white/10 hover:border-blue-300/50 hover:bg-white/15"
-                        )}
-                        title={sound.name}
-                      >
-                        <span className="text-xl">{sound.name.split(' ')[0]}</span>
-                        <span className="text-[10px] font-normal text-blue-200">{sound.name.split(' ')[1]}</span>
-                      </Button>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Секция 4: Опасная зона - PREMIUM WARNING */}
+            {/* Секция 3: Опасная зона - PREMIUM WARNING */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-red-500/30 shadow-lg overflow-hidden">
               <div className="p-4 border-b border-red-500/20 bg-gradient-to-r from-red-500/20 to-rose-500/20">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
