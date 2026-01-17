@@ -103,7 +103,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
           transition={{ delay: 0.5, duration: 0.5 }}
         >
           <div className="px-4 py-2 bg-primary/10 rounded-lg backdrop-blur-sm border border-primary/20 flex-center-all">
-            <p className="text-muted-foreground select-none flex-responsive-text flex-center-all">Your ultimate task management solution for 2025</p>
+            <p className="text-muted-foreground select-none flex-responsive-text flex-center-all">Your ultimate task management solution</p>
           </div>
         </motion.div>
       </div>
