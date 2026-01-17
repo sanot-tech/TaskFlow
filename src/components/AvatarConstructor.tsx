@@ -178,7 +178,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
                     whileHover={{ backgroundColor: "#f3f4f6" }}
                     whileTap={{ scale: 0.98 }}
                     className={cn(
-                      "px-3 py-2 cursor-pointer flex items-center justify-between text-xs transition-colors",
+                      "px-3 py-2 cursor-pointer flex items-center justify-between text-xs transition-colors text-black",
                       value === option.value ? "bg-blue-50 text-blue-600 font-bold" : "hover:bg-gray-50"
                     )}
                     onClick={() => {
