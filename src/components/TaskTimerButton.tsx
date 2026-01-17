@@ -68,19 +68,19 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         </motion.div>
       </DialogTrigger>
       
-      <DialogContent className="sm:max-w-[360px] rounded-xl quantum-symmetry">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-lg flex-center-all">
+      <DialogContent className="sm:max-w-[360px] rounded-xl quantum-symmetry flex-premium-container flex-center-all quantum-depth quantum-metallographic">
+        <DialogHeader className="flex-center-all">
+          <DialogTitle className="flex items-center gap-2 text-lg flex-center-all font-google-sans-flex-bold">
             <Clock className="h-5 w-5 text-blue-500 flex-center-all" />
             <span className="flex-center-all">Start Timer</span>
           </DialogTitle>
-          <DialogDescription className="text-sm flex-center-all">
-            Task: <strong className="text-gray-900 flex-center-all">{taskTitle}</strong>
+          <DialogDescription className="text-sm flex-center-all text-muted-foreground">
+            Task: <strong className="text-gray-900 flex-center-all ml-1">{taskTitle}</strong>
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-4 py-4 flex-center-all">
-          <div className="space-y-2 flex-center-all">
+        <div className="space-y-4 py-4 flex-center-all w-full">
+          <div className="space-y-2 flex-center-all w-full">
             <Label className="text-sm font-medium flex-center-all">Duration (minutes)</Label>
             <Input
               type="number"
@@ -88,11 +88,11 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
               max="180"
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              className="h-10 flex-center-all quantum-symmetry"
+              className="h-10 flex-center-all quantum-symmetry w-full"
             />
           </div>
           
-          <div className="grid grid-cols-3 gap-2 flex-center-all">
+          <div className="grid grid-cols-3 gap-2 flex-center-all w-full">
             {[5, 25, 45].map((min) => (
               <Button
                 key={min}
@@ -106,8 +106,8 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
           </div>
         </div>
         
-        <div className="flex gap-2 flex-center-all">
-          <Button onClick={handleStart} className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 flex-center-all quantum-symmetry">
+        <div className="flex gap-2 flex-center-all w-full">
+          <Button onClick={handleStart} className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 flex-center-all quantum-symmetry font-google-sans-flex-medium">
             <Play className="h-4 w-4 mr-2 flex-center-all" /> Start
           </Button>
           <Button onClick={() => setIsOpen(false)} variant="outline" className="flex-1 h-10 flex-center-all quantum-symmetry">
