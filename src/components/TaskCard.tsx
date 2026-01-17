@@ -123,7 +123,7 @@ const PremiumCheckbox = ({
           sizeClasses[size],
           checked 
             ? "bg-gradient-to-br from-emerald-400 to-teal-500 border-emerald-500 shadow-lg shadow-emerald-500/30" 
-            : "bg-white border-gray-300 hover:border-emerald-400"
+            : "bg-gray-800 border-gray-600 hover:border-emerald-400"
         )}
       />
     </motion.div>
@@ -148,7 +148,7 @@ const PremiumCardHeader = ({
   
   return (
     <div className={cn(
-      "flex items-center gap-3 p-4 border-b border-gray-100/50",
+      "flex items-center gap-3 p-4 border-b border-gray-700/50",
       isMobile ? "flex-col items-start" : "flex-row"
     )}>
       {/* Checkbox + Title Section - Perfect Flex Symmetry */}
@@ -174,7 +174,7 @@ const PremiumCardHeader = ({
           >
             <h3 className={cn(
               "font-bold text-lg leading-tight truncate",
-              task.completed && "line-through text-gray-400"
+              task.completed && "line-through text-gray-500"
             )}>
               {task.title}
             </h3>
@@ -184,7 +184,7 @@ const PremiumCardHeader = ({
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={onExpand}
-              className="p-1 rounded-full hover:bg-gray-100 flex-center-all"
+              className="p-1 rounded-full hover:bg-gray-700/50 flex-center-all"
             >
               {isExpanded ? 
                 <ChevronUp className="h-4 w-4 text-gray-400" /> : 
@@ -194,7 +194,7 @@ const PremiumCardHeader = ({
           </motion.div>
           
           {task.description && (
-            <CardDescription className="text-sm text-gray-500 mt-1 line-clamp-2">
+            <CardDescription className="text-sm text-gray-400 mt-1 line-clamp-2">
               {task.description}
             </CardDescription>
           )}
@@ -227,7 +227,7 @@ const PremiumCardHeader = ({
             variant="ghost"
             size="sm"
             onClick={() => onDelete(task.id)}
-            className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg"
+            className="text-red-400 hover:text-red-300 hover:bg-red-900/30 rounded-lg"
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -283,8 +283,8 @@ const PremiumTaskDetails = ({
           isMobile ? "flex-col items-start" : "flex-row"
         )}>
           {task.dueDate && (
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Calendar className="h-4 w-4 text-blue-500" />
+            <div className="flex items-center gap-2 text-sm text-gray-300">
+              <Calendar className="h-4 w-4 text-blue-400" />
               <span className="font-medium">{format(task.dueDate, "PPP")}</span>
             </div>
           )}
@@ -295,7 +295,7 @@ const PremiumTaskDetails = ({
                 <Badge 
                   key={tag} 
                   variant="outline" 
-                  className="text-xs px-2 py-0.5 bg-gray-50 border-gray-200"
+                  className="text-xs px-2 py-0.5 bg-gray-800 border-gray-700 text-gray-300"
                 >
                   {tag}
                 </Badge>
@@ -307,8 +307,8 @@ const PremiumTaskDetails = ({
         {/* Subtasks Section */}
         {task.subtasks.length > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-bold text-gray-700">
-              <CheckCircle className="h-4 w-4 text-blue-500" />
+            <div className="flex items-center gap-2 text-sm font-bold text-gray-300">
+              <CheckCircle className="h-4 w-4 text-blue-400" />
               <span>Subtasks ({task.subtasks.filter(s => s.completed).length}/{task.subtasks.length})</span>
             </div>
             
@@ -330,7 +330,7 @@ const PremiumTaskDetails = ({
                     <span
                       className={cn(
                         "text-sm flex-1",
-                        subtask.completed && "line-through text-gray-400"
+                        subtask.completed && "line-through text-gray-500"
                       )}
                     >
                       {subtask.title}
@@ -339,7 +339,7 @@ const PremiumTaskDetails = ({
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={() => onDeleteSubtask(task.id, subtask.id)}
-                      className="opacity-0 group-hover:opacity-100 p-1 text-red-400 hover:text-red-600 transition-opacity"
+                      className="opacity-0 group-hover:opacity-100 p-1 text-red-400 hover:text-red-300 transition-opacity"
                     >
                       <Trash2 className="h-3 w-3" />
                     </motion.button>
@@ -358,7 +358,7 @@ const PremiumTaskDetails = ({
             value={newSubtask}
             onChange={(e) => setNewSubtask(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex-1 border-2 border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            className="flex-1 border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-blue-400 focus:ring-2 focus:ring-blue-900/30"
           />
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -374,7 +374,7 @@ const PremiumTaskDetails = ({
         </div>
 
         {/* Timer Section */}
-        <div className="pt-3 border-t border-gray-100">
+        <div className="pt-3 border-t border-gray-700">
           <TaskTimerButton taskId={task.id} taskTitle={task.title} />
         </div>
       </div>
@@ -406,9 +406,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({
       <Card className={cn(
         "border-2 rounded-2xl overflow-hidden transition-all duration-300",
         task.subtasks.length > 0 
-          ? "border-blue-200/50 bg-gradient-to-br from-white to-blue-50/30" 
-          : "border-gray-200/50 bg-white",
-        "hover:shadow-xl hover:shadow-gray-200/30 hover:border-gray-300/50",
+          ? "border-blue-900/50 bg-gradient-to-br from-gray-900 to-gray-800/50" 
+          : "border-gray-700/50 bg-gray-900",
+        "hover:shadow-xl hover:shadow-gray-900/50 hover:border-gray-600/50",
         "backdrop-blur-sm"
       )}>
         <PremiumCardHeader

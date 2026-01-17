@@ -364,7 +364,7 @@ const Index = () => {
                       placeholder="What needs to be done?"
                       value={taskTitle}
                       onChange={(e) => setTaskTitle(e.target.value)}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
+                      className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
                     />
                   </div>
 
@@ -374,7 +374,7 @@ const Index = () => {
                       placeholder="Add details (optional)"
                       value={taskDescription}
                       onChange={(e) => setTaskDescription(e.target.value)}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
+                      className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 text-lg py-6 px-4 select-text"
                     />
                   </div>
                 </div>
@@ -389,7 +389,7 @@ const Index = () => {
                         placeholder="Enter priority (e.g., High, Urgent, Important)"
                         value={taskPriority}
                         onChange={handlePriorityChange}
-                        className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 select-text"
+                        className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 select-text"
                       />
 
                       {/* Палитра цветов (всегда доступна) */}
@@ -409,7 +409,7 @@ const Index = () => {
                                   "w-12 h-12 p-0 border-2 transition-all duration-200",
                                   taskPriorityColor === color.color 
                                     ? "border-primary ring-2 ring-primary/50 scale-110 shadow-lg" 
-                                    : "border-gray-300 hover:border-primary hover:scale-105"
+                                    : "border-gray-700 hover:border-primary hover:scale-105"
                                 )}
                                 title={color.name}
                                 style={{ outline: taskPriorityColor === color.color ? "3px solid hsl(var(--primary))" : "none", outlineOffset: "2px" }}
@@ -430,15 +430,15 @@ const Index = () => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-full justify-start text-left font-normal border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 py-6 select-none",
-                            !taskDueDate && "text-muted-foreground"
+                            "w-full justify-start text-left font-normal border-2 border-gray-700 bg-gray-800 text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 py-6 select-none",
+                            !taskDueDate && "text-gray-500"
                           )}
                         >
                           <Calendar className="mr-3 h-5 w-5" />
                           {taskDueDate ? format(taskDueDate, "PPP") : <span className="select-none">Pick a date</span>}
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
+                      <PopoverContent className="w-auto p-0 bg-gray-800 border-gray-700">
                         <CalendarComponent
                           mode="single"
                           selected={taskDueDate}
@@ -459,7 +459,7 @@ const Index = () => {
                       value={newTag}
                       onChange={(e) => setNewTag(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && addTag()}
-                      className="border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1 select-text"
+                      className="border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder:text-gray-500 focus:border-primary focus:ring-2 focus:ring-primary/20 flex-1 select-text"
                     />
                     <motion.div
                       whileHover={{ scale: 1.05 }}
@@ -485,12 +485,12 @@ const Index = () => {
                         >
                           <Badge
                             variant="secondary"
-                            className="flex items-center gap-2 bg-secondary text-secondary-foreground px-3 py-2 text-sm select-none"
+                            className="flex items-center gap-2 bg-gray-800 text-gray-200 border-gray-700 px-3 py-2 text-sm select-none"
                           >
                             <span className="font-medium select-none">{tag}</span>
                             <button 
                               onClick={() => removeTag(tag)} 
-                              className="text-xs hover:text-red-500 font-bold select-none"
+                              className="text-xs hover:text-red-400 font-bold select-none"
                             >
                               ×
                             </button>
