@@ -170,13 +170,15 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
       </DialogTrigger>
       
       {/* NEW AUTORESPONSIVE DIALOG CONTENT - FLEX CONCEPTION PREMIUM */}
+      {/* Fixed: Added overlay and centered positioning */}
       <DialogContent 
         className={cn(
           "rounded-2xl quantum-symmetry flex-center-all",
-          "max-w-[90vw] sm:max-w-[85vw] md:max-w-[70vw] lg:max-w-[600px] xl:max-w-[700px]"
+          "max-w-[90vw] sm:max-w-[85vw] md:max-w-[70vw] lg:max-w-[600px] xl:max-w-[700px]",
+          "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         )}
         style={{ 
-          transform: `scale(${scale})`,
+          transform: `translate(-50%, -50%) scale(${scale})`,
           padding: `${padding * 1.5}px`,
           gap: `${gap * 1.5}px`
         }}
@@ -184,17 +186,17 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         {/* Neuro-Adaptive Header */}
         <DialogHeader className="flex-center-all w-full">
           <DialogTitle 
-            className="flex items-center gap-2 flex-center-all font-bold"
+            className="flex items-center gap-2 flex-center-all font-bold text-gray-900"
             style={{ fontSize: `${textSize * 1.5}px` }}
           >
             <Clock 
-              className="text-blue-500 flex-center-all" 
+              className="text-blue-600 flex-center-all" 
               style={{ width: `${iconSize * 1.2}px`, height: `${iconSize * 1.2}px` }} 
             />
             <span className="flex-center-all">Start Timer</span>
           </DialogTitle>
           <DialogDescription 
-            className="text-sm flex-center-all"
+            className="text-sm flex-center-all text-gray-700"
             style={{ fontSize: `${textSize}px` }}
           >
             Task: <strong className="text-gray-900 flex-center-all ml-1">{taskTitle}</strong>
@@ -208,7 +210,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         >
           <div className="space-y-2 flex-center-all w-full">
             <Label 
-              className="text-sm font-medium flex-center-all"
+              className="text-sm font-medium flex-center-all text-gray-800"
               style={{ fontSize: `${textSize}px` }}
             >
               Duration (minutes)
@@ -219,7 +221,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
               max="180"
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              className="h-10 flex-center-all quantum-symmetry w-full"
+              className="h-10 flex-center-all quantum-symmetry w-full text-gray-900"
               style={{ 
                 fontSize: `${textSize}px`,
                 padding: `${padding / 2}px ${padding}px`
@@ -256,7 +258,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         >
           <Button 
             onClick={handleStart} 
-            className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 flex-center-all quantum-symmetry"
+            className="flex-1 bg-blue-500 hover:bg-blue-600 h-10 flex-center-all quantum-symmetry text-white"
             style={{ 
               fontSize: `${textSize}px`,
               padding: `${padding / 2}px ${padding}px`,
@@ -272,7 +274,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
           <Button 
             onClick={() => setIsOpen(false)} 
             variant="outline" 
-            className="flex-1 h-10 flex-center-all quantum-symmetry"
+            className="flex-1 h-10 flex-center-all quantum-symmetry text-gray-700"
             style={{ 
               fontSize: `${textSize}px`,
               padding: `${padding / 2}px ${padding}px`,
