@@ -96,16 +96,20 @@ export const useUserProfile = () => {
 
   const updateProfile = (updates: Partial<UserProfile>) => {
     if (profile) {
-      setProfile({ ...profile, ...updates });
+      const updatedProfile = { ...profile, ...updates };
+      setProfile(updatedProfile);
+      return updatedProfile;
     }
   };
 
   const updateSettings = (updates: Partial<UserProfile['settings']>) => {
     if (profile) {
-      setProfile({
+      const updatedProfile = {
         ...profile,
         settings: { ...profile.settings, ...updates },
-      });
+      };
+      setProfile(updatedProfile);
+      return updatedProfile;
     }
   };
 
@@ -117,7 +121,8 @@ export const useUserProfile = () => {
   const regenerateAvatar = () => {
     if (profile) {
       const newAvatar = generateRandomAvatar();
-      updateProfile({ avatar: newAvatar });
+      const updatedProfile = updateProfile({ avatar: newAvatar });
+      return updatedProfile;
     }
   };
 
