@@ -92,15 +92,6 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
                 <BookOpen className="h-4 w-4 mr-2 flex-center-all" /> Guide
               </motion.button>
             </Link>
-            
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex-premium-button flex items-center px-4 py-2 text-sm flex-center-all"
-              onClick={() => document.body.classList.toggle('light')}
-            >
-              <Settings className="h-4 w-4 mr-2 flex-center-all" /> Theme
-            </motion.button>
           </div>
         </div>
         
