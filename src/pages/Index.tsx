@@ -501,7 +501,7 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* Add Task Button - Perfectly Centered */}
+                {/* Add Task Button - Autoresponsive Premium Flex */}
                 <motion.div
                   className="flex justify-center pt-4"
                   whileHover={{ scale: 1.02 }}
@@ -510,9 +510,10 @@ const Index = () => {
                 >
                   <Button 
                     onClick={addTask} 
-                    className="btn-primary w-full max-w-md text-lg font-medium py-8 px-8 select-none"
+                    className="flex-center-all quantum-symmetry w-full max-w-md text-lg font-bold py-8 px-8 select-none bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl shadow-xl shadow-emerald-500/20 border-2 border-emerald-400/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/30 flex items-center gap-3"
                   >
-                    <Plus className="h-6 w-6 mr-3" /> Create Task
+                    <Plus className="h-6 w-6 flex-center-all" /> 
+                    <span className="flex-center-all">Create Task</span>
                   </Button>
                 </motion.div>
               </CardContent>

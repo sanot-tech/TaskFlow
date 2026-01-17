@@ -15,20 +15,19 @@ import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { cn } from "@/lib/utils";
 import { AvatarConstructor } from "./AvatarConstructor";
 
-export const ProfileSettings: React.FC = () => {
-  const { profile, updateProfile, updateSettings, resetProfile, regenerateAvatar } = useUserProfile();
+// Wrapper component to handle the conditional rendering properly
+const ProfileSettingsContent: React.FC<{
+  profile: any,
+  updateProfile: any,
+  updateSettings: any,
+  resetProfile: any,
+  regenerateAvatar: any
+}> = ({ profile, updateProfile, updateSettings, resetProfile, regenerateAvatar }) => {
   const { ALARM_SOUNDS, selectedSound, setSelectedSound } = useAlarmTimer();
   const [isOpen, setIsOpen] = useState(false);
-  const [tempUsername, setTempUsername] = useState("");
+  const [tempUsername, setTempUsername] = useState(profile?.username || "");
   const [showConstructor, setShowConstructor] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
-
-  // Вместо return null, возвращаем пустой элемент, чтобы сохранить структуру
-  if (!profile) {
-    return <Button variant="outline" className="gap-2 opacity-0 pointer-events-none">
-      <Settings className="h-4 w-4" /> Профиль
-    </Button>;
-  }
 
   const handleSave = () => {
     if (tempUsername.trim()) {
@@ -82,7 +81,7 @@ export const ProfileSettings: React.FC = () => {
           
           <DialogHeader className="relative z-10">
             <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-              <Settings className="h-6 w-6 text-white/90" /> 
+              <Settings className="h-6 w-6 text-white/90" />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-100">
                 Профиль
               </span>
@@ -96,7 +95,7 @@ export const ProfileSettings: React.FC = () => {
         {/* PREMIUM SCROLLABLE CONTENT - Glass Card */}
         <div className="flex-1 overflow-y-auto custom-scrollbar relative">
           {/* Background pattern */}
-          <div className="absolute inset-0 opacity-5 pointer-events-none" 
+          <div className="absolute inset-0 opacity-5 pointer-events-none"
                style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)' }}>
           </div>
           
@@ -262,4 +261,23 @@ export const ProfileSettings: React.FC = () => {
       </DialogContent>
     </Dialog>
   );
+};
+
+export const ProfileSettings: React.FC = () => {
+  const { profile, updateProfile, updateSettings, resetProfile, regenerateAvatar } = useUserProfile();
+
+  // Render an empty button when profile is not loaded to maintain consistent hook calls
+  if (!profile) {
+    return <Button variant="outline" className="gap-2 opacity-0 pointer-events-none">
+      <Settings className="h-4 w-4" /> Профиль
+    </Button>;
+  }
+
+  return <ProfileSettingsContent
+    profile={profile}
+    updateProfile={updateProfile}
+    updateSettings={updateSettings}
+    resetProfile={resetProfile}
+    regenerateAvatar={regenerateAvatar}
+  />;
 };
