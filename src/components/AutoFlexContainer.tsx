@@ -83,10 +83,7 @@ export const AutoFlexContainer: React.FC<AutoFlexContainerProps> = ({
       <motion.div
         ref={containerRef}
         className={`flex flex-col items-center justify-center ${centerAll ? 'min-h-screen' : ''} ${className}`}
-        style={{
-          transform: adaptiveScale ? `scale(${scale})` : 'none',
-          transformOrigin: 'center center',
-        }}
+        // Removed transform scale from here
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
