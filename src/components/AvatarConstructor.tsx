@@ -207,13 +207,13 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
   };
 
   return (
-    <Card className="border-0 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl shadow-lg">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg font-bold flex items-center gap-2">
-          <Palette className="h-5 w-5 text-purple-600" /> Конструктор аватарки
+    <Card className="border-0 bg-gradient-to-br from-purple-900/90 via-pink-900/90 to-blue-900/90 rounded-xl shadow-lg backdrop-blur-xl border border-white/10">
+      <CardHeader className="pb-3 bg-gradient-to-r from-purple-600/90 via-pink-600/90 to-blue-600/90 rounded-t-xl -mx-px -mt-px px-6 pt-6">
+        <CardTitle className="text-lg font-bold flex items-center gap-2 text-white">
+          <Palette className="h-5 w-5 text-purple-300" /> Конструктор аватарки
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-6">
         {/* Превью */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -225,9 +225,9 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <Avatar className="w-32 h-32 border-4 border-purple-300 rounded-full overflow-hidden shadow-xl">
+            <Avatar className="w-32 h-32 border-4 border-purple-300/50 rounded-full overflow-hidden shadow-xl bg-white/10">
               <AvatarImage src={generateAvatarUrl()} alt="Preview" className="rounded-full" />
-              <AvatarFallback>
+              <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white">
                 <User className="h-8 w-8" />
               </AvatarFallback>
             </Avatar>
@@ -237,17 +237,17 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
         {/* Кнопки быстрых действий */}
         <div className="grid grid-cols-3 gap-2">
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={handleRandomize} className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
+            <Button onClick={handleRandomize} className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border border-white/20">
               <Sparkles className="h-4 w-4 mr-2" /> Random
             </Button>
           </motion.div>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={handleReset} variant="outline" className="w-full">
+            <Button onClick={handleReset} variant="outline" className="w-full bg-white/10 text-white border-white/20 hover:bg-white/20">
               <RefreshCw className="h-4 w-4 mr-2" /> Reset
             </Button>
           </motion.div>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={handleApply} className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white">
+            <Button onClick={handleApply} className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white border border-white/20">
               <Save className="h-4 w-4 mr-2" /> Apply
             </Button>
           </motion.div>
@@ -313,7 +313,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
         </div>
 
         {/* Close button */}
-        <Button onClick={onClose} variant="outline" className="w-full mt-2">
+        <Button onClick={onClose} variant="outline" className="w-full mt-2 bg-white/10 text-white border-white/20 hover:bg-white/20">
           Close Constructor
         </Button>
       </CardContent>
