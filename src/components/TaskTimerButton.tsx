@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { showError } from "@/utils/toast";
 
 // TaskTimerButton component props interface
 interface TaskTimerButtonProps {
@@ -105,6 +106,12 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
 
   const handleStart = () => {
     if (duration > 0) {
+      // Check if alarm system is enabled before starting
+      if (!isAlarmEnabled) {
+        showError("Please enable the alarm system first!");
+        return;
+      }
+      
       startTimer(taskId, taskTitle, duration);
       setIsOpen(false);
     }
