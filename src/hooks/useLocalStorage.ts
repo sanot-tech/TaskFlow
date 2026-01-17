@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  // Получаем сохранённое значение из localStorage или используем initialValue
-  const getSavedValue = () => {
+  // ВАЖНО: Все хуки должны вызываться в одном и том же порядке при каждом рендере
+  const [value, setValue] = useState<T>(() => {
     try {
       const saved = localStorage.getItem(key);
       if (saved) {
@@ -13,9 +13,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       console.error("Error loading from localStorage:", error);
       return initialValue;
     }
-  };
-
-  const [value, setValue] = useState<T>(getSavedValue);
+  });
 
   // Сохраняем в localStorage при каждом изменении value
   useEffect(() => {
