@@ -98,7 +98,7 @@ const useNeuroAdaptiveSizing = () => {
 
 // TaskTimerButton Component
 export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTitle }) => {
-  const { startTimer, stopTimer, isTimerActive, getTimeForTask } = useAlarmTimer();
+  const { startTimer, stopTimer, isTimerActive, getTimeForTask, isAlarmEnabled } = useAlarmTimer();
   const [duration, setDuration] = useState(25);
   const [isOpen, setIsOpen] = useState(false);
   const { scale, iconSize, textSize, padding, gap } = useNeuroAdaptiveSizing();

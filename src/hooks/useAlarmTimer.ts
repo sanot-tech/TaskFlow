@@ -28,6 +28,7 @@ export const useAlarmTimer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const startTimer = (taskId: string, taskTitle: string, duration: number) => {
+    // Check if alarm system is enabled
     if (!isAlarmEnabled) {
       showError("Please enable the alarm system first!");
       return;
