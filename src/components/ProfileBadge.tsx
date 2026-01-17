@@ -15,7 +15,10 @@ export const ProfileBadge: React.FC = () => {
     );
   }
 
-  if (!profile) return null;
+  // Вместо return null, возвращаем пустой элемент, чтобы сохранить структуру
+  if (!profile) {
+    return <div className="w-16 h-16 opacity-0 pointer-events-none"></div>;
+  }
 
   return (
     <motion.div

@@ -20,8 +20,7 @@ import { ScrollNav } from "@/components/ScrollNav";
 import { AlarmControl } from "@/components/AlarmControl";
 import { TaskTimerButton } from "@/components/TaskTimerButton";
 import { useUserProfile } from "@/hooks/useUserProfile";
-import { ProfileBadge } from "@/components/ProfileBadge";
-import { ProfileSettings } from "@/components/ProfileSettings";
+import { ProfileComponentsWrapper } from "@/components/ProfileComponentsWrapper";
 
 interface Task {
   id: string;
@@ -339,7 +338,7 @@ const Index = () => {
   return (
     // Добавляем user-select-none для всего приложения
     <div className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable">
-      <ScrollNav />
+      {profile && !isLoading && <ScrollNav />}
       <div className="max-w-6xl mx-auto">
         {/* Header Section - Perfectly Centered */}
         <div className="flex justify-center items-center mb-8">
@@ -380,15 +379,7 @@ const Index = () => {
             </motion.div>
             
             {/* Profile Section */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="flex items-center gap-3"
-            >
-              <ProfileBadge />
-              <ProfileSettings />
-            </motion.div>
+            <ProfileComponentsWrapper profile={profile} isLoading={isLoading} />
           </div>
         </div>
 

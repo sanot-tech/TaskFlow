@@ -23,7 +23,12 @@ export const ProfileSettings: React.FC = () => {
   const [showConstructor, setShowConstructor] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
 
-  if (!profile) return null;
+  // Вместо return null, возвращаем пустой элемент, чтобы сохранить структуру
+  if (!profile) {
+    return <Button variant="outline" className="gap-2 opacity-0 pointer-events-none">
+      <Settings className="h-4 w-4" /> Профиль
+    </Button>;
+  }
 
   const handleSave = () => {
     if (tempUsername.trim()) {
