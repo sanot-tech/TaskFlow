@@ -24,12 +24,6 @@ export const useAlarmTimer = () => {
   const [selectedSound, setSelectedSound] = useState(ALARM_SOUNDS[0].id);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const alarmsRef = useRef<AlarmTimer[]>([]);
-
-  // Keep ref in sync with state
-  useEffect(() => {
-    alarmsRef.current = alarms;
-  }, [alarms]);
 
   const startTimer = (taskId: string, taskTitle: string, duration: number) => {
     if (!isAlarmEnabled) {
@@ -162,9 +156,8 @@ export const useAlarmTimer = () => {
     }, 500);
   };
 
-  // FIX: Always run useEffect with same structure
   useEffect(() => {
-    if (!isAlarmEnabled) {
+    if (!isAlarmEnabled || alarms.length === 0) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -174,15 +167,16 @@ export const useAlarmTimer = () => {
 
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => {
-        const currentAlarms = alarmsRef.current;
-        const updatedAlarms = currentAlarms.map(alarm => {
-          if (alarm.remainingTime <= 1) {
-            triggerAlarm(alarm);
-            return { ...alarm, isActive: false, remainingTime: 0 };
-          }
-          return { ...alarm, remainingTime: alarm.remainingTime - 1 };
+        setAlarms(prev => {
+          const updatedAlarms = prev.map(alarm => {
+            if (alarm.remainingTime <= 1) {
+              triggerAlarm(alarm);
+              return { ...alarm, isActive: false, remainingTime: 0 };
+            }
+            return { ...alarm, remainingTime: alarm.remainingTime - 1 };
+          });
+          return updatedAlarms.filter(a => a.isActive || a.remainingTime === 0);
         });
-        setAlarms(updatedAlarms.filter(a => a.isActive || a.remainingTime === 0));
       }, 1000);
     }
 
@@ -192,7 +186,7 @@ export const useAlarmTimer = () => {
         intervalRef.current = null;
       }
     };
-  }, [isAlarmEnabled, selectedSound]);
+  }, [isAlarmEnabled, alarms.length, selectedSound]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
