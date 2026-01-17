@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings, Save, Trash2, Smile, Palette, Type, Shirt, Glasses, Sparkles, User, X, Plus } from "lucide-react";
+import { Settings, Save, Trash2, Smile, Palette, Type, Shirt, Glasses, Sparkles, User, X, Plus, Check } from "lucide-react";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -59,33 +59,44 @@ export const ProfileSettings: React.FC = () => {
         </motion.div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[600px] rounded-xl p-0 overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Заголовок */}
-        <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white flex-shrink-0">
-          <DialogHeader>
+      <DialogContent className="sm:max-w-[600px] rounded-2xl p-0 overflow-hidden flex flex-col max-h-[90vh] bg-gradient-to-br from-purple-900/90 via-pink-900/90 to-blue-900/90 backdrop-blur-2xl border-0 shadow-2xl">
+        {/* PREMIUM HEADER - Glassmorphic Gradient */}
+        <div className="relative bg-gradient-to-r from-purple-600/90 via-pink-600/90 to-blue-600/90 p-6 text-white flex-shrink-0 backdrop-blur-xl border-b border-white/10">
+          {/* Decorative glow */}
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-50 pointer-events-none"></div>
+          
+          <DialogHeader className="relative z-10">
             <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-              <Settings className="h-6 w-6" /> Настройки профиля
+              <Settings className="h-6 w-6 text-white/90" /> 
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-100">
+                Профиль
+              </span>
             </DialogTitle>
-            <DialogDescription className="text-purple-100 opacity-90">
+            <DialogDescription className="text-purple-100/80 opacity-90">
               Управляйте своим профилем и предпочтениями
             </DialogDescription>
           </DialogHeader>
         </div>
 
-        {/* Скролл контент */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
-          <div className="p-6 space-y-6 bg-white">
-            {/* Секция 1: Аватар и имя (Flex Perfect Symmetry) */}
-            <div className="flex items-center gap-6 p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl border-2 border-purple-200">
-              {/* Аватар */}
+        {/* PREMIUM SCROLLABLE CONTENT - Glass Card */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar relative">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-5 pointer-events-none" 
+               style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)' }}>
+          </div>
+          
+          <div className="relative p-6 space-y-5">
+            {/* Секция 1: Аватар и имя - PREMIUM FLEX LAYOUT */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-4 sm:p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              {/* Аватар - Perfect Center */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative flex-shrink-0"
               >
-                <Avatar className="w-24 h-24 border-4 border-purple-400 rounded-full overflow-hidden shadow-xl">
+                <Avatar className="w-20 h-20 sm:w-24 sm:h-24 border-3 border-white/30 rounded-full overflow-hidden shadow-2xl ring-4 ring-purple-500/20">
                   <AvatarImage src={profile.avatar} alt={profile.username} className="rounded-full" />
-                  <AvatarFallback className="bg-gradient-to-br from-purple-200 to-pink-200 text-purple-800 font-bold text-xl">
+                  <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white font-bold text-xl">
                     {profile.username[0]}
                   </AvatarFallback>
                 </Avatar>
@@ -97,7 +108,7 @@ export const ProfileSettings: React.FC = () => {
                 >
                   <Button
                     size="icon"
-                    className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg"
+                    className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg border-2 border-white/30"
                     onClick={handleRegenerateAvatar}
                     title="Случайная аватарка"
                   >
@@ -106,15 +117,17 @@ export const ProfileSettings: React.FC = () => {
                 </motion.div>
               </motion.div>
 
-              {/* Имя и конструктор */}
-              <div className="flex-1 space-y-3 min-w-0">
+              {/* Имя и конструктор - Flex Column */}
+              <div className="flex-1 space-y-3 min-w-0 w-full">
                 <div className="space-y-1">
-                  <Label className="text-sm font-bold text-purple-800">Имя пользователя</Label>
+                  <Label className="text-sm font-bold text-purple-200 flex items-center gap-2">
+                    <User className="h-3 w-3" /> Имя пользователя
+                  </Label>
                   <Input
                     placeholder={profile.username}
                     value={tempUsername || profile.username}
                     onChange={(e) => setTempUsername(e.target.value)}
-                    className="border-2 border-purple-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                    className="border-2 border-white/20 bg-white/10 text-white placeholder:text-purple-200/60 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 h-11"
                   />
                 </div>
                 
@@ -122,7 +135,7 @@ export const ProfileSettings: React.FC = () => {
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
                     <Button
                       onClick={() => setShowConstructor(!showConstructor)}
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-2 border-white/20 shadow-lg h-10"
                     >
                       <Palette className="h-4 w-4 mr-2" /> Конструктор
                     </Button>
@@ -131,7 +144,7 @@ export const ProfileSettings: React.FC = () => {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="w-10 border-purple-300 text-purple-600 hover:bg-purple-50"
+                      className="w-10 h-10 border-2 border-white/20 bg-white/10 text-white hover:bg-white/20"
                       onClick={() => setTempUsername("")}
                     >
                       <X className="h-4 w-4" />
@@ -145,9 +158,9 @@ export const ProfileSettings: React.FC = () => {
             <AnimatePresence>
               {showConstructor && (
                 <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
+                  initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, height: "auto", scale: 1 }}
+                  exit={{ opacity: 0, height: 0, scale: 0.95 }}
                   className="overflow-hidden"
                 >
                   <AvatarConstructor
@@ -159,42 +172,42 @@ export const ProfileSettings: React.FC = () => {
               )}
             </AnimatePresence>
 
-            {/* Секция 2: Уведомления (Gold Standard Card) */}
-            <Card className="border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-bold text-amber-900 flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-amber-600" /> Уведомления
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-white/60 rounded-lg border border-amber-200">
-                  <Label className="font-medium text-amber-900">Браузерные уведомления</Label>
+            {/* Секция 2: Уведомления - PREMIUM CARD */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg overflow-hidden">
+              <div className="p-4 border-b border-white/10 bg-gradient-to-r from-amber-500/20 to-yellow-500/20">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-amber-300" /> Уведомления
+                </h3>
+              </div>
+              <div className="p-4 space-y-3">
+                <div className="flex items-center justify-between p-3 bg-white/10 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
+                  <Label className="font-medium text-white/90">Браузерные уведомления</Label>
                   <Switch
                     checked={profile.settings.notifications}
                     onCheckedChange={(checked) => updateSettings({ notifications: checked })}
-                    className="data-[state=checked]:bg-amber-500"
+                    className="data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-400"
                   />
                 </div>
-                <div className="flex items-center justify-between p-3 bg-white/60 rounded-lg border border-amber-200">
-                  <Label className="font-medium text-amber-900">Звук будильника</Label>
+                <div className="flex items-center justify-between p-3 bg-white/10 rounded-xl border border-white/10 hover:bg-white/15 transition-colors">
+                  <Label className="font-medium text-white/90">Звук будильника</Label>
                   <Switch
                     checked={profile.settings.soundEnabled}
                     onCheckedChange={(checked) => updateSettings({ soundEnabled: checked })}
-                    className="data-[state=checked]:bg-amber-500"
+                    className="data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-400"
                   />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            {/* Секция 3: Звук будильника (Perfect Symmetry) */}
-            <Card className="border-2 border-blue-300 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-bold text-blue-900 flex items-center gap-2">
-                  <Glasses className="h-5 w-5 text-blue-600" /> Звук будильника
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-5 gap-2">
+            {/* Секция 3: Звук будильника - PREMIUM GRID */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg overflow-hidden">
+              <div className="p-4 border-b border-white/10 bg-gradient-to-r from-blue-500/20 to-cyan-500/20">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Glasses className="h-5 w-5 text-blue-300" /> Звук будильника
+                </h3>
+              </div>
+              <div className="p-4">
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                   {ALARM_SOUNDS.map((sound) => (
                     <motion.div
                       key={sound.id}
@@ -208,30 +221,30 @@ export const ProfileSettings: React.FC = () => {
                           updateSettings({ selectedSound: sound.id });
                         }}
                         className={cn(
-                          "w-full h-12 p-0 rounded-lg border-2 transition-all flex flex-col items-center justify-center gap-1",
+                          "w-full h-12 p-0 rounded-xl border-2 transition-all flex flex-col items-center justify-center gap-1",
                           selectedSound === sound.id
-                            ? "border-blue-500 bg-blue-100 shadow-md"
-                            : "border-blue-200 bg-white hover:border-blue-400"
+                            ? "border-blue-400 bg-blue-500/30 shadow-lg ring-2 ring-blue-400/30"
+                            : "border-white/10 bg-white/10 hover:border-blue-300/50 hover:bg-white/15"
                         )}
                         title={sound.name}
                       >
                         <span className="text-xl">{sound.name.split(' ')[0]}</span>
-                        <span className="text-[10px] font-normal text-blue-600">{sound.name.split(' ')[1]}</span>
+                        <span className="text-[10px] font-normal text-blue-200">{sound.name.split(' ')[1]}</span>
                       </Button>
                     </motion.div>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            {/* Секция 4: Опасная зона (Gold Standard) */}
-            <Card className="border-2 border-red-300 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-bold text-red-900 flex items-center gap-2">
-                  <Trash2 className="h-5 w-5 text-red-600" /> Опасная зона
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+            {/* Секция 4: Опасная зона - PREMIUM WARNING */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-red-500/30 shadow-lg overflow-hidden">
+              <div className="p-4 border-b border-red-500/20 bg-gradient-to-r from-red-500/20 to-rose-500/20">
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Trash2 className="h-5 w-5 text-red-300" /> Опасная зона
+                </h3>
+              </div>
+              <div className="p-4">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -239,27 +252,27 @@ export const ProfileSettings: React.FC = () => {
                 >
                   <Button
                     variant="destructive"
-                    className="w-full h-12 text-lg font-bold bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700"
+                    className="w-full h-12 text-lg font-bold bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 border-2 border-red-400/30 shadow-lg"
                     onClick={handleReset}
                   >
                     <Trash2 className="h-5 w-5 mr-2" /> Сбросить профиль
                   </Button>
                 </motion.div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Футер с кнопками (фиксированный внизу) */}
-        <div className="p-6 bg-white border-t border-gray-200 flex-shrink-0">
+        {/* PREMIUM FOOTER - Glassmorphic Actions */}
+        <div className="p-6 bg-white/10 backdrop-blur-md border-t border-white/10 flex-shrink-0">
           <div className="flex gap-3">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-              <Button onClick={handleSave} className="w-full h-12 text-lg font-bold bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700">
+              <Button onClick={handleSave} className="w-full h-12 text-lg font-bold bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 border-2 border-white/20 shadow-lg">
                 <Save className="h-5 w-5 mr-2" /> Сохранить
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-              <Button onClick={() => setIsOpen(false)} variant="outline" className="w-full h-12 text-lg font-bold border-2 border-gray-300 hover:bg-gray-50">
+              <Button onClick={() => setIsOpen(false)} variant="outline" className="w-full h-12 text-lg font-bold border-2 border-white/20 bg-white/10 text-white hover:bg-white/20">
                 Отмена
               </Button>
             </motion.div>
