@@ -503,14 +503,14 @@ const Index = () => {
 
                 {/* Add Task Button - Perfectly Centered */}
                 <motion.div
-                  className="flex justify-center pt-2"
+                  className="flex justify-center pt-4"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   <Button 
                     onClick={addTask} 
-                    className="btn-primary w-full max-w-md text-lg font-medium py-6 select-none"
+                    className="btn-primary w-full max-w-md text-lg font-medium py-8 px-8 select-none"
                   >
                     <Plus className="h-6 w-6 mr-3" /> Create Task
                   </Button>
