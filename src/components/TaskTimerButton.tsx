@@ -196,10 +196,10 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
             <span className="flex-center-all">Start Timer</span>
           </DialogTitle>
           <DialogDescription 
-            className="text-sm flex-center-all text-gray-700"
+            className="text-sm flex-center-all text-gray-600"
             style={{ fontSize: `${textSize}px` }}
           >
-            Task: <strong className="text-gray-900 flex-center-all ml-1">{taskTitle}</strong>
+            Task: <strong className="text-blue-600 flex-center-all ml-1">{taskTitle}</strong>
           </DialogDescription>
         </DialogHeader>
         
@@ -210,7 +210,7 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         >
           <div className="space-y-2 flex-center-all w-full">
             <Label 
-              className="text-sm font-medium flex-center-all text-gray-800"
+              className="text-sm font-medium flex-center-all text-gray-700"
               style={{ fontSize: `${textSize}px` }}
             >
               Duration (minutes)
