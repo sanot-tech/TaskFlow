@@ -31,13 +31,13 @@ export const useAlarmTimer = () => {
     // Check if alarm system is enabled
     if (!isAlarmEnabled) {
       showError("Please enable the alarm system first!");
-      return;
+      return false;
     }
 
     const existingAlarm = alarms.find(a => a.taskId === taskId);
     if (existingAlarm) {
       showError("Timer for this task is already running!");
-      return;
+      return false;
     }
 
     const newAlarm: AlarmTimer = {
@@ -49,6 +49,7 @@ export const useAlarmTimer = () => {
     };
 
     setAlarms(prev => [...prev, newAlarm]);
+    return true;
   };
 
   const stopTimer = (taskId: string) => {

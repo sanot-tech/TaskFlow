@@ -105,6 +105,12 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
   const { scale, iconSize, textSize, padding, gap } = useNeuroAdaptiveSizing();
 
   const handleStart = () => {
+    console.log("handleStart called");
+    console.log("isAlarmEnabled:", isAlarmEnabled);
+    console.log("duration:", duration);
+    console.log("taskId:", taskId);
+    console.log("taskTitle:", taskTitle);
+    
     if (duration > 0) {
       // Check if alarm system is enabled before starting
       if (!isAlarmEnabled) {
@@ -113,10 +119,12 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
       }
       
       // Start the timer
-      startTimer(taskId, taskTitle, duration);
+      const success = startTimer(taskId, taskTitle, duration);
       
-      // Close the dialog
-      setIsOpen(false);
+      if (success) {
+        // Close the dialog
+        setIsOpen(false);
+      }
     }
   };
 
