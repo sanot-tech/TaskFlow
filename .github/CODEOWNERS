@@ -1,0 +1,38 @@
+# Code Owners
+
+# Global default — requires review from all code owners
+* @Biopasks
+
+# Core application
+/src/hooks/          @Biopasks
+/src/contexts/       @Biopasks
+/src/lib/            @Biopasks
+
+# Components
+/src/components/     @Biopasks
+
+# Pages
+/src/pages/          @Biopasks
+
+# Tests
+/src/__tests__/      @Biopasks
+
+# Configuration
+/*.json              @Biopasks
+/*.ts                @Biopasks
+/vite.config.ts      @Biopasks
+
+# Documentation
+/*.md                @Biopasks
+/docs/               @Biopasks
+
+# GitHub configuration
+/.github/            @Biopasks
+
+# CI/CD
+/.github/workflows/  @Biopasks
+
+# Security-sensitive files
+/SECURITY.md         @Biopasks
+/CONTRIBUTING.md     @Biopasks
+/CODE_OF_CONDUCT.md  @Biopasks

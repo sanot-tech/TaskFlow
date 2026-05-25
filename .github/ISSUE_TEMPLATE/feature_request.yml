@@ -1,0 +1,76 @@
+name: Feature Request
+description: Suggest an idea or enhancement for this project
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💡 Feature Request
+        Thanks for suggesting an improvement! Please describe your idea clearly so we can evaluate it effectively.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I have searched existing [issues](https://github.com/Biopasks/todo-list/issues) and this is not a duplicate
+          required: true
+        - label: I have checked the [roadmap](https://github.com/Biopasks/todo-list/projects) for planned features
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What area does this feature relate to?
+      options:
+        - Core Functionality
+        - User Experience
+        - Performance
+        - Accessibility
+        - Developer Experience
+        - Documentation
+        - Security
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem? Please describe
+      placeholder: "I'm always frustrated when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like in detail
+      placeholder: "I would like to see X feature that works by..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe alternatives you've considered
+      placeholder: "I considered doing X instead, but it doesn't work because..."
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected Impact
+      description: How would this feature benefit users or the project?
+      placeholder: "This would save users X minutes per day by..."
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Add mockups, screenshots, or reference implementations here
