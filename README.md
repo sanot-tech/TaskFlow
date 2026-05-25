@@ -1,16 +1,13 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-    <img src="assets/logo-light.svg" width="200" alt="TaskFlow">
-  </picture>
+  <img src="logo.jpg" width="180" alt="TaskFlow Logo" style="border-radius: 12px;">
 </p>
 
-<h1 align="center">TaskFlow — Enterprise Task Orchestration Platform</h1>
+<h1 align="center">TaskFlow</h1>
 
 <p align="center">
   <b>Orchestrate. Execute. Deliver.</b><br>
-  A next-generation, full-stack task management solution engineered for high-performance teams,<br>
-  productivity architects, and mission-critical workflow orchestration.
+  A next-generation, full-stack task orchestration platform for high-performance teams<br>
+  and productivity architects who demand reliability, speed, and elegance.
 </p>
 
 <p align="center">
