@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.jpg" width="180" alt="TaskFlow Logo" style="border-radius: 12px;">
+  <img src="public/logo.jpg" width="180" alt="TaskFlow Logo" style="border-radius: 12px;">
 </p>
 
 <h1 align="center">TaskFlow</h1>
