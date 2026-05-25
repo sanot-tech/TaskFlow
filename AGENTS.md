@@ -227,7 +227,35 @@ git commit -m "docs: add README with full documentation"
 - Body: explain WHY, not WHAT (the diff shows what)
 - Use `git log --oneline` to verify history before push
 
-### 6.8 History Rewrite (if needed)
+### 6.8 Vercel Deployment
+
+Deploy the project to Vercel with a custom project name:
+
+```bash
+# Set VERCEL_TOKEN in your shell or .env
+export VERCEL_TOKEN="vcp_xxxxxxxxxxxxxx"
+
+# Deploy to production (first run links the project)
+npx vercel --prod --token "$VERCEL_TOKEN" --yes
+
+# Rename project via API (if needed)
+curl -s -X PATCH \
+  -H "Authorization: Bearer $VERCEL_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"taskflow"}' \
+  "https://api.vercel.com/v9/projects/old-name"
+
+# Important: remove deprecated "name" field from vercel.json
+# Vercel project name is set via API, not vercel.json
+```
+
+**Notes:**
+- Project is auto-linked to GitHub repo → pushes to `main` trigger deployments
+- The `name` property in `vercel.json` is deprecated — set name via API or Vercel dashboard
+- For SPA fallback, keep the `rewrites` rule in `vercel.json`
+- If CLI deploy hangs, push a commit to GitHub — the git integration handles it
+
+### 6.9 History Rewrite (if needed)
 
 If you already have a messy commit history, clean it up:
 
