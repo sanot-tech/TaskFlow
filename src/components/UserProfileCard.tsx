@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { User, Settings, Bell, Volume2, Edit, Save, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { useAvatarSync } from "@/hooks/useAvatarSync";
+import { useAvatar } from "@/contexts/AvatarContext";
 
 interface UserProfileCardProps {
   profile: {
@@ -22,7 +21,7 @@ interface UserProfileCardProps {
 }
 
 export const UserProfileCard: React.FC<UserProfileCardProps> = ({ profile, onUpdateProfile }) => {
-  const { avatar } = useAvatarSync();
+  const { avatar } = useAvatar();
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(profile.name);
   const [editedEmail, setEditedEmail] = useState(profile.email);

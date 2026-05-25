@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { RefreshCw, User, Save, Palette, Type, Shirt, Glasses, Sparkles, X, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useAvatarSync } from "@/hooks/useAvatarSync";
+import { useAvatar } from "@/contexts/AvatarContext";
 
 // AvatarConstructor component props interface
 interface AvatarConstructorProps {
@@ -82,7 +81,7 @@ const CONSTRUCTOR_PARAMS = {
 
 // AvatarConstructor Component
 export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAvatar, onApply, onClose }) => {
-  const { avatar, updateAvatar } = useAvatarSync();
+  const { avatar, updateAvatar } = useAvatar();
   const [seed, setSeed] = useState(`constructor_${Date.now()}`);
   
   // Используем синхронизированный аватар как начальное значение, если доступен

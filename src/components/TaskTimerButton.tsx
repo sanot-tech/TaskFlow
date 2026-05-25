@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -230,12 +229,14 @@ export const TaskTimerButton: React.FC<TaskTimerButtonProps> = ({ taskId, taskTi
         >
           <div className="space-y-2 flex-center-all w-full">
             <Label 
+              htmlFor="duration"
               className="text-sm font-medium flex-center-all text-gray-300"
               style={{ fontSize: `${textSize}px` }}
             >
               Duration (minutes)
             </Label>
             <Input
+              id="duration"
               type="number"
               min="1"
               max="180"

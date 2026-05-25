@@ -1,91 +1,95 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import React from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Lightbulb, HelpCircle, Library, Users, Settings, ChevronRight, Clock, Target, Zap, GitBranch, Database, Code, Palette, Layout, BarChart2, PieChart, LineChart, User, Users as UsersIcon, MessageSquare, Share2, Lock, Unlock, Eye, EyeOff, Sun, Moon, Laptop, Smartphone, Tablet, Monitor, Wifi, Battery, Cpu, MemoryStick, HardDrive, GitCommit, GitMerge, GitPullRequest, GitCompare, Terminal, Codepen, Figma, Framer, ChevronDown, ChevronUp, AlertCircle, Info, CheckCircle2, XCircle, PlusCircle, MinusCircle, Tag, Calendar, Palette as PaletteIcon } from "lucide-react";
+import { BookOpen, Lightbulb, HelpCircle, ChevronRight, Clock, Target, Zap, GitBranch, Layout, Users as UsersIcon, AlertCircle, Info, CheckCircle2, PlusCircle, Tag, Calendar, Palette as PaletteIcon, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import WebFont from "webfontloader";
+import { PremiumHeader } from "@/components/PremiumHeader";
+import { useUserProfile } from "@/hooks/useUserProfile";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-// List of beautiful, similar fonts (modern sans-serif)
-const fontList = [
-  "Poppins", "Montserrat", "Open Sans", "Lato", "Roboto", 
-  "Source Sans Pro", "Nunito", "Raleway", "Quicksand", "Work Sans",
-  "Rubik", "Muli", "Fira Sans", "Ubuntu", "Merriweather Sans",
-  "Cabin", "Oxygen", "PT Sans", "Dosis", "Karla",
-  "Asap", "Cantarell", "Exo", "Varela Round", "Titillium Web",
-  "Signika", "Yanone Kaffeesatz", "Abel", "Anton", "Arimo",
-  "Bitter", "Cairo", "Catamaran", "Droid Sans", "Encode Sans",
-  "Francois One", "Hind", "Josefin Sans", "Kanit", "Maven Pro",
-  "Noto Sans", "Orbitron", "Oswald", "Play", "Prompt",
-  "Questrial", "Rajdhani", "Sora", "Telex", "Zilla Slab"
+const sections = [
+  { id: 'getting-started', label: 'How to Start', icon: 'BookOpen' },
+  { id: 'priority-colors', label: 'Priority Colors', icon: 'PaletteIcon' },
+  { id: 'calendar', label: 'Using the Calendar', icon: 'Calendar' },
+  { id: 'tips', label: 'Organization Tips', icon: 'Lightbulb' },
+  { id: 'collaboration', label: 'Family & Friends', icon: 'UsersIcon' },
+  { id: 'examples', label: 'Everyday Examples', icon: 'HelpCircle' },
+  { id: 'advice', label: 'Simple Advice', icon: 'Lightbulb' },
 ];
 
-// Main guide page component
 const Guide = () => {
-  const [letterFonts, setLetterFonts] = useState<string[]>([]);
-
-  // Initialize fonts for each letter in "TodoList"
-  useEffect(() => {
-    const initialFonts = "TodoList".split("").map(() => 
-      fontList[Math.floor(Math.random() * fontList.length)]
-    );
-    setLetterFonts(initialFonts);
-  }, []);
-
-  // Change fonts every 2 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLetterFonts("TodoList".split("").map(() => 
-        fontList[Math.floor(Math.random() * fontList.length)]
-      ));
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Load fonts using WebFontLoader with Inter as backup
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: [...fontList, 'Inter:300,400,500,600,700']
-      }
-    });
-  }, []);
-
+  const { profile, isLoading } = useUserProfile();
+  const [activeSection, setActiveSection] = React.useState('getting-started');
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      let current = 'getting-started';
+      sections.forEach(({ id }) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 200) current = id;
+        }
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const iconMap: Record<string, React.ReactNode> = {
+    BookOpen: <BookOpen className="h-4 w-4" />,
+    PaletteIcon: <PaletteIcon className="h-4 w-4" />,
+    Calendar: <Calendar className="h-4 w-4" />,
+    Lightbulb: <Lightbulb className="h-4 w-4" />,
+    UsersIcon: <UsersIcon className="h-4 w-4" />,
+    HelpCircle: <HelpCircle className="h-4 w-4" />,
+  };
+
   return (
-    // Добавляем классы для эффекта нажатого скролла
     <div className="min-h-screen bg-background text-foreground p-4 dark smooth-scroll scrollable">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8 mt-16">
-          <div className="flex items-center space-x-3">
-            <BookOpen className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold text-primary flex">
-              Simple Guide for&nbsp;
-              {"TodoList".split("").map((letter, index) => (
-                <span
-                  key={index}
-                  style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
-                  className="transition-all duration-500 ease-in-out"
-                >
-                  {letter}
-                </span>
-              ))}
-            </h1>
-          </div>
+      <div className="max-w-6xl mx-auto relative">
+        <PremiumHeader profile={profile} isLoading={isLoading} />
+
+        {/* Top Navigation Bar */}
+        <div className="sticky top-4 z-50 w-full mb-8">
+          <nav className="flex flex-wrap justify-center gap-2 p-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg mx-auto max-w-3xl">
+            {sections.map(({ id, label }) => (
+              <motion.button
+                key={id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => scrollToSection(id)}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 whitespace-nowrap",
+                  activeSection === id
+                    ? "bg-primary/20 text-primary border border-primary/40 shadow-md"
+                    : "text-muted-foreground hover:bg-white/10 hover:text-foreground border border-transparent"
+                )}
+              >
+                {iconMap[label] || null}
+                {label}
+              </motion.button>
+            ))}
+          </nav>
         </div>
-        <div className="space-y-12 pb-24">
+
+        <div className="space-y-12 pb-8">
           {/* Getting Started Section */}
-          <section className="section-spacing">
+          <section id="getting-started" className="section-spacing" data-section="getting-started">
             <div className="border-l-4 border-primary pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <BookOpen className="h-8 w-8 mr-3 text-primary" /> How to Start
@@ -145,7 +149,7 @@ const Guide = () => {
             </div>
           </section>
           {/* Priority Colors Section */}
-          <section className="section-spacing">
+          <section id="priority-colors" className="section-spacing" data-section="priority-colors">
             <div className="border-l-4 border-red-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <PaletteIcon className="h-8 w-8 mr-3 text-red-500" /> Understanding Priority Colors
@@ -219,7 +223,7 @@ const Guide = () => {
             </div>
           </section>
           {/* Calendar Section */}
-          <section className="section-spacing">
+          <section id="calendar" className="section-spacing" data-section="calendar">
             <div className="border-l-4 border-blue-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <Calendar className="h-8 w-8 mr-3 text-blue-500" /> Using the Calendar
@@ -283,7 +287,7 @@ const Guide = () => {
             </div>
           </section>
           {/* Simple Tips Section */}
-          <section className="section-spacing">
+          <section id="tips" className="section-spacing" data-section="tips">
             <div className="border-l-4 border-yellow-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <Lightbulb className="h-8 w-8 mr-3 text-yellow-500" /> Simple Tips for Better Organization
@@ -359,7 +363,7 @@ const Guide = () => {
             </div>
           </section>
           {/* Working with Others Section - Simplified */}
-          <section className="section-spacing">
+          <section id="collaboration" className="section-spacing" data-section="collaboration">
             <div className="border-l-4 border-blue-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <UsersIcon className="h-8 w-8 mr-3 text-blue-500" /> Working with Family and Friends
@@ -420,7 +424,7 @@ const Guide = () => {
             </div>
           </section>
           {/* Simple Examples Section */}
-          <section className="section-spacing">
+          <section id="examples" className="section-spacing" data-section="examples">
             <div className="border-l-4 border-green-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <HelpCircle className="h-8 w-8 mr-3 text-green-500" /> Everyday Examples
@@ -510,7 +514,7 @@ const Guide = () => {
             </div>
           </section>
           {/* Simple Advice Section */}
-          <section className="section-spacing">
+          <section id="advice" className="section-spacing" data-section="advice">
             <div className="border-l-4 border-purple-500 pl-6 mb-8">
               <h2 className="text-3xl font-bold mb-4 flex items-center">
                 <Lightbulb className="h-8 w-8 mr-3 text-purple-500" /> Simple Advice
@@ -596,22 +600,23 @@ const Guide = () => {
             </div>
           </section>
         </div>
+
+        {/* Enterprise Footer */}
+        <footer className="mt-12 pb-28 border-t border-white/10 pt-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-[10px] leading-relaxed text-muted-foreground/60 max-w-3xl mx-auto">
+              © {new Date().getFullYear()} TaskFlow. All rights reserved. TaskFlow is a proprietary task management and productivity platform designed for enterprise-grade workflow optimization, team collaboration, and personal organization. This software is provided under the terms of the MIT License. TaskFlow incorporates third-party open-source components including React, TypeScript, Tailwind CSS, Framer Motion, Lucide Icons, date-fns, Radix UI Primitives, and other dependencies, each subject to its respective licensing terms. TaskFlow is not affiliated with, endorsed by, or sponsored by any of the aforementioned third-party projects unless expressly stated. All product names, logos, and brands are property of their respective owners. Use of this software constitutes acceptance of the terms and conditions set forth in the accompanying license agreement. Version 2.0.0. Build 20260525. For licensing inquiries, enterprise deployment, or partnership opportunities, please contact enterprise@taskflow.dev. This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+            </p>
+            <p className="text-[10px] text-muted-foreground/40 mt-3">
+              TaskFlow ® is a registered trademark. All rights reserved. Patent pending.
+            </p>
+          </div>
+        </footer>
       </div>
-      {/* Fixed Navigation Buttons at Bottom */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-3">
-        <Link to="/">
-          <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-lg rounded-full px-6 h-12 font-bold">
-            <ChevronRight className="h-5 w-5 mr-2" /> To Tasks
-          </Button>
-        </Link>
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
         <Link to="/" onClick={scrollToTop}>
-          <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg rounded-full px-6 h-12 font-bold">
-            <BookOpen className="h-5 w-5 mr-2" /> To Home
-          </Button>
-        </Link>
-        <Link to="/">
-          <Button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg rounded-full px-6 h-12 font-bold">
-            <HelpCircle className="h-5 w-5 mr-2" /> Go Back
+          <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg rounded-full px-8 h-12 font-bold shadow-xl shadow-purple-500/20">
+            <ChevronRight className="h-5 w-5 mr-2" /> Back to Tasks
           </Button>
         </Link>
       </div>

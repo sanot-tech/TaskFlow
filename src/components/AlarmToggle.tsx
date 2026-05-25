@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -25,6 +24,8 @@ export const AlarmToggle: React.FC<AlarmToggleProps> = ({
     >
       <Button
         onClick={toggleAlarmSystem}
+        role="switch"
+        aria-checked={isAlarmEnabled}
         className={cn(
           "w-full py-5 font-semibold transition-all duration-300 rounded-xl shadow-lg flex-center-all quantum-symmetry text-sm",
           isAlarmEnabled

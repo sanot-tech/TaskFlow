@@ -1,31 +1,24 @@
-"use client";
-
 import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings, Save, Trash2, Smile, Palette, Type, Shirt, Glasses, Sparkles, User, X, Plus, Check } from "lucide-react";
+import { Settings, Save, Trash2, Palette, Sparkles, User, X } from "lucide-react";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useAlarmTimer } from "@/hooks/useAlarmTimer";
 import { cn } from "@/lib/utils";
 import { AvatarConstructor } from "./AvatarConstructor";
-import { useAvatarSync } from "@/hooks/useAvatarSync";
+import { useAvatar } from "@/contexts/AvatarContext";
 
-// Wrapper component to handle the conditional rendering properly
 const ProfileSettingsContent: React.FC<{
   profile: any,
   updateProfile: any,
   updateSettings: any,
   resetProfile: any,
-  regenerateAvatar: any
-}> = ({ profile, updateProfile, updateSettings, resetProfile, regenerateAvatar }) => {
-  const { avatar, updateAvatar } = useAvatarSync();
-  const { ALARM_SOUNDS, selectedSound, setSelectedSound } = useAlarmTimer();
+}> = ({ profile, updateProfile, updateSettings, resetProfile }) => {
+  const { avatar, regenerateAvatar } = useAvatar();
   const [isOpen, setIsOpen] = useState(false);
   const [tempUsername, setTempUsername] = useState(profile?.username || "");
   const [showConstructor, setShowConstructor] = useState(false);
@@ -38,25 +31,16 @@ const ProfileSettingsContent: React.FC<{
     setIsOpen(false);
   };
 
-  // Debounced avatar regeneration to prevent rapid clicks
   const handleRegenerateAvatar = useCallback(() => {
     if (isRegenerating) return;
-    
     setIsRegenerating(true);
-    const newProfile = regenerateAvatar(); // Получаем обновленный профиль
-    if (newProfile && newProfile.avatar) {
-      updateAvatar(newProfile.avatar); // Обновляем синхронизированный аватар напрямую
-    }
-    
-    // Reset regeneration state after a short delay
+    regenerateAvatar();
     setTimeout(() => {
       setIsRegenerating(false);
     }, 500);
-  }, [regenerateAvatar, updateAvatar, isRegenerating]);
+  }, [regenerateAvatar, isRegenerating]);
 
   const handleApplyAvatar = (avatarUrl: string) => {
-    // Обновляем синхронизированный аватар
-    updateAvatar(avatarUrl);
     setShowConstructor(false);
   };
 
@@ -80,9 +64,7 @@ const ProfileSettingsContent: React.FC<{
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[600px] rounded-2xl p-0 overflow-hidden flex flex-col max-h-[90vh] bg-gradient-to-br from-purple-900/90 via-pink-900/90 to-blue-900/90 backdrop-blur-2xl border-0 shadow-2xl">
-        {/* PREMIUM HEADER - Glassmorphic Gradient */}
         <div className="relative bg-gradient-to-r from-purple-600/90 via-pink-600/90 to-blue-600/90 p-6 text-white flex-shrink-0 backdrop-blur-xl border-b border-white/10">
-          {/* Decorative glow */}
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-50 pointer-events-none"></div>
           
           <DialogHeader className="relative z-10">
@@ -98,24 +80,20 @@ const ProfileSettingsContent: React.FC<{
           </DialogHeader>
         </div>
 
-        {/* PREMIUM SCROLLABLE CONTENT - Glass Card */}
         <div className="flex-1 overflow-y-auto custom-scrollbar relative">
-          {/* Background pattern */}
           <div className="absolute inset-0 opacity-5 pointer-events-none"
                style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)' }}>
           </div>
           
           <div className="relative p-6 space-y-5">
-            {/* Секция 1: Аватар и имя - PREMIUM FLEX LAYOUT */}
             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-4 sm:p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
-              {/* Аватар - Perfect Center */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative flex-shrink-0"
               >
                 <Avatar className="w-20 h-20 sm:w-24 sm:h-24 border-3 border-white/30 rounded-full overflow-hidden shadow-2xl ring-4 ring-purple-500/20">
-                  <AvatarImage src={avatar.url || profile.avatar} alt={profile.username} className="rounded-full" />
+                  <AvatarImage src={avatar.url} alt={profile.username} className="rounded-full" />
                   <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white font-bold text-xl">
                     {profile.username[0]}
                   </AvatarFallback>
@@ -227,7 +205,7 @@ const ProfileSettingsContent: React.FC<{
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-red-500/30 shadow-lg overflow-hidden">
               <div className="p-4 border-b border-red-500/20 bg-gradient-to-r from-red-500/20 to-rose-500/20">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Trash2 className="h-5 w-5 text-red-300" /> Danger Zone
+                    <Trash2 className="h-5 w-5 text-red-300" /> Reset Profile
                 </h3>
               </div>
               <div className="p-4">
@@ -269,11 +247,9 @@ const ProfileSettingsContent: React.FC<{
   );
 };
 
-// ProfileSettings Component
 export const ProfileSettings: React.FC = () => {
-  const { profile, updateProfile, updateSettings, resetProfile, regenerateAvatar } = useUserProfile();
+  const { profile, updateProfile, updateSettings, resetProfile } = useUserProfile();
 
-  // Render an empty button when profile is not loaded to maintain consistent hook calls
   if (!profile) {
     return <Button variant="outline" className="gap-2 opacity-0 pointer-events-none">
       <Settings className="h-4 w-4" /> Profile
@@ -285,6 +261,5 @@ export const ProfileSettings: React.FC = () => {
     updateProfile={updateProfile}
     updateSettings={updateSettings}
     resetProfile={resetProfile}
-    regenerateAvatar={regenerateAvatar}
   />;
 };

@@ -4,23 +4,18 @@ import { Link } from "react-router-dom";
 import { Home, Zap, Target, Settings, User, Smile, HelpCircle, BookOpen } from "lucide-react";
 import { ProfileComponentsWrapper } from "./ProfileComponentsWrapper";
 
-// PremiumHeader component props interface
 interface PremiumHeaderProps {
   profile: any;
   isLoading: boolean;
-  letterFonts: string[];
 }
 
-// PremiumHeader Component
 export const PremiumHeader: React.FC<PremiumHeaderProps> = ({ 
   profile, 
   isLoading, 
-  letterFonts 
 }) => {
   return (
-    <header className="w-full max-w-6xl flex justify-center items-center mb-8 quantum-symmetry quantum-depth quantum-metallographic flex-center-all">
+    <header className="w-full max-w-6xl flex justify-center items-center mb-8 flex-center-all">
       <div className="flex flex-col items-center w-full flex-center-all">
-        {/* Main Title and Navigation Buttons */}
         <div className="flex flex-col items-center mb-6 w-full flex-center-all">
           <div className="flex items-center justify-center space-x-6 mb-4 flex-center-all">
             <motion.div
@@ -29,8 +24,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
               transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
               className="flex-center-all"
             >
-              <h1 className="text-4xl font-bold text-primary flex items-center space-x-2 select-none relative group quantum-animated flex-center-all">
-                {/* Animated border with shimmer effect */}
+              <h1 className="text-4xl font-bold text-primary flex items-center space-x-2 relative group flex-center-all">
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-100%] group-hover:animate-shimmer flex-center-all"></div>
                 <div className="relative z-10 border-2 border-primary rounded-lg px-4 py-2 bg-background/30 backdrop-blur-sm shadow-lg flex-center-all">
                   <div className="flex items-center space-x-2 flex-center-all">
@@ -41,20 +35,7 @@ export const PremiumHeader: React.FC<PremiumHeaderProps> = ({
                     >
                       <Zap className="h-8 w-8 text-yellow-500 flex-center-all" />
                     </motion.span>
-                    <span className="flex font-google-sans-flex-medium flex-center-all">
-                      {"TodoList".split("").map((letter, index) => (
-                        <motion.span
-                          key={index}
-                          style={{ fontFamily: `${letterFonts[index]}, sans-serif` }}
-                          className="transition-all duration-500 ease-in-out inline-block select-none flex-center-all"
-                          initial={{ opacity: 0, y: -20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: index * 0.05 }}
-                        >
-                          {letter}
-                        </motion.span>
-                      ))}
-                    </span>
+                    <span className="font-bold text-2xl">TaskFlow</span>
                     <motion.span
                       animate={{ rotate: [0, -5, 0, 5, 0] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 5 }}

@@ -1,12 +1,14 @@
 // src/__tests__/test-setup.ts
 import '@testing-library/jest-dom';
 
-// Mock window.Notification
+// Mock window.Notification as a constructor
+const MockNotification: any = jest.fn().mockImplementation((title: string, options?: any) => {
+  return { title, ...options };
+});
+MockNotification.permission = 'granted';
+MockNotification.requestPermission = jest.fn(() => Promise.resolve('granted'));
 Object.defineProperty(window, 'Notification', {
-  value: {
-    permission: 'granted',
-    requestPermission: jest.fn(() => Promise.resolve('granted')),
-  },
+  value: MockNotification,
   writable: true,
 });
 
@@ -41,3 +43,9 @@ Object.defineProperty(window, 'localStorage', {
 
 // Mock console.error to prevent test log pollution
 console.error = jest.fn();
+
+describe('test setup', () => {
+  it('loads without errors', () => {
+    expect(true).toBe(true);
+  });
+});

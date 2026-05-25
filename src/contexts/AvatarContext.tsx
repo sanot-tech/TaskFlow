@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLocalStorage } from './useLocalStorage';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 const AVATAR_PARAMS = {
   backgroundColors: ["b6e3f4", "c0aede", "d1d4f9", "f0e68c", "ffd700", "ff69b4", "a8e6cf", "f0e68c", "ffd700", "ff69b4"],
@@ -31,16 +31,27 @@ export interface AvatarState {
   error?: string;
 }
 
-export const useAvatarSync = () => {
+interface AvatarContextValue {
+  avatar: AvatarState;
+  updateAvatar: (url: string) => void;
+  regenerateAvatar: () => string;
+  resetAvatar: () => void;
+  isLoading: boolean;
+  hasError: boolean;
+}
+
+const AvatarContext = createContext<AvatarContextValue | null>(null);
+
+export const AvatarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [localAvatar, setLocalAvatar] = useLocalStorage<AvatarState>(
     'avatar-state',
     { url: '', timestamp: Date.now(), version: 1 }
   );
-  
+
   const [avatar, setAvatar] = useState<AvatarState>(localAvatar);
   const [isLoading, setIsLoading] = useState(false);
   const errorTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  
+
   useEffect(() => {
     return () => {
       if (errorTimeoutRef.current) {
@@ -48,84 +59,63 @@ export const useAvatarSync = () => {
       }
     };
   }, []);
-  
+
   useEffect(() => {
     setLocalAvatar(avatar);
   }, [avatar, setLocalAvatar]);
-  
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'avatar-state' && e.newValue) {
-        try {
-          const newAvatar = JSON.parse(e.newValue);
-          setAvatar(prev => ({
-            ...prev,
-            ...newAvatar,
-            error: undefined
-          }));
-        } catch (error) {
-          console.error('Error parsing avatar state:', error);
-          setAvatar(prev => ({
-            ...prev,
-            error: 'Sync error'
-          }));
-          
-          if (errorTimeoutRef.current) {
-            clearTimeout(errorTimeoutRef.current);
-          }
-          errorTimeoutRef.current = setTimeout(() => {
-            setAvatar(prev => ({ ...prev, error: undefined }));
-          }, 5000);
-        }
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-  
+
   const updateAvatar = useCallback((newUrl: string) => {
     setIsLoading(true);
-    
+
     try {
       new URL(newUrl);
       setAvatar({
         url: newUrl,
         timestamp: Date.now(),
         version: avatar.version + 1,
-        error: undefined
+        error: undefined,
       });
     } catch {
       setAvatar(prev => ({
         ...prev,
-        error: 'Invalid avatar URL'
+        error: 'Invalid avatar URL',
       }));
     } finally {
       setIsLoading(false);
     }
   }, [avatar.version]);
-  
+
   const regenerateAvatar = useCallback(() => {
     const newUrl = generateRandomAvatar();
     updateAvatar(newUrl);
     return newUrl;
   }, [updateAvatar]);
-  
+
   const resetAvatar = useCallback(() => {
     setAvatar({
       url: '',
       timestamp: Date.now(),
       version: avatar.version + 1,
-      error: undefined
+      error: undefined,
     });
   }, [avatar.version]);
-  
-  return {
-    avatar,
-    updateAvatar,
-    regenerateAvatar,
-    resetAvatar,
-    isLoading,
-    hasError: !!avatar.error
-  };
+
+  return (
+    <AvatarContext.Provider value={{
+      avatar,
+      updateAvatar,
+      regenerateAvatar,
+      resetAvatar,
+      isLoading,
+      hasError: !!avatar.error,
+    }}>
+      {children}
+    </AvatarContext.Provider>
+  );
+};
+
+export const useAvatar = () => {
+  const ctx = useContext(AvatarContext);
+  if (!ctx) throw new Error('useAvatar must be used within AvatarProvider');
+  return ctx;
 };

@@ -7,7 +7,7 @@ export default {
     '**/?(*.)+(spec|test).+(ts|tsx|js)',
   ],
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/test-setup.ts'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverageFrom: [
@@ -30,6 +30,14 @@ export default {
       'ts-jest',
       {
         useESM: true,
+        tsconfig: {
+          jsx: 'react-jsx',
+          esModuleInterop: true,
+          moduleResolution: 'node',
+          lib: ['ES2020', 'DOM', 'DOM.Iterable'],
+          target: 'ES2020',
+          types: ['jest', '@testing-library/jest-dom'],
+        },
       },
     ],
   },

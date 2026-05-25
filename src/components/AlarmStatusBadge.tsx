@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { Zap, Activity } from "lucide-react";

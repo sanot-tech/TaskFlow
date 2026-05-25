@@ -1,4 +1,3 @@
-"use client";
 
 import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -15,7 +14,6 @@ import { Link } from "react-router-dom";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import WebFont from "webfontloader";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ScrollNav } from "@/components/ScrollNav";
@@ -60,23 +58,7 @@ const customPriorityColors = [
   { color: "bg-indigo-500", name: "Indigo" },
 ];
 
-// Font list for dynamic typography
-const fontList = [
-  "Poppins", "Montserrat", "Open Sans", "Lato", "Roboto", 
-  "Source Sans Pro", "Nunito", "Raleway", "Quicksand", "Work Sans",
-  "Rubik", "Muli", "Fira Sans", "Ubuntu", "Merriweather Sans",
-  "Cabin", "Oxygen", "PT Sans", "Dosis", "Karla",
-  "Asap", "Cantarell", "Exo", "Varela Round", "Titillium Web",
-  "Signika", "Yanone Kaffeesatz", "Abel", "Anton", "Arimo",
-  "Bitter", "Cairo", "Catamaran", "Droid Sans", "Encode Sans",
-  "Francois One", "Hind", "Josefin Sans", "Kanit", "Maven Pro",
-  "Noto Sans", "Orbitron", "Oswald", "Play", "Prompt",
-  "Questrial", "Rajdhani", "Sora", "Telex", "Zilla Slab"
-];
-
-// Main page component
 const Index = () => {
-  // ALL HOOKS MUST BE CALLED UNCONDITIONALLY AT THE TOP LEVEL
   const [tasks, setTasks] = useLocalStorage<Task[]>("todo_tasks", []);
   const [taskTitle, setTaskTitle] = useLocalStorage<string>("todo_title", "");
   const [taskDescription, setTaskDescription] = useLocalStorage<string>("todo_description", "");
@@ -85,36 +67,8 @@ const Index = () => {
   const [taskDueDate, setTaskDueDate] = useLocalStorage<Date | undefined>("todo_due_date", undefined);
   const [taskTags, setTaskTags] = useLocalStorage<string[]>("todo_tags", []);
   const [newTag, setNewTag] = useState("");
-  const [letterFonts, setLetterFonts] = useState<string[]>([]);
   const { toast } = useToast();
-  const { profile, isLoading, regenerateAvatar } = useUserProfile();
-
-  // LOGIC CYCLE: Font initialization - COMPLETE
-  useEffect(() => {
-    const initialFonts = "TodoList".split("").map(() =>
-      fontList[Math.floor(Math.random() * fontList.length)]
-    );
-    setLetterFonts(initialFonts);
-  }, []);
-
-  // LOGIC CYCLE: Font rotation - COMPLETE
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLetterFonts("TodoList".split("").map(() =>
-        fontList[Math.floor(Math.random() * fontList.length)]
-      ));
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // LOGIC CYCLE: WebFont loading - COMPLETE
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: [...fontList, 'Inter:300,400,500,600,700']
-      }
-    });
-  }, []);
+  const { profile, isLoading } = useUserProfile();
 
   // LOGIC CYCLE: Load demo data - COMPLETE
   useEffect(() => {
@@ -337,11 +291,10 @@ const Index = () => {
   };
 
   return (
-    // Add user-select-none for the entire application
-    <div className="min-h-screen p-4 select-none touch-pan-y smooth-scroll scrollable flex flex-col items-center">
+    <div className="min-h-screen p-4 touch-pan-y smooth-scroll scrollable flex flex-col items-center">
       {profile && !isLoading && <ScrollNav />}
       
-      <PremiumHeader profile={profile} isLoading={isLoading} letterFonts={letterFonts} />
+      <PremiumHeader profile={profile} isLoading={isLoading} />
       
       <div className="max-w-6xl mx-auto w-full">
 
@@ -362,9 +315,10 @@ const Index = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
+          data-section="create-task"
         >
           <div className="flex justify-center mb-8">
-            <Card className="custom-card w-full max-w-3xl select-none">
+            <Card className="custom-card w-full max-w-3xl">
               <CardHeader className="text-center pb-4">
                 <CardTitle className="text-2xl font-bold flex items-center justify-center select-none flex-center-all quantum-symmetry">
                   <Plus className="h-6 w-6 mr-3 text-green-500" /> Add New Task
@@ -374,7 +328,7 @@ const Index = () => {
                 {/* Title & Description - Perfectly Aligned */}
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg select-none">Task Title</Label>
+                    <Label className="font-medium text-lg">Task Title</Label>
                     <Input
                       placeholder="What needs to be done?"
                       value={taskTitle}
@@ -384,7 +338,7 @@ const Index = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg select-none">Description</Label>
+                    <Label className="font-medium text-lg">Description</Label>
                     <Input
                       placeholder="Add details (optional)"
                       value={taskDescription}
@@ -397,7 +351,7 @@ const Index = () => {
                 {/* Priority & Date - Perfectly Balanced */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg select-none">Priority</Label>
+                    <Label className="font-medium text-lg">Priority</Label>
                     <div className="space-y-3">
                       {/* Text input for priority */}
                       <Input
@@ -409,7 +363,7 @@ const Index = () => {
 
                       {/* Color palette (always available) */}
                       <div className="space-y-2">
-                        <Label className="text-sm font-medium text-muted-foreground select-none">Choose Color</Label>
+                        <Label className="text-sm font-medium text-muted-foreground">Choose Color</Label>
                         <div className="flex flex-wrap gap-2">
                           {customPriorityColors.map((color, index) => (
                             <motion.div
@@ -439,7 +393,7 @@ const Index = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="font-medium text-lg select-none">Due Date</Label>
+                    <Label className="font-medium text-lg">Due Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -450,7 +404,7 @@ const Index = () => {
                           )}
                         >
                           <Calendar className="mr-3 h-5 w-5" />
-                          {taskDueDate ? format(taskDueDate, "PPP") : <span className="select-none">Pick a date</span>}
+                          {taskDueDate ? format(taskDueDate, "PPP") : <span>Pick a date</span>}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0 bg-gray-800 border-gray-700">
@@ -467,7 +421,7 @@ const Index = () => {
 
                 {/* Tags Section - Perfectly Centered */}
                 <div className="space-y-3">
-                  <Label className="font-medium text-lg select-none">Tags</Label>
+                  <Label className="font-medium text-lg">Tags</Label>
                   <div className="flex gap-3">
                     <Input
                       placeholder="Add tag and press Enter"
@@ -539,24 +493,45 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Tasks List Section - Perfectly Centered */}
-        <div className="flex justify-center">
-          <div className="w-full max-w-3xl space-y-4">
-            <AnimatePresence>
-              {tasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  onToggleCompletion={toggleTaskCompletion}
-                  onDelete={deleteTask}
-                  onAddSubtask={addSubtask}
-                  onToggleSubtask={toggleSubtaskCompletion}
-                  onDeleteSubtask={deleteSubtask}
-                />
-              ))}
-            </AnimatePresence>
+        {/* Tasks List Section - All Tasks Visible */}
+        {tasks.length > 0 && (
+          <div className="flex justify-center w-full" data-section="tasks">
+            <div className="flex flex-col gap-4 w-full max-w-3xl">
+              <AnimatePresence>
+                {tasks.map((task, index) => (
+                  <motion.div
+                    key={task.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.2, delay: index * 0.05 }}
+                  >
+                    <TaskCard
+                      task={task}
+                      onToggleCompletion={toggleTaskCompletion}
+                      onDelete={deleteTask}
+                      onAddSubtask={addSubtask}
+                      onToggleSubtask={toggleSubtaskCompletion}
+                      onDeleteSubtask={deleteSubtask}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Enterprise Footer */}
+        <footer className="mt-24 pb-8 border-t border-white/10 pt-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-[10px] leading-relaxed text-muted-foreground/60 max-w-3xl mx-auto">
+              © {new Date().getFullYear()} TaskFlow. All rights reserved. TaskFlow is a proprietary task management and productivity platform designed for enterprise-grade workflow optimization, team collaboration, and personal organization. This software is provided under the terms of the MIT License. TaskFlow incorporates third-party open-source components including React, TypeScript, Tailwind CSS, Framer Motion, Lucide Icons, date-fns, Radix UI Primitives, and other dependencies, each subject to its respective licensing terms. TaskFlow is not affiliated with, endorsed by, or sponsored by any of the aforementioned third-party projects unless expressly stated. All product names, logos, and brands are property of their respective owners. Use of this software constitutes acceptance of the terms and conditions set forth in the accompanying license agreement. Version 2.0.0. Build 20260525. For licensing inquiries, enterprise deployment, or partnership opportunities, please contact enterprise@taskflow.dev. This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+            </p>
+            <p className="text-[10px] text-muted-foreground/40 mt-3">
+              TaskFlow ® is a registered trademark. All rights reserved. Patent pending.
+            </p>
+          </div>
+        </footer>
       </div>
 
       {/* Button to navigate to guide page */}

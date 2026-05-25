@@ -1,4 +1,3 @@
-"use client";
 
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
@@ -13,6 +12,7 @@ import { motion } from "framer-motion";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useEffect } from "react";
 import { AlarmProvider } from "@/contexts/AlarmContext";
+import { AvatarProvider } from "@/contexts/AvatarContext";
 
 // Initialize React Query client for data fetching and caching
 const queryClient = new QueryClient();
@@ -59,12 +59,14 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster position="top-right" duration={5000} />
+      <AvatarProvider>
       <AlarmProvider>
         <BrowserRouter>
           <UserProfileInitializer />
           <AnimatedRoutes />
         </BrowserRouter>
       </AlarmProvider>
+      </AvatarProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

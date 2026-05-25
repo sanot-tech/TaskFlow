@@ -27,12 +27,12 @@ jest.mock('../components/TaskTimerButton', () => {
   };
 });
 
-// Mock browser Notification API
+// Mock browser Notification API as a constructor function
+const mockNotification = jest.fn() as jest.Mock & { permission: string; requestPermission: jest.Mock };
+mockNotification.permission = 'granted';
+mockNotification.requestPermission = jest.fn(() => Promise.resolve('granted'));
 Object.defineProperty(window, 'Notification', {
-  value: {
-    permission: 'granted',
-    requestPermission: jest.fn(() => Promise.resolve('granted')),
-  },
+  value: mockNotification,
   writable: true,
 });
 
@@ -42,16 +42,16 @@ Object.defineProperty(navigator, 'vibrate', {
   writable: true,
 });
 
-// Mock Audio
-window.Audio = class MockAudio {
-  constructor(public src?: string) {}
-  play = jest.fn(() => Promise.resolve());
-  pause = jest.fn();
-  currentTime = 0;
-  volume = 1.0;
-  loop = false;
-  load = jest.fn();
-} as unknown as typeof Audio;
+// Mock Audio as a jest.fn() so it can be spied on (assigns to `this` so mock.instances reflects property changes)
+window.Audio = jest.fn().mockImplementation(function (this: any, src?: string) {
+  this.play = jest.fn(() => Promise.resolve());
+  this.pause = jest.fn();
+  this.currentTime = 0;
+  this.src = src;
+  this.volume = 1.0;
+  this.loop = false;
+  this.load = jest.fn();
+}) as unknown as typeof Audio;
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <AlarmProvider>{children}</AlarmProvider>
@@ -63,7 +63,7 @@ describe('Timer Notifications', () => {
     jest.useFakeTimers();
     
     // Clear any existing notifications
-    if ((window.Notification as any).requestPermission.mock) {
+    if ((window.Notification as any).requestPermission?.mock) {
       (window.Notification as any).requestPermission.mockClear();
     }
   });
@@ -90,7 +90,7 @@ describe('Timer Notifications', () => {
     fireEvent.click(screen.getByRole('switch'));
 
     // Select a specific sound
-    fireEvent.click(screen.getByText('🔔 Sunrise'));
+    fireEvent.click(screen.getByRole('button', { name: '🔔 Sunrise' }));
 
     // Start a short timer (2 seconds)
     fireEvent.click(screen.getByRole('button', { name: /Timer/i }));
@@ -104,11 +104,12 @@ describe('Timer Notifications', () => {
 
     // Check that audio was created and played
     const MockAudioConstructor = window.Audio as jest.MockedClass<typeof Audio>;
-    expect(MockAudioConstructor).toHaveBeenCalledTimes(1);
+    // Audio is called once when clicking the sound button (testSound) and once when timer completes (playSound)
+    expect(MockAudioConstructor).toHaveBeenCalledTimes(2);
     expect(MockAudioConstructor).toHaveBeenCalledWith('/sounds/bell.mp3');
     
-    // Check that play was called on the audio instance
-    const audioInstance = (MockAudioConstructor as any).mock.instances[0];
+    // Check that play was called on the audio instance created by playSound
+    const audioInstance = (MockAudioConstructor as any).mock.instances[1];
     expect(audioInstance.play).toHaveBeenCalledTimes(1);
   });
 
@@ -118,8 +119,9 @@ describe('Timer Notifications', () => {
       taskTitle: 'Browser notification test',
     };
 
-    // Mock the Notification constructor
+    // Mock the Notification constructor with granted permission
     const mockNotification = jest.fn();
+    (mockNotification as any).permission = 'granted';
     (window as any).Notification = mockNotification;
 
     render(
@@ -255,7 +257,7 @@ describe('Timer Notifications', () => {
       jest.clearAllMocks();
       
       // Select sound
-      fireEvent.click(screen.getByText(sound.name));
+      fireEvent.click(screen.getByRole('button', { name: sound.name }));
 
       // Start a short timer
       fireEvent.click(screen.getByRole('button', { name: /Timer/i }));
@@ -275,11 +277,11 @@ describe('Timer Notifications', () => {
 
   it('handles notification permission flow', async () => {
     // Temporarily change notification permission to 'default'
+    const permMock = jest.fn() as jest.Mock & { permission: string; requestPermission: jest.Mock };
+    permMock.permission = 'default';
+    permMock.requestPermission = jest.fn(() => Promise.resolve('granted'));
     Object.defineProperty(window, 'Notification', {
-      value: {
-        permission: 'default',
-        requestPermission: jest.fn(() => Promise.resolve('granted')),
-      },
+      value: permMock,
       writable: true,
     });
 
@@ -315,11 +317,11 @@ describe('Timer Notifications', () => {
 
   it('handles notification blocking gracefully', async () => {
     // Temporarily change notification permission to 'denied'
+    const deniedMock = jest.fn() as jest.Mock & { permission: string; requestPermission: jest.Mock };
+    deniedMock.permission = 'denied';
+    deniedMock.requestPermission = jest.fn(() => Promise.resolve('denied'));
     Object.defineProperty(window, 'Notification', {
-      value: {
-        permission: 'denied',
-        requestPermission: jest.fn(() => Promise.resolve('denied')),
-      },
+      value: deniedMock,
       writable: true,
     });
 
@@ -364,8 +366,9 @@ describe('Timer Notifications', () => {
       taskTitle: 'Multi notification test 2',
     };
 
-    // Mock the Notification constructor
+    // Mock the Notification constructor with granted permission
     const mockNotification = jest.fn();
+    (mockNotification as any).permission = 'granted';
     (window as any).Notification = mockNotification;
 
     render(
@@ -386,9 +389,10 @@ describe('Timer Notifications', () => {
     fireEvent.click(screen.getByRole('button', { name: /Start/i }));
 
     // Start second timer (slightly longer: 4 seconds)
-    fireEvent.click(screen.getAllByRole('button', { name: /Timer/i })[1]);
-    fireEvent.change(screen.getAllByLabelText(/Duration \(minutes\)/i)[1], { target: { value: '0.067' } }); // ~4 seconds
-    fireEvent.click(screen.getAllByRole('button', { name: /Start/i })[1]);
+    // After first timer starts, its button changes to the stop button, so only one Timer button remains
+    fireEvent.click(screen.getAllByRole('button', { name: /Timer/i })[0]);
+    fireEvent.change(screen.getByLabelText(/Duration \(minutes\)/i), { target: { value: '0.067' } }); // ~4 seconds
+    fireEvent.click(screen.getByRole('button', { name: /Start/i }));
 
     // Wait for first timer to complete
     act(() => {

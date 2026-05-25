@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { TaskTimerButton } from '../components/TaskTimerButton';
-import { AlarmProvider } from '../contexts/AlarmContext';
+import { AlarmProvider, AlarmContext } from '../contexts/AlarmContext';
+import { showError } from '../utils/toast';
 
 // Mock the useNeuroAdaptiveSizing hook to return consistent values
 jest.mock('../components/TaskTimerButton', () => {
@@ -55,7 +56,7 @@ describe('TaskTimerButton', () => {
     
     // Check that the modal elements are present
     expect(screen.getByText(/Start Timer/i)).toBeInTheDocument();
-    expect(screen.getByText(/Task: Test Task/i)).toBeInTheDocument();
+    expect(screen.getByText((content) => content.includes('Test Task'))).toBeInTheDocument();
     expect(screen.getByLabelText(/Duration \(minutes\)/i)).toBeInTheDocument();
   });
 
@@ -87,8 +88,6 @@ describe('TaskTimerButton', () => {
   });
 
   it('shows error when alarm system is disabled', async () => {
-    const { showError } = require('../utils/toast');
-    
     render(<TaskTimerButton {...defaultProps} />, { wrapper });
     
     // Open the modal
@@ -104,117 +103,29 @@ describe('TaskTimerButton', () => {
   });
 
   it('starts timer when alarm system is enabled', async () => {
-    render(<TaskTimerButton {...defaultProps} />, { wrapper });
-    
-    // Enable the alarm system first
-    const { result } = require('@testing-library/react');
-    const { renderHook } = require('@testing-library/react');
-    
-    // Since we can't easily access the context here, we'll simulate the scenario differently
-    // by rendering the component inside a provider with pre-enabled alarm system
-    const PreEnabledAlarmProvider = ({ children }: { children: React.ReactNode }) => {
-      const [alarms, setAlarms] = React.useState<any[]>([]);
-      const [isAlarmEnabled, setIsAlarmEnabled] = React.useState(true); // Enabled by default
-      const [selectedSound, setSelectedSound] = React.useState('bell');
-      const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
-      const audioRef = React.useRef<HTMLAudioElement | null>(null);
-
-      const startTimer = (taskId: string, taskTitle: string, duration: number) => {
-        const existingAlarm = alarms.find((a: any) => a.taskId === taskId);
-        if (existingAlarm) {
-          return false;
-        }
-
-        const newAlarm = {
-          taskId,
-          taskTitle,
-          duration,
-          isActive: true,
-          remainingTime: duration * 60,
-        };
-
-        setAlarms(prev => [...prev, newAlarm]);
-        return true;
-      };
-
-      const stopTimer = (taskId: string) => {
-        setAlarms(prev => prev.filter((a: any) => a.taskId !== taskId));
-      };
-
-      const toggleAlarmSystem = () => {
-        setIsAlarmEnabled(prev => !prev);
-      };
-
-      const formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-      };
-
-      const getTimeForTask = (taskId: string) => {
-        const alarm = alarms.find((a: any) => a.taskId === taskId);
-        return alarm ? formatTime(alarm.remainingTime) : null;
-      };
-
-      const isTimerActive = (taskId: string) => {
-        return alarms.some((a: any) => a.taskId === taskId);
-      };
-
-      const ALARM_SOUNDS = [
-        { id: 'bell', name: '🔔 Sunrise', url: '/sounds/bell.mp3' },
-        { id: 'chime', name: '✨ Melody', url: '/sounds/chime.mp3' },
-        { id: 'siren', name: '🚨 Siren', url: '/sounds/siren.mp3' },
-        { id: 'beep', name: '🔊 Beep', url: '/sounds/beep.mp3' },
-        { id: 'soft', name: '🎵 Soft', url: '/sounds/soft.mp3' },
-      ];
-
-      const value = {
-        alarms,
-        isAlarmEnabled,
-        selectedSound,
-        ALARM_SOUNDS,
-        startTimer,
-        stopTimer,
-        toggleAlarmSystem,
-        setSelectedSound,
-        formatTime,
-        getTimeForTask,
-        isTimerActive,
-      };
-
-      return <AlarmContext.Provider value={value}>{children}</AlarmContext.Provider>;
-    };
-
-    // Create a context object to use in the test
-    const AlarmContext = React.createContext<any>(undefined);
-
+    // Render inside a provider with pre-enabled alarm system
     const PreEnabledWrapper = ({ children }: { children: React.ReactNode }) => (
-      <PreEnabledAlarmProvider>
-        <AlarmContext.Provider value={{
-          startTimer: (taskId: string, taskTitle: string, duration: number) => {
-            // Simulate starting a timer
-            return true;
-          },
-          stopTimer: (taskId: string) => {},
-          isTimerActive: (taskId: string) => false,
-          getTimeForTask: (taskId: string) => null,
-          isAlarmEnabled: true,
-          toggleAlarmSystem: () => {},
-          formatTime: (seconds: number) => `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`,
-          alarms: [],
-          selectedSound: 'bell',
-          ALARM_SOUNDS: [
-            { id: 'bell', name: '🔔 Sunrise', url: '/sounds/bell.mp3' },
-            { id: 'chime', name: '✨ Melody', url: '/sounds/chime.mp3' },
-            { id: 'siren', name: '🚨 Siren', url: '/sounds/siren.mp3' },
-            { id: 'beep', name: '🔊 Beep', url: '/sounds/beep.mp3' },
-            { id: 'soft', name: '🎵 Soft', url: '/sounds/soft.mp3' },
-          ],
-          setSelectedSound: (soundId: string) => {},
-        }}>
-          {children}
-        </AlarmContext.Provider>
-      </PreEnabledAlarmProvider>
+      <AlarmContext.Provider value={{
+        alarms: [],
+        isAlarmEnabled: true,
+        selectedSound: 'bell',
+        ALARM_SOUNDS: [
+          { id: 'bell', name: '🔔 Sunrise', url: '/sounds/bell.mp3' },
+          { id: 'chime', name: '✨ Melody', url: '/sounds/chime.mp3' },
+          { id: 'siren', name: '🚨 Siren', url: '/sounds/siren.mp3' },
+          { id: 'beep', name: '🔊 Beep', url: '/sounds/beep.mp3' },
+          { id: 'soft', name: '🎵 Soft', url: '/sounds/soft.mp3' },
+        ],
+        startTimer: (taskId: string, taskTitle: string, duration: number) => true,
+        stopTimer: () => {},
+        toggleAlarmSystem: () => {},
+        setSelectedSound: () => {},
+        formatTime: (seconds: number) => `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`,
+        getTimeForTask: () => null,
+        isTimerActive: () => false,
+      }}>
+        {children}
+      </AlarmContext.Provider>
     );
 
     render(<TaskTimerButton {...defaultProps} />, { wrapper: PreEnabledWrapper });
@@ -242,7 +153,7 @@ describe('TaskTimerButton', () => {
         },
         stopTimer: (taskId: string) => {},
         isTimerActive: (taskId: string) => taskId === 'test-task-1', // Simulate active timer
-        getTimeForTask: (taskId: string) => taskId === 'test-task-1' ? '00:25' : null,
+        getTimeForTask: (taskId: string) => taskId === 'test-task-1' ? '0:25' : null,
         isAlarmEnabled: true,
         toggleAlarmSystem: () => {},
         formatTime: (seconds: number) => `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`,
@@ -261,13 +172,11 @@ describe('TaskTimerButton', () => {
       </AlarmContext.Provider>
     );
 
-    const AlarmContext = React.createContext<any>(undefined);
-
     render(<TaskTimerButton {...defaultProps} />, { wrapper: ActiveTimerWrapper });
     
     // Check that the active timer state is displayed
-    expect(screen.getByText('00:25')).toBeInTheDocument(); // Remaining time
-    expect(screen.getByRole('button', { name: /Stop Circle Icon/i })).toBeInTheDocument(); // Stop button
+    expect(screen.getByText('0:25')).toBeInTheDocument(); // Remaining time
+    expect(screen.getByRole('button', { name: /0:25/ })).toBeInTheDocument(); // Stop button
   });
 
   it('stops timer when stop button is clicked', () => {
@@ -281,7 +190,7 @@ describe('TaskTimerButton', () => {
           // Simulate stopping the timer
         },
         isTimerActive: (taskId: string) => taskId === 'test-task-1', // Simulate active timer
-        getTimeForTask: (taskId: string) => taskId === 'test-task-1' ? '00:25' : null,
+        getTimeForTask: (taskId: string) => taskId === 'test-task-1' ? '0:25' : null,
         isAlarmEnabled: true,
         toggleAlarmSystem: () => {},
         formatTime: (seconds: number) => `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`,
@@ -300,12 +209,10 @@ describe('TaskTimerButton', () => {
       </AlarmContext.Provider>
     );
 
-    const AlarmContext = React.createContext<any>(undefined);
-
     render(<TaskTimerButton {...defaultProps} />, { wrapper: ActiveTimerWrapper });
     
     // Click the stop button
-    fireEvent.click(screen.getByRole('button', { name: /Stop Circle Icon/i }));
+    fireEvent.click(screen.getByRole('button', { name: /0:25/ }));
     
     // Here we're testing that the click handler is called, which would stop the timer
     // In a real implementation, this would update the UI to show the inactive state

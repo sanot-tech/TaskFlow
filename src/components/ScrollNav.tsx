@@ -1,71 +1,29 @@
-"use client";
-
 import React from "react";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
-// ScrollNav component props interface
 interface ScrollNavProps {
   className?: string;
 }
 
-// ScrollNav Component
 export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
-  const scrollToNext = () => {
-    const sections = document.querySelectorAll('section, .task-card');
-    const currentScroll = window.scrollY;
-    
-    for (let section of sections) {
-      const rect = section.getBoundingClientRect();
-      if (rect.top > 50) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-    }
-    
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  };
-
-  const scrollToPrev = () => {
-    const sections = document.querySelectorAll('section, .task-card');
-    const currentScroll = window.scrollY;
-    
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const rect = sections[i].getBoundingClientRect();
-      if (rect.top < -50) {
-        sections[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-    }
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollUp = () => {
+    window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
+  };
+
+  const scrollDown = () => {
+    window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
   };
 
   return (
     <div className={cn("fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3", className)}>
-      {/* Вверх (предыдущий) - прозрачный с оранжевым текстом */}
-      <motion.div
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-      >
-        <Button
-          onClick={scrollToPrev}
-          className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-orange-500 border-2 border-orange-300/50 shadow-lg"
-          size="icon"
-          aria-label="Scroll up"
-        >
-          <ChevronUp className="h-7 w-7" />
-        </Button>
-      </motion.div>
-      
-      {/* Наверх (в начало) - прозрачный с голубым текстом */}
+      {/* Scroll to Top */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -82,17 +40,35 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
         </Button>
       </motion.div>
 
-      {/* Вниз (следующий) - прозрачный с зеленым текстом */}
+      {/* Scroll Up a Frame */}
       <motion.div
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
       >
         <Button
-          onClick={scrollToNext}
+          onClick={scrollUp}
+          className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-orange-500 border-2 border-orange-300/50 shadow-lg"
+          size="icon"
+          aria-label="Scroll up"
+          title="Вверх"
+        >
+          <ChevronUp className="h-7 w-7" />
+        </Button>
+      </motion.div>
+
+      {/* Scroll Down a Frame */}
+      <motion.div
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      >
+        <Button
+          onClick={scrollDown}
           className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-green-500 border-2 border-green-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll down"
+          title="Вниз"
         >
           <ChevronDown className="h-7 w-7" />
         </Button>

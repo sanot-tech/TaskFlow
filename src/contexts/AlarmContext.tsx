@@ -1,4 +1,3 @@
-"use client";
 
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { showError } from "@/utils/toast";
@@ -37,14 +36,14 @@ interface AlarmContextType {
 }
 
 // Create context
-const AlarmContext = createContext<AlarmContextType | undefined>(undefined);
+export const AlarmContext = createContext<AlarmContextType | undefined>(undefined);
 
 // Provider component
 export const AlarmProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [alarms, setAlarms] = useState<AlarmTimer[]>([]);
   const [isAlarmEnabled, setIsAlarmEnabled] = useState(false);
   const [selectedSound, setSelectedSound] = useState(ALARM_SOUNDS[0].id);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const startTimer = (taskId: string, taskTitle: string, duration: number) => {
@@ -203,7 +202,7 @@ export const AlarmProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             }
             return { ...alarm, remainingTime: alarm.remainingTime - 1 };
           });
-          return updatedAlarms.filter(a => a.isActive || a.remainingTime === 0);
+          return updatedAlarms.filter(a => a.isActive);
         });
       }, 1000);
     }
