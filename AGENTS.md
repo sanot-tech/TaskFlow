@@ -108,6 +108,11 @@ a professional, enterprise-grade repository.
 ### 6.1 Repository Setup
 
 ```bash
+# Set git identity — use GitHub noreply to hide personal email
+# Get it from: GitHub → Settings → Emails → "Keep my email addresses private"
+git config user.name "YourUsername"
+git config user.email "12345678+YourUsername@users.noreply.github.com"
+
 # Create local repo
 git init
 git add -A
@@ -254,12 +259,31 @@ curl -s -X PATCH \
 - The `name` property in `vercel.json` is deprecated — set name via API or Vercel dashboard
 - For SPA fallback, keep the `rewrites` rule in `vercel.json`
 - If CLI deploy hangs, push a commit to GitHub — the git integration handles it
+- **Vercel blocks deployments if commit email doesn't match a GitHub account.** Always use GitHub noreply email (`ID+username@users.noreply.github.com`) to avoid this. Enable it in GitHub → Settings → Emails → "Keep my email addresses private".
 
-### 6.9 History Rewrite (if needed)
+### 6.9 Fix Author Email in History
+
+If commits were made with the wrong email (e.g. `username@github.com`), rewrite all authors to use GitHub noreply:
+
+```bash
+# Set the correct noreply email first
+git config user.email "12345678+YourUsername@users.noreply.github.com"
+
+# Rebase all commits, resetting author on each
+GIT_SEQUENCE_EDITOR=true git rebase --root --exec "git commit --amend --reset-author --no-edit"
+
+# Force push (destructive! use with caution)
+git push origin main --force
+```
+
+### 6.10 History Rewrite (if needed)
 
 If you already have a messy commit history, clean it up:
 
 ```bash
+# Set correct email first
+git config user.email "12345678+YourUsername@users.noreply.github.com"
+
 # Create orphan branch (fresh history)
 git checkout --orphan clean/main
 
