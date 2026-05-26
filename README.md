@@ -107,8 +107,10 @@ Experience TaskFlow live — no installation required:
 
 <p align="center">
   <a href="https://go-taskflow.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/try%20it-go-taskflow.vercel.app-brightgreen?logo=vercel&style=for-the-badge" alt="TaskFlow Live">
+    <img src="https://img.shields.io/badge/visit-live%20demo-brightgreen?logo=vercel&style=for-the-badge" alt="TaskFlow Live">
   </a>
+  <br>
+  <sub>🌐 <a href="https://go-taskflow.vercel.app">go-taskflow.vercel.app</a></sub>
 </p>
 
 The web app is deployed to Vercel and fully functional in any modern browser.
