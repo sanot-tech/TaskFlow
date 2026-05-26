@@ -125,11 +125,11 @@ All data is stored locally — nothing is sent to any server.
   <table>
     <tr>
       <td align="center" width="50%"><strong>📋 Dashboard & Task Management</strong></td>
-      <td align="center" width="50%"><strong>📝 Task Creation</strong></td>
+      <td align="center" width="50%"><strong>📋 Task Cards</strong></td>
     </tr>
     <tr>
       <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/dashboard.png" width="400" alt="TaskFlow Dashboard — main task management interface with priority colors, tags, and subtasks"></td>
-      <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/task-creation.png" width="400" alt="TaskFlow Task Creation — form with title, description, priority, due date, and tags"></td>
+      <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/task-cards.png" width="400" alt="TaskFlow Task Cards — expanded task list with priority colors, tags, and subtask tracking"></td>
     </tr>
     <tr>
       <td align="center" width="50%"><strong>👤 Profile Settings</strong></td>
