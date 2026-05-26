@@ -18,9 +18,20 @@
   <a href="https://github.com/sanot-tech/TaskFlow/stargazers"><img src="https://img.shields.io/github/stars/sanot-tech/TaskFlow?style=flat&logo=starship&color=yellow" alt="Stars"></a>
   <a href="https://github.com/sanot-tech/TaskFlow/security/dependabot"><img src="https://img.shields.io/badge/security-dependabot-brightgreen?logo=dependabot" alt="Dependabot"></a>
   <a href="https://github.com/sanot-tech/TaskFlow/security"><img src="https://img.shields.io/badge/security-passing-brightgreen?logo=github&label=security" alt="Security"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/sanot-tech/TaskFlow"><img src="https://img.shields.io/ossf-scorecard/github.com/sanot-tech/TaskFlow?label=OpenSSF%20Scorecard" alt="OpenSSF Scorecard"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript" alt="TypeScript"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React"></a>
   <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite"></a>
+</p>
+
+<p align="center">
+  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/testing-jest%20%7C%20rtl-C21325?logo=jest&logoColor=white" alt="Testing"></a>
+  <a href="https://react.dev"><img src="https://img.shields.io/badge/state%20management-react%20context-61DAFB?logo=react" alt="State"></a>
+  <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/styling-tailwind%20css%203-06B6D4?logo=tailwindcss" alt="Styling"></a>
+  <a href="https://vite.dev"><img src="https://img.shields.io/badge/build-vite%206-646CFF?logo=vite" alt="Build"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/lang-typescript%205.5-3178C6?logo=typescript" alt="Language"></a>
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/ui-react%2018-61DAFB?logo=react" alt="UI"></a>
+  <a href="https://www.npmjs.com/"><img src="https://img.shields.io/badge/packaging-npm-CB3837?logo=npm" alt="Package Manager"></a>
 </p>
 
 <p align="center">
@@ -476,7 +487,7 @@ See the [CHANGELOG.md](CHANGELOG.md) file for a detailed history of releases, fe
 <a name="license"></a>
 ## 📄 License
 
-Copyright © 2026 sanot-tech
+Copyright © 2026 Sanot
 
 Licensed under the [MIT License](LICENSE). See `LICENSE` for the full license text.
 
@@ -543,7 +554,7 @@ This project would not be possible without the incredible open-source community:
 ---
 
 <p align="center">
-  <b>Built with ❤️ by <a href="https://github.com/sanot-tech">@sanot-tech</a></b><br>
+  <b>Built with ❤️ by <a href="https://github.com/sanot-tech">Sanot</a></b><br>
   <sub>If you find this project valuable, please consider <a href="https://github.com/sanot-tech/TaskFlow/stargazers">starring ⭐</a> the repository.</sub>
 </p>
 
