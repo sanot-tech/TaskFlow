@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: 📖 Documentation
-    url: https://github.com/sanot-tech/taskflow#readme
+    url: https://github.com/sanot-tech/TaskFlow#readme
     about: Check the documentation before creating an issue
   - name: 💬 GitHub Discussions
-    url: https://github.com/sanot-tech/taskflow/discussions
+    url: https://github.com/sanot-tech/TaskFlow/discussions
     about: Ask questions, share ideas, and get help from the community
   - name: 🔒 Security Vulnerability
-    url: https://github.com/sanot-tech/taskflow/blob/main/SECURITY.md
+    url: https://github.com/sanot-tech/TaskFlow/blob/main/SECURITY.md
     about: Please report security vulnerabilities via our Security Policy

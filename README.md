@@ -11,13 +11,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/sanot-tech/taskflow/actions"><img src="https://img.shields.io/github/actions/workflow/status/sanot-tech/taskflow/ci.yml?branch=main&logo=github&label=CI%2FCD&color=blueviolet" alt="CI/CD"></a>
-  <a href="https://github.com/sanot-tech/taskflow/actions"><img src="https://img.shields.io/badge/coverage-97%20tests-brightgreen?logo=jest&label=tests" alt="Tests"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/actions"><img src="https://img.shields.io/github/actions/workflow/status/sanot-tech/TaskFlow/ci.yml?branch=main&logo=github&label=CI%2FCD&color=blueviolet" alt="CI/CD"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/actions"><img src="https://img.shields.io/badge/coverage-97%20tests-brightgreen?logo=jest&label=tests" alt="Tests"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative" alt="License"></a>
-  <a href="https://github.com/sanot-tech/taskflow/releases"><img src="https://img.shields.io/github/v/release/sanot-tech/taskflow?logo=semver&label=version" alt="Version"></a>
-  <a href="https://github.com/sanot-tech/taskflow/stargazers"><img src="https://img.shields.io/github/stars/sanot-tech/taskflow?style=flat&logo=starship&color=yellow" alt="Stars"></a>
-  <a href="https://github.com/sanot-tech/taskflow/security/dependabot"><img src="https://img.shields.io/badge/security-dependabot-brightgreen?logo=dependabot" alt="Dependabot"></a>
-  <a href="https://github.com/sanot-tech/taskflow/security"><img src="https://img.shields.io/badge/security-passing-brightgreen?logo=github&label=security" alt="Security"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/releases"><img src="https://img.shields.io/github/v/release/sanot-tech/TaskFlow?logo=semver&label=version" alt="Version"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/stargazers"><img src="https://img.shields.io/github/stars/sanot-tech/TaskFlow?style=flat&logo=starship&color=yellow" alt="Stars"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/security/dependabot"><img src="https://img.shields.io/badge/security-dependabot-brightgreen?logo=dependabot" alt="Dependabot"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/security"><img src="https://img.shields.io/badge/security-passing-brightgreen?logo=github&label=security" alt="Security"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript" alt="TypeScript"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React"></a>
   <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite"></a>
@@ -178,7 +178,7 @@ In the modern software ecosystem, teams face a fundamental challenge: tools are 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/sanot-tech/taskflow.git
+git clone https://github.com/sanot-tech/TaskFlow.git
 cd taskflow
 
 # 2. Install dependencies
@@ -454,7 +454,7 @@ We welcome contributions from the community! Please see our [Contributing Guide]
 - [Contributing Guide](CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md)
-- [Issue Tracker](https://github.com/sanot-tech/taskflow/issues)
+- [Issue Tracker](https://github.com/sanot-tech/TaskFlow/issues)
 
 ---
 
@@ -544,11 +544,11 @@ This project would not be possible without the incredible open-source community:
 
 <p align="center">
   <b>Built with ❤️ by <a href="https://github.com/sanot-tech">@sanot-tech</a></b><br>
-  <sub>If you find this project valuable, please consider <a href="https://github.com/sanot-tech/taskflow/stargazers">starring ⭐</a> the repository.</sub>
+  <sub>If you find this project valuable, please consider <a href="https://github.com/sanot-tech/TaskFlow/stargazers">starring ⭐</a> the repository.</sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/sanot-tech/taskflow">
+  <a href="https://github.com/sanot-tech/TaskFlow">
     <img src="https://img.shields.io/badge/⬅️ back to top-181717?logo=github" alt="Back to top">
   </a>
 </p>

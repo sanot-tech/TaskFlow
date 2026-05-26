@@ -16,11 +16,11 @@ body:
     attributes:
       label: Prerequisites
       options:
-        - label: I have searched [existing issues](https://github.com/sanot-tech/taskflow/issues) and this is not a duplicate
+        - label: I have searched [existing issues](https://github.com/sanot-tech/TaskFlow/issues) and this is not a duplicate
           required: true
-        - label: I have checked the [roadmap](https://github.com/sanot-tech/taskflow/projects) and this feature is not already planned
+        - label: I have checked the [roadmap](https://github.com/sanot-tech/TaskFlow/projects) and this feature is not already planned
           required: true
-        - label: I have reviewed the [documentation](https://github.com/sanot-tech/taskflow#readme) for existing solutions
+        - label: I have reviewed the [documentation](https://github.com/sanot-tech/TaskFlow#readme) for existing solutions
           required: true
 
   - type: markdown
