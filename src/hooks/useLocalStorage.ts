@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 // useLocalStorage Hook
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  // Получаем сохранённое значение из localStorage или используем initialValue
+  // Get saved value from localStorage or use initialValue
   const getSavedValue = () => {
     try {
       const saved = localStorage.getItem(key);
@@ -18,7 +18,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   const [value, setValue] = useState<T>(getSavedValue);
 
-  // Сохраняем в localStorage при каждом изменении value
+  // Persist to localStorage on every value change
   useEffect(() => {
     try {
       localStorage.setItem(key, JSON.stringify(value));

@@ -16,11 +16,11 @@ body:
       label: Prerequisites
       description: Before submitting, please confirm
       options:
-        - label: I have searched existing [issues](https://github.com/Biopasks/todo-list/issues) and this is not a duplicate
+        - label: I have searched existing [issues](https://github.com/sanot-tech/taskflow/issues) and this is not a duplicate
           required: true
         - label: I am running the latest version
           required: true
-        - label: I have checked the [documentation](https://github.com/Biopasks/todo-list#readme) for existing solutions
+        - label: I have checked the [documentation](https://github.com/sanot-tech/taskflow#readme) for existing solutions
           required: true
 
   - type: textarea

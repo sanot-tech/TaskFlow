@@ -16,7 +16,7 @@ export const ProfileComponentsWrapper: React.FC<ProfileComponentsWrapperProps> =
   isLoading 
 }) => {
   if (isLoading || !profile) {
-    // Возвращаем пустой контейнер с тем же размером, чтобы не изменять DOM структуру
+    // Return empty container with same dimensions to preserve DOM structure
     return (
       <div className="flex items-center gap-3 opacity-0 pointer-events-none h-16">
         <div className="w-16 h-16" />

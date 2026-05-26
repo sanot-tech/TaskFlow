@@ -11,13 +11,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Biopasks/taskflow/actions"><img src="https://img.shields.io/github/actions/workflow/status/Biopasks/taskflow/ci.yml?branch=main&logo=github&label=CI%2FCD&color=blueviolet" alt="CI/CD"></a>
-  <a href="https://codecov.io/gh/Biopasks/taskflow"><img src="https://img.shields.io/codecov/c/github/Biopasks/taskflow?logo=codecov&label=coverage&color=success" alt="Coverage"></a>
+  <a href="https://github.com/sanot-tech/taskflow/actions"><img src="https://img.shields.io/github/actions/workflow/status/sanot-tech/taskflow/ci.yml?branch=main&logo=github&label=CI%2FCD&color=blueviolet" alt="CI/CD"></a>
+  <a href="https://codecov.io/gh/sanot-tech/taskflow"><img src="https://img.shields.io/codecov/c/github/sanot-tech/taskflow?logo=codecov&label=coverage&color=success" alt="Coverage"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative" alt="License"></a>
-  <a href="https://github.com/Biopasks/taskflow/releases"><img src="https://img.shields.io/github/v/release/Biopasks/taskflow?logo=semver&label=version" alt="Version"></a>
-  <a href="https://github.com/Biopasks/taskflow/stargazers"><img src="https://img.shields.io/github/stars/Biopasks/taskflow?style=flat&logo=starship&color=yellow" alt="Stars"></a>
-  <a href="https://github.com/Biopasks/taskflow/security/dependabot"><img src="https://img.shields.io/badge/security-dependabot-brightgreen?logo=dependabot" alt="Dependabot"></a>
-  <a href="https://openssf.org/scorecard"><img src="https://img.shields.io/ossf-scorecard/github.com/Biopasks/taskflow?label=OpenSSF&color=purple" alt="OpenSSF"></a>
+  <a href="https://github.com/sanot-tech/taskflow/releases"><img src="https://img.shields.io/github/v/release/sanot-tech/taskflow?logo=semver&label=version" alt="Version"></a>
+  <a href="https://github.com/sanot-tech/taskflow/stargazers"><img src="https://img.shields.io/github/stars/sanot-tech/taskflow?style=flat&logo=starship&color=yellow" alt="Stars"></a>
+  <a href="https://github.com/sanot-tech/taskflow/security/dependabot"><img src="https://img.shields.io/badge/security-dependabot-brightgreen?logo=dependabot" alt="Dependabot"></a>
+  <a href="https://openssf.org/scorecard"><img src="https://img.shields.io/ossf-scorecard/github.com/sanot-tech/taskflow?label=OpenSSF&color=purple" alt="OpenSSF"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript" alt="TypeScript"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React"></a>
   <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite"></a>
@@ -178,7 +178,7 @@ In the modern software ecosystem, teams face a fundamental challenge: tools are 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Biopasks/taskflow.git
+git clone https://github.com/sanot-tech/taskflow.git
 cd taskflow
 
 # 2. Install dependencies
@@ -299,7 +299,7 @@ taskflow/
 │   ├── workflows/
 │   │   ├── ci.yml               # Continuous integration
 │   │   └── release.yml          # Automated releases
-│   ├── CODEOWNERS               # @Biopasks ownership
+│   ├── CODEOWNERS               # @sanot-tech ownership
 │   ├── dependabot.yml           # Dependency automation
 │   └── FUNDING.yml              # Sponsorship links
 │
@@ -454,7 +454,7 @@ We welcome contributions from the community! Please see our [Contributing Guide]
 - [Contributing Guide](CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md)
-- [Issue Tracker](https://github.com/Biopasks/taskflow/issues)
+- [Issue Tracker](https://github.com/sanot-tech/taskflow/issues)
 
 ---
 
@@ -476,7 +476,7 @@ See the [CHANGELOG.md](CHANGELOG.md) file for a detailed history of releases, fe
 <a name="license"></a>
 ## 📄 License
 
-Copyright © 2026 Biopasks
+Copyright © 2026 sanot-tech
 
 Licensed under the [MIT License](LICENSE). See `LICENSE` for the full license text.
 
@@ -543,12 +543,12 @@ This project would not be possible without the incredible open-source community:
 ---
 
 <p align="center">
-  <b>Built with ❤️ by <a href="https://github.com/Biopasks">@Biopasks</a></b><br>
-  <sub>If you find this project valuable, please consider <a href="https://github.com/Biopasks/taskflow/stargazers">starring ⭐</a> the repository.</sub>
+  <b>Built with ❤️ by <a href="https://github.com/sanot-tech">@sanot-tech</a></b><br>
+  <sub>If you find this project valuable, please consider <a href="https://github.com/sanot-tech/taskflow/stargazers">starring ⭐</a> the repository.</sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Biopasks/taskflow">
+  <a href="https://github.com/sanot-tech/taskflow">
     <img src="https://img.shields.io/badge/⬅️ back to top-181717?logo=github" alt="Back to top">
   </a>
 </p>

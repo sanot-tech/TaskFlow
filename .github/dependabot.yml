@@ -16,7 +16,7 @@ updates:
       - 'dependencies'
       - 'automated'
     assignees:
-      - 'BiopasksNAME'
+      - 'sanot-tech'
     groups:
       react:
         patterns:

@@ -58,11 +58,11 @@ Use descriptive, hyphenated branch names with a type prefix:
 ```bash
 # 1. Fork the repository
 # 2. Clone your fork
-git clone https://github.com/Biopasks/todo-list.git
+git clone https://github.com/sanot-tech/taskflow.git
 cd todo-list
 
 # 3. Add upstream remote
-git remote add upstream https://github.com/Biopasks/todo-list.git
+git remote add upstream https://github.com/sanot-tech/taskflow.git
 
 # 4. Install dependencies
 npm install
@@ -266,8 +266,8 @@ Open a [feature request](.github/ISSUE_TEMPLATE/feature_request.yml) with:
 ## Community
 
 - **Discord**: [Join our server](https://discord.gg/biopasks)
-- **Twitter/X**: [@Biopasks](https://twitter.com/Biopasks)
-- **Discussions**: [GitHub Discussions](https://github.com/Biopasks/todo-list/discussions)
+- **Twitter/X**: [@sanot-tech](https://twitter.com/sanot-tech)
+- **Discussions**: [GitHub Discussions](https://github.com/sanot-tech/taskflow/discussions)
 
 ### Recognition
 
@@ -282,9 +282,9 @@ Contributors are recognized in:
 
 If you have questions about contributing, please:
 
-1. Check existing [documentation](https://github.com/Biopasks/todo-list#readme)
-2. Search [existing issues](https://github.com/Biopasks/todo-list/issues)
-3. Ask in [Discussions](https://github.com/Biopasks/todo-list/discussions)
+1. Check existing [documentation](https://github.com/sanot-tech/taskflow#readme)
+2. Search [existing issues](https://github.com/sanot-tech/taskflow/issues)
+3. Ask in [Discussions](https://github.com/sanot-tech/taskflow/discussions)
 4. Reach out via email: [contributors@biopasks.dev](mailto:contributors@biopasks.dev)
 
 ---

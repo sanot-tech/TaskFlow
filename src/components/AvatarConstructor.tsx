@@ -17,7 +17,7 @@ interface AvatarConstructorProps {
   onClose?: () => void;
 }
 
-// Параметры для конструктора
+// Constructor options
 const CONSTRUCTOR_PARAMS = {
   backgroundColors: [
     { value: "b6e3f4", label: "Light Blue" },
@@ -84,7 +84,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
   const { avatar, updateAvatar } = useAvatar();
   const [seed, setSeed] = useState(`constructor_${Date.now()}`);
   
-  // Используем синхронизированный аватар как начальное значение, если доступен
+  // Use synced avatar as initial value if available
   const initialParams = {
     backgroundColor: "b6e3f4",
     skinColor: "edb98a",
@@ -102,10 +102,10 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}&backgroundColor=${params.backgroundColor}&accessories=${params.accessories}&accessoriesProbability=100&skinColor=${params.skinColor}&topType=${params.topType}&hairColor=${params.hairColor}&facialHairType=blank&clothingType=${params.clothingType}&clothingColor=${params.clothingColor}&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=${params.radius}`;
   };
 
-  // Локальное состояние для превью аватара
+  // Local state for avatar preview
   const [previewAvatar, setPreviewAvatar] = useState<string | null>(null);
   
-  // Инициализируем preview аватар при первом рендере
+  // Initialize avatar preview on first render
   useEffect(() => {
     setPreviewAvatar(generateAvatarUrl());
   }, []);
@@ -125,17 +125,17 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     setParams(randomParams);
     setSeed(`constructor_${Date.now()}_${Math.random()}`);
     
-    // Обновляем превью аватара сразу при рандомизации
+    // Update avatar preview immediately on randomize
     const newAvatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=constructor_${Date.now()}_${Math.random()}&backgroundColor=${randomParams.backgroundColor}&accessories=${randomParams.accessories}&accessoriesProbability=100&skinColor=${randomParams.skinColor}&topType=${randomParams.topType}&hairColor=${randomParams.hairColor}&facialHairType=blank&clothingType=${randomParams.clothingType}&clothingColor=${randomParams.clothingColor}&eyeType=happy&mouthType=smile&eyebrowType=raisedExcited&radius=${randomParams.radius}`;
     setPreviewAvatar(newAvatarUrl);
     
-    // Обновляем синхронизированный аватар при рандомизации
+    // Update synced avatar on randomize
     updateAvatar(newAvatarUrl);
   };
 
   const handleApply = () => {
     const avatarUrl = generateAvatarUrl();
-    // Обновляем синхронизированный аватар при применении
+    // Update synced avatar on apply
     updateAvatar(avatarUrl);
     if (onApply) {
       onApply(avatarUrl);
@@ -158,7 +158,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
     setPreviewAvatar(generateAvatarUrl());
   };
 
-  // НОВАЯ ФУНКЦИЯ: Создание кастомного инпута с выбором
+  // Custom input with selection
   const CustomSelect = ({ 
     label, 
     icon, 
@@ -219,7 +219,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
                       {option.value === value && <Check className="h-3 w-3" />}
                       {option.label}
                     </div>
-                    {/* Цветной индикатор для цветов */}
+                    {/* Color indicator */}
                     {option.value.startsWith("#") || option.value.length === 6 ? (
                       <div 
                         className="w-4 h-4 rounded-sm border border-gray-300" 
@@ -244,7 +244,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 p-6">
-        {/* Превью */}
+        {/* Preview */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -264,7 +264,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
           </motion.div>
         </motion.div>
 
-        {/* Кнопки быстрых действий */}
+        {/* Quick action buttons */}
         <div className="grid grid-cols-3 gap-2">
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button onClick={handleRandomize} className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border border-white/20">
@@ -283,7 +283,7 @@ export const AvatarConstructor: React.FC<AvatarConstructorProps> = ({ currentAva
           </motion.div>
         </div>
 
-        {/* Сетка параметров - НОВЫЕ ИНПУТЫ */}
+        {/* Parameter grid */}
         <div className="grid grid-cols-2 gap-3">
           <CustomSelect
             label="Background"

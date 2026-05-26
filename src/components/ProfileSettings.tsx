@@ -45,7 +45,7 @@ const ProfileSettingsContent: React.FC<{
   };
 
   const handleReset = () => {
-    if (confirm("Вы уверены? Это удалит все данные профиля!")) {
+    if (confirm("Are you sure? This will delete all profile data!")) {
       resetProfile();
     }
   };
@@ -98,7 +98,7 @@ const ProfileSettingsContent: React.FC<{
                     {profile.username[0]}
                   </AvatarFallback>
                 </Avatar>
-                {/* Быстрые кнопки действий */}
+                {/* Quick action buttons */}
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -112,14 +112,14 @@ const ProfileSettingsContent: React.FC<{
                     )}
                     onClick={handleRegenerateAvatar}
                     disabled={isRegenerating}
-                    title="Случайная аватарка"
+                    title="Random avatar"
                   >
                     <Sparkles className={cn("h-4 w-4", isRegenerating && "animate-spin")} />
                   </Button>
                 </motion.div>
               </motion.div>
 
-              {/* Имя и конструктор - Flex Column */}
+              {/* Name + Constructor */}
               <div className="flex-1 space-y-3 min-w-0 w-full">
                 <div className="space-y-1">
                   <Label className="text-sm font-bold text-purple-200 flex items-center gap-2">
@@ -156,7 +156,7 @@ const ProfileSettingsContent: React.FC<{
               </div>
             </div>
 
-            {/* Конструктор (анимированный) */}
+            {/* Constructor (animated) */}
             <AnimatePresence>
               {showConstructor && (
                 <motion.div
@@ -174,7 +174,7 @@ const ProfileSettingsContent: React.FC<{
               )}
             </AnimatePresence>
 
-            {/* Секция 2: Уведомления - PREMIUM CARD */}
+            {/* Notifications */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg overflow-hidden">
               <div className="p-4 border-b border-white/10 bg-gradient-to-r from-amber-500/20 to-yellow-500/20">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -201,7 +201,7 @@ const ProfileSettingsContent: React.FC<{
               </div>
             </div>
 
-            {/* Секция 4: Опасная зона - PREMIUM WARNING */}
+            {/* Danger zone */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-red-500/30 shadow-lg overflow-hidden">
               <div className="p-4 border-b border-red-500/20 bg-gradient-to-r from-red-500/20 to-rose-500/20">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">

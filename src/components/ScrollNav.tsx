@@ -34,7 +34,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
           className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-cyan-500 border-2 border-cyan-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll to top"
-          title="Наверх"
+          title="Scroll to top"
         >
           <ChevronUp className="h-7 w-7" />
         </Button>
@@ -51,7 +51,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
           className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-orange-500 border-2 border-orange-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll up"
-          title="Вверх"
+          title="Up"
         >
           <ChevronUp className="h-7 w-7" />
         </Button>
@@ -68,7 +68,7 @@ export const ScrollNav: React.FC<ScrollNavProps> = ({ className }) => {
           className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-green-500 border-2 border-green-300/50 shadow-lg"
           size="icon"
           aria-label="Scroll down"
-          title="Вниз"
+          title="Down"
         >
           <ChevronDown className="h-7 w-7" />
         </Button>

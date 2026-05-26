@@ -23,6 +23,18 @@ professional standards.
 
 ---
 
+## 1.1 Pre-flight Checklist (Before Making Changes)
+
+Always audit the project before editing:
+1. **Scan for stale files** — orphaned duplicates (`src/src/`), stray assets, unfinished experiments
+2. **Check filenames** — no Cyrillic, no spaces, no typos in paths or names
+3. **Verify all URLs work** — badge links, raw.githubusercontent.com, GitHub repo URLs
+4. **Confirm references match** — if a file is renamed/deleted, update every import and string reference
+5. **Remove local-only files** — `AI_RULES.md`, `template/`, personal notes, API dumps — use `.gitignore`
+6. **Run checks after changes** — `npm run lint` + `npx tsc --noEmit` + `npm t`
+
+---
+
 ## 2. Project Structure
 
 ```

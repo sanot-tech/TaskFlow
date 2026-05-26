@@ -1,38 +1,38 @@
 # Code Owners
 
 # Global default — requires review from all code owners
-* @Biopasks
+* @sanot-tech
 
 # Core application
-/src/hooks/          @Biopasks
-/src/contexts/       @Biopasks
-/src/lib/            @Biopasks
+/src/hooks/          @sanot-tech
+/src/contexts/       @sanot-tech
+/src/lib/            @sanot-tech
 
 # Components
-/src/components/     @Biopasks
+/src/components/     @sanot-tech
 
 # Pages
-/src/pages/          @Biopasks
+/src/pages/          @sanot-tech
 
 # Tests
-/src/__tests__/      @Biopasks
+/src/__tests__/      @sanot-tech
 
 # Configuration
-/*.json              @Biopasks
-/*.ts                @Biopasks
-/vite.config.ts      @Biopasks
+/*.json              @sanot-tech
+/*.ts                @sanot-tech
+/vite.config.ts      @sanot-tech
 
 # Documentation
-/*.md                @Biopasks
-/docs/               @Biopasks
+/*.md                @sanot-tech
+/docs/               @sanot-tech
 
 # GitHub configuration
-/.github/            @Biopasks
+/.github/            @sanot-tech
 
 # CI/CD
-/.github/workflows/  @Biopasks
+/.github/workflows/  @sanot-tech
 
 # Security-sensitive files
-/SECURITY.md         @Biopasks
-/CONTRIBUTING.md     @Biopasks
-/CODE_OF_CONDUCT.md  @Biopasks
+/SECURITY.md         @sanot-tech
+/CONTRIBUTING.md     @sanot-tech
+/CODE_OF_CONDUCT.md  @sanot-tech
