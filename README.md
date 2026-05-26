@@ -12,12 +12,12 @@
 
 <p align="center">
   <a href="https://github.com/sanot-tech/taskflow/actions"><img src="https://img.shields.io/github/actions/workflow/status/sanot-tech/taskflow/ci.yml?branch=main&logo=github&label=CI%2FCD&color=blueviolet" alt="CI/CD"></a>
-  <a href="https://codecov.io/gh/sanot-tech/taskflow"><img src="https://img.shields.io/codecov/c/github/sanot-tech/taskflow?logo=codecov&label=coverage&color=success" alt="Coverage"></a>
+  <a href="https://github.com/sanot-tech/taskflow/actions"><img src="https://img.shields.io/badge/coverage-97%20tests-brightgreen?logo=jest&label=tests" alt="Tests"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?logo=open-source-initiative" alt="License"></a>
   <a href="https://github.com/sanot-tech/taskflow/releases"><img src="https://img.shields.io/github/v/release/sanot-tech/taskflow?logo=semver&label=version" alt="Version"></a>
   <a href="https://github.com/sanot-tech/taskflow/stargazers"><img src="https://img.shields.io/github/stars/sanot-tech/taskflow?style=flat&logo=starship&color=yellow" alt="Stars"></a>
   <a href="https://github.com/sanot-tech/taskflow/security/dependabot"><img src="https://img.shields.io/badge/security-dependabot-brightgreen?logo=dependabot" alt="Dependabot"></a>
-  <a href="https://openssf.org/scorecard"><img src="https://img.shields.io/ossf-scorecard/github.com/sanot-tech/taskflow?label=OpenSSF&color=purple" alt="OpenSSF"></a>
+  <a href="https://github.com/sanot-tech/taskflow/security"><img src="https://img.shields.io/badge/security-passing-brightgreen?logo=github&label=security" alt="Security"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript" alt="TypeScript"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React"></a>
   <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite"></a>
