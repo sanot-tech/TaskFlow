@@ -1,17 +1,16 @@
-# Звуки будильника
+# Alarm Sounds
 
-Эти звуки загружены с открытых источников и могут использоваться в вашем приложении.
+These sounds are used by the app's alarm system. They are bundled locally and work offline.
 
-## Источники:
-- **Mixkit** (https://mixkit.co) — бесплатные звуки для всех
-- **Open Audio** — публичное достояние
+## Files:
+- `bell.mp3` — Sunrise (classic ring)
+- `chime.mp3` — Melody (pleasant chime)
+- `siren.mp3` — Siren (loud alert)
+- `beep.mp3` — Beep (short signal)
+- `soft.mp3` — Soft (gentle melody)
 
-## Файлы:
-- `bell.mp3` — Восход (классический звонок)
-- `chime.mp3` — Мелодия (приятный перезвон)
-- `siren.mp3` — Сирена (громкое предупреждение)
-- `beep.mp3` — Бип (короткий сигнал)
-- `soft.mp3` — Нежный (мягкая мелодия)
+## Attribution:
+- Generated via ffmpeg (sine wave tones)
 
-## Использование:
-Все звуки загружены локально и работают без интернета.
+## Usage:
+All sounds are loaded locally from `/sounds/` and work without internet access.
