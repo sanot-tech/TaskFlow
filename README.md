@@ -113,10 +113,10 @@ In the modern software ecosystem, teams face a fundamental challenge: tools are 
 │  │                     PRESENTATION LAYER                       │  │
 │  │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐  │  │
 │  │  │     Pages      │  │   Components   │  │  Layout/Shell  │  │  │
-│  │  │  • Index       │  │  • UI Primitives│  │  • PremiumHdr │  │  │
-│  │  │  • Guide       │  │  • TaskCard    │  │  • ScrollNav   │  │  │
-│  │  │  • NotFound    │  │  • AlarmCtrl   │  │  • Enterprise  │  │  │
-│  │  │                │  │  • AvatarConst │  │    Footer      │  │  │
+│  │  │  • Index       │  │   UI Primitive │  │  • PremiumHdr  │  │  │
+│  │  │  • Guide       │  │   TaskCard     │  │  • ScrollNav   │  │  │
+│  │  │  • NotFound    │  │   AlarmCtrl    │  │  • Enterprise  │  │  │
+│  │  │                │  │   AvatarConst  │  │    Footer      │  │  │
 │  │  └───────┬────────┘  └───────┬────────┘  └───────┬────────┘  │  │
 │  └──────────┼──────────────────┼──────────────────┼─────────────┘  │
 │             │                  │                  │                │
