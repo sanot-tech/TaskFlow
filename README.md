@@ -509,10 +509,10 @@ For organizations requiring custom licensing, dedicated support, or on-premise d
 
 | Offering | Description | Contact |
 |----------|-------------|---------|
-| **Enterprise License** | Custom terms, SLA guarantees, indemnification | enterprise@biopasks.dev |
-| **Dedicated Support** | 24/7 support with 1-hour response SLA | support@biopasks.dev |
-| **On-Premise** | Air-gapped deployment; SOC 2 compliance | infra@biopasks.dev |
-| **Training** | Team onboarding; workshop facilitation | training@biopasks.dev |
+| **Enterprise License** | Custom terms, SLA guarantees, indemnification | @sanot-tech |
+| **Dedicated Support** | 24/7 support with 1-hour response SLA | @sanot-tech |
+| **On-Premise** | Air-gapped deployment; SOC 2 compliance | @sanot-tech |
+| **Training** | Team onboarding; workshop facilitation | @sanot-tech |
 
 ### Professional Services
 

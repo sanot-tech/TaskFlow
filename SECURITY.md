@@ -20,7 +20,7 @@ We provide security updates for the following versions:
 
 | Method | Details |
 |--------|---------|
-| **Email** | security@biopasks.dev |
+| **Email** | [@sanot-tech](https://github.com/sanot-tech) |
 | **PGP Key** | [Download](https://example.com/pgp-key.asc) |
 | **Key Fingerprint** | `A1B2 C3D4 E5F6 A7B8 C9D0 E1F2 A3B4 C5D6 E7F8 A9B0` |
 

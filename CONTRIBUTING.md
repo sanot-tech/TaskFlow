@@ -19,7 +19,7 @@ First off, thank you for considering contributing! We welcome contributions from
 
 ## Code of Conduct
 
-This project adheres to the [Contributor Covenant](CODE_OF_CONDUCT.md) v2.1. By participating, you agree to uphold this code. Report unacceptable behavior to [conduct@biopasks.dev](mailto:conduct@biopasks.dev).
+This project adheres to the [Contributor Covenant](CODE_OF_CONDUCT.md) v2.1. By participating, you agree to uphold this code. Report unacceptable behavior to [@sanot-tech](https://github.com/sanot-tech).
 
 ---
 
@@ -285,7 +285,7 @@ If you have questions about contributing, please:
 1. Check existing [documentation](https://github.com/sanot-tech/taskflow#readme)
 2. Search [existing issues](https://github.com/sanot-tech/taskflow/issues)
 3. Ask in [Discussions](https://github.com/sanot-tech/taskflow/discussions)
-4. Reach out via email: [contributors@biopasks.dev](mailto:contributors@biopasks.dev)
+4. Reach out via email: [@sanot-tech](https://github.com/sanot-tech)
 
 ---
 

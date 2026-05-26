@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a reproducible bug or unexpected behavior
+description: Report a reproducible bug or unexpected behavior in TaskFlow
 title: "[Bug]: "
 labels: ["bug", "needs-triage"]
 assignees: []
@@ -7,28 +7,99 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## 🐛 Bug Report
-        Thanks for taking the time to fill out this report. Please provide as much detail as possible to help us resolve the issue quickly.
+        ## 🐛 Bug Report — TaskFlow
+
+        Thank you for taking the time to report a bug. Your feedback helps us improve the reliability of TaskFlow. Please provide as much detail as possible to help us resolve the issue quickly.
 
   - type: checkboxes
     id: prerequisites
     attributes:
       label: Prerequisites
-      description: Before submitting, please confirm
+      description: Before submitting, please confirm the following
       options:
-        - label: I have searched existing [issues](https://github.com/sanot-tech/taskflow/issues) and this is not a duplicate
+        - label: I have searched [existing issues](https://github.com/sanot-tech/taskflow/issues) and this is not a duplicate
           required: true
-        - label: I am running the latest version
+        - label: I am running the [latest version](https://github.com/sanot-tech/taskflow/releases)
           required: true
-        - label: I have checked the [documentation](https://github.com/sanot-tech/taskflow#readme) for existing solutions
+        - label: I can reliably reproduce this bug under the conditions described
           required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 🌍 Environment
+
+  - type: dropdown
+    id: environment-os
+    attributes:
+      label: Operating System
+      options:
+        - macOS 15 Sequoia
+        - macOS 14 Sonoma
+        - macOS 13 Ventura
+        - Windows 11
+        - Windows 10
+        - Ubuntu 24.04
+        - Ubuntu 22.04
+        - Fedora 40
+        - Arch Linux
+        - Other Linux
+        - iOS 18
+        - Android 15
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome 128+
+        - Chrome 127
+        - Chrome 126
+        - Firefox 130+
+        - Firefox 129
+        - Firefox 128
+        - Safari 18
+        - Safari 17.5
+        - Edge 128+
+        - Brave
+        - Arc
+        - Node.js (CLI/API)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: environment-version
+    attributes:
+      label: TaskFlow Version
+      description: What version of TaskFlow are you using? (check package.json or the app footer)
+      placeholder: e.g., v2.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: environment-node
+    attributes:
+      label: Node.js Version (if applicable)
+      description: Run `node --version`
+      placeholder: e.g., v20.15.0
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### 🔍 Bug Details
 
   - type: textarea
     id: description
     attributes:
       label: Bug Description
       description: A clear and concise description of what the bug is
-      placeholder: "When I click X, Y happens instead of Z..."
+      placeholder: "When I click 'Complete Task', the task is marked as completed but the UI does not update until I refresh the page..."
     validations:
       required: true
 
@@ -36,12 +107,12 @@ body:
     id: reproduction
     attributes:
       label: Steps to Reproduce
-      description: Exact steps to reproduce the behavior
+      description: Exact, numbered steps to reproduce the behavior
       placeholder: |
-        1. Go to '...'
-        2. Click on '...'
-        3. Scroll to '...'
-        4. See error
+        1. Navigate to the dashboard at '/tasks'
+        2. Click on any active task to open details
+        3. Click the 'Mark Complete' button
+        4. Observe that the task remains visible in the active list
       render: bash
     validations:
       required: true
@@ -51,7 +122,7 @@ body:
     attributes:
       label: Expected Behavior
       description: What did you expect to happen?
-      placeholder: "I expected X to happen instead of Y"
+      placeholder: "The task should disappear from the active list and appear under 'Completed' immediately, without requiring a page refresh"
     validations:
       required: true
 
@@ -59,34 +130,27 @@ body:
     id: actual
     attributes:
       label: Actual Behavior
-      description: What actually happened? Include screenshots if applicable
-      placeholder: "X happened, which is incorrect because..."
+      description: What actually happened? Include screenshots, screen recordings, or console output if applicable
+      placeholder: "The task stays in the active list. The UI only updates after manually refreshing the page. No console errors appear."
     validations:
       required: true
 
-  - type: textarea
-    id: environment
+  - type: markdown
     attributes:
-      label: Environment
-      description: Please complete the following information
       value: |
-        - OS: [e.g., macOS 14.5, Windows 11, Ubuntu 24.04]
-        - Browser: [e.g., Chrome 125, Firefox 127, Safari 17.5]
-        - Version: [e.g., v2.0.0]
-        - Node Version: [e.g., 20.15.0]
-        - Package Manager: [e.g., pnpm 9.4.0]
-    validations:
-      required: true
+        ---
+        ### 📋 Logs & Additional Context
 
   - type: textarea
     id: logs
     attributes:
       label: Relevant Log Output
-      description: Copy and paste any relevant log output (will be auto-formatted)
+      description: Copy and paste any relevant log output (browser console, terminal, network requests). The content will be auto-formatted.
       render: shell
 
   - type: textarea
     id: context
     attributes:
       label: Additional Context
-      description: Add any other context about the problem here (e.g., related issues, possible fixes)
+      description: Any other information that might be relevant (related issues, possible root cause, workarounds attempted)
+      placeholder: "This might be related to issue #123. A workaround is to refresh the page after completing a task."

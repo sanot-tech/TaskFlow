@@ -1,85 +1,95 @@
-name: Pull Request
-description: Submit a pull request to contribute to the project
-title: "[PR]: "
-labels: []
-body:
-  - type: markdown
-    attributes:
-      value: |
-        ## 🚀 Pull Request
-        Thank you for contributing! Please complete the checklist below to ensure a smooth review process.
+## 🚀 Pull Request — TaskFlow
 
-  - type: checkboxes
-    id: prerequisites
-    attributes:
-      label: Pre-submission Checklist
-      description: Confirm before submitting
-      options:
-        - label: I have read the [Contributing Guide](../CONTRIBUTING.md)
-          required: true
-        - label: I have read the [Code of Conduct](../CODE_OF_CONDUCT.md)
-          required: true
-        - label: I have run `pnpm lint` and fixed any issues
-          required: true
-        - label: I have run `pnpm typecheck` and fixed any issues
-          required: true
-        - label: I have run `pnpm test` and all tests pass
-          required: true
-        - label: I have added/updated tests for my changes
-          required: true
-        - label: I have added/updated documentation as needed
-          required: true
-        - label: My commits follow [conventional commits](https://www.conventionalcommits.org/)
-          required: true
+Thank you for contributing to TaskFlow! Please complete the checklist below to ensure a smooth review process.
 
-  - type: dropdown
-    id: type
-    attributes:
-      label: Change Type
-      options:
-        - feat — New feature
-        - fix — Bug fix
-        - refactor — Code refactoring
-        - docs — Documentation
-        - test — Testing
-        - chore — Maintenance
-        - perf — Performance
-        - style — Code style
-    validations:
-      required: true
+---
 
-  - type: textarea
-    id: description
-    attributes:
-      label: Description
-      description: What does this PR do? Why is it needed?
-      placeholder: |
-        This PR adds...
-        Closes #ISSUE_NUMBER
-    validations:
-      required: true
+### ✅ Pre-submission Checklist
 
-  - type: textarea
-    id: testing
-    attributes:
-      label: Testing Notes
-      description: How did you verify your changes?
-      placeholder: |
-        - Unit tests added for new functionality
-        - Manual testing on Chrome/Firefox/Safari
-        - Tested with screen reader
-    validations:
-      required: true
+- [ ] I have read the [Contributing Guide](../CONTRIBUTING.md)
+- [ ] I have read the [Code of Conduct](../CODE_OF_CONDUCT.md)
+- [ ] I have run `pnpm lint` and fixed all issues
+- [ ] I have run `pnpm typecheck` and fixed all issues
+- [ ] I have run `pnpm test` and all tests pass
+- [ ] I have added or updated tests for my changes
+- [ ] I have added or updated documentation as needed
+- [ ] My commits follow [conventional commits](https://www.conventionalcommits.org/)
+- [ ] I have rebased my branch onto the latest `main`
 
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots / Recordings
-      description: If UI changes, add screenshots or screen recordings
-      placeholder: Drag and drop images here, or paste video links
+---
 
-  - type: textarea
-    id: notes
-    attributes:
-      label: Additional Notes
-      description: Any other information reviewers should know
+### 📋 Change Type
+
+- [ ] ✨ feat — New feature
+- [ ] 🐛 fix — Bug fix
+- [ ] ♻️ refactor — Code restructuring
+- [ ] 📝 docs — Documentation
+- [ ] 🎨 style — Code style / formatting
+- [ ] ⚡ perf — Performance improvement
+- [ ] 🧪 test — Testing
+- [ ] 🔧 chore — Maintenance / dependencies
+- [ ] 🚀 ci — CI/CD configuration
+
+---
+
+### 📝 Description
+
+<!--
+Describe your changes in detail. What does this PR do? Why is it needed?
+What problem does it solve? How does it solve it?
+-->
+
+**Summary:**
+<!-- Brief summary here -->
+
+**Motivation:**
+<!-- Why is this change necessary? -->
+
+**Implementation:**
+<!-- How does your implementation work? Any design decisions? -->
+
+Closes # <!-- Add issue number(s) this PR addresses, e.g., Closes #42, Closes #101 -->
+
+---
+
+### 🧪 Testing Notes
+
+<!-- How did you verify your changes? Be specific. -->
+
+- [ ] Unit tests added / updated
+- [ ] Integration tests added / updated
+- [ ] Manual testing performed
+
+**Test steps:**
+<!-- Outline the steps to manually test this PR -->
+
+**Browsers / environments tested:**
+- [ ] Chrome
+- [ ] Firefox
+- [ ] Safari
+- [ ] Mobile (iOS / Android)
+- [ ] Node.js
+
+---
+
+### 📸 Screenshots
+
+<!-- If UI changes, add screenshots or screen recordings. Drag and drop images here. -->
+
+| Before | After |
+|--------|-------|
+|        |       |
+
+---
+
+### ⚠️ Breaking Changes
+
+- [ ] This PR introduces breaking changes
+
+<!-- If yes, describe the migration path for downstream consumers -->
+
+---
+
+### 📎 Additional Notes
+
+<!-- Any other information reviewers should know? Performance considerations, edge cases, future work, etc. -->
