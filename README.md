@@ -22,6 +22,8 @@
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript" alt="TypeScript"></a>
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React"></a>
   <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite"></a>
+  <a href="https://go-taskflow.vercel.app"><img src="https://img.shields.io/badge/deployed-vercel-brightgreen?logo=vercel" alt="Vercel"></a>
+  <a href="https://github.com/sanot-tech/TaskFlow/discussions"><img src="https://img.shields.io/github/discussions/sanot-tech/TaskFlow?logo=github&color=brightgreen&label=discussions" alt="Discussions"></a>
 </p>
 
 <p align="center">
@@ -53,6 +55,8 @@
   <br>
   <ol>
     <li><a href="#overview">Overview</a></li>
+    <li><a href="#live-demo">Live Demo</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#key-capabilities">Key Capabilities</a></li>
     <li><a href="#architecture">Architecture</a></li>
     <li><a href="#quick-start">Quick Start</a></li>
@@ -93,6 +97,54 @@ In the modern software ecosystem, teams face a fundamental challenge: tools are 
 | **Power** | Composable architecture; plugin-ready interfaces; programmable API surfaces |
 | **Reliability** | 97%+ test coverage across 97 unit/integration tests; formal verification of critical paths |
 | **Performance** | Sub-50ms interaction latency; tree-shaken bundles; lazy-loaded modules; CDN-optimized assets |
+
+---
+
+<a name="live-demo"></a>
+## 🚀 Live Demo
+
+Experience TaskFlow live — no installation required:
+
+<p align="center">
+  <a href="https://go-taskflow.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/try%20it-go-taskflow.vercel.app-brightgreen?logo=vercel&style=for-the-badge" alt="TaskFlow Live">
+  </a>
+</p>
+
+The web app is deployed to Vercel and fully functional in any modern browser.
+All data is stored locally — nothing is sent to any server.
+
+---
+
+<a name="screenshots"></a>
+## 📸 Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="50%"><strong>📋 Dashboard & Task Management</strong></td>
+      <td align="center" width="50%"><strong>📝 Task Creation</strong></td>
+    </tr>
+    <tr>
+      <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/dashboard.png" width="400" alt="TaskFlow Dashboard — main task management interface with priority colors, tags, and subtasks"></td>
+      <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/task-creation.png" width="400" alt="TaskFlow Task Creation — form with title, description, priority, due date, and tags"></td>
+    </tr>
+    <tr>
+      <td align="center" width="50%"><strong>👤 Profile Settings</strong></td>
+      <td align="center" width="50%"><strong>🎨 Avatar Constructor</strong></td>
+    </tr>
+    <tr>
+      <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/profile-settings.png" width="400" alt="TaskFlow Profile Settings — user profile management dialog"></td>
+      <td><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/avatar-constructor.png" width="400" alt="TaskFlow Avatar Constructor — DiceBear avatar customization"></td>
+    </tr>
+    <tr>
+      <td align="center" colspan="2"><strong>📖 User Guide</strong></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><img src="https://raw.githubusercontent.com/sanot-tech/TaskFlow/main/screenshots/guide.png" width="600" alt="TaskFlow Guide — comprehensive user documentation"></td>
+    </tr>
+  </table>
+</div>
 
 ---
 
@@ -377,6 +429,27 @@ taskflow/
 - **Imports**: Grouped: React → third-party → internal → styles
 - **Naming**: `PascalCase` for components; `camelCase` for functions/variables
 - **CSS**: Tailwind utility classes; extract repeated patterns to `cn()` helpers
+
+---
+
+### Deployment
+
+Deploy to Vercel with zero configuration:
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy to production
+vercel --prod
+
+# Or deploy to preview
+vercel
+```
+
+The app is live at **[https://go-taskflow.vercel.app](https://go-taskflow.vercel.app)**.
+
+> **Note:** Vercel deploys are triggered automatically on every push to the `main` branch via the GitHub integration.
 
 ---
 

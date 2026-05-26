@@ -1,0 +1,74 @@
+name: Documentation
+description: Report issues or suggest improvements to TaskFlow documentation
+title: "[Docs]: "
+labels: ["documentation"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📖 Documentation — TaskFlow
+
+        Help us improve our documentation!
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I have searched [existing issues](https://github.com/sanot-tech/TaskFlow/issues) and this is not a duplicate
+          required: true
+        - label: I have reviewed the [current documentation](https://github.com/sanot-tech/TaskFlow#readme)
+          required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Documentation Type
+      options:
+        - Missing documentation
+        - Inaccurate / outdated
+        - Typo / grammar
+        - Unclear explanation
+        - Missing examples / screenshots
+        - Translation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Area
+      options:
+        - README
+        - CONTRIBUTING.md
+        - Code comments
+        - Setup / installation guide
+        - Timer / alarm configuration
+        - Customization / themes
+        - Avatar / profile system
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: "The README doesn't explain how to configure custom alarm sounds..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Change
+      placeholder: "Add a section under 'Customization' with the directory structure for custom alarm sounds..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context

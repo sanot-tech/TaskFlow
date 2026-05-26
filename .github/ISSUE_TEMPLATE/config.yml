@@ -6,6 +6,18 @@ contact_links:
   - name: 💬 GitHub Discussions
     url: https://github.com/sanot-tech/TaskFlow/discussions
     about: Ask questions, share ideas, and get help from the community
+  - name: 🚀 Feature Requests & Ideas
+    url: https://github.com/sanot-tech/TaskFlow/discussions/categories/ideas
+    about: Share and vote on feature ideas in Discussions
+  - name: ❓ Questions & Help
+    url: https://github.com/sanot-tech/TaskFlow/discussions/categories/q-a
+    about: Ask the community for help
+  - name: 🎮 Community Chat
+    url: https://github.com/sanot-tech/TaskFlow/discussions
+    about: Join the community conversation
   - name: 🔒 Security Vulnerability
     url: https://github.com/sanot-tech/TaskFlow/blob/main/SECURITY.md
     about: Please report security vulnerabilities via our Security Policy
+  - name: 📋 Changelog
+    url: https://github.com/sanot-tech/TaskFlow/releases
+    about: See what's new in each release

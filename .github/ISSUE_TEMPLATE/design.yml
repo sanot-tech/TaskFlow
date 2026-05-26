@@ -1,0 +1,73 @@
+name: Design / UI Polish
+description: Visual improvements, UI inconsistencies, animation tweaks, and design system updates
+title: "[Design]: "
+labels: ["design"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🎨 Design / UI Polish — TaskFlow
+
+        Help us make TaskFlow look and feel amazing.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I have searched [existing issues](https://github.com/sanot-tech/TaskFlow/issues) for similar design requests
+          required: true
+        - label: I have included visual references
+          required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Design Issue Type
+      options:
+        - Visual inconsistency
+        - Animation / transition improvement
+        - Layout / spacing
+        - Color / typography / theme
+        - Responsive / mobile layout
+        - Accessibility (contrast, focus states)
+        - New visual component
+        - Icon / illustration
+        - Dark / light mode
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Visual Priority
+      options:
+        - 🔴 High — Affects usability or brand consistency
+        - 🟡 Medium — Visual polish, improves experience
+        - 🟢 Low — Minor cosmetic tweak
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current State
+      placeholder: "Currently, the task cards have no hover effect and look flat."
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired State
+      placeholder: "Task cards should lift on hover with a subtle shadow and border highlight."
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation Notes
+      placeholder: "Modify TaskCard component. Add transition on transform and box-shadow. Use Tailwind group hover utilities."

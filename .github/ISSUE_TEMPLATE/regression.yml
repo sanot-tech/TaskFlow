@@ -1,0 +1,70 @@
+name: Regression
+description: A feature that previously worked but broke after a recent change or update
+title: "[Regression]: "
+labels: ["regression", "bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🔄 Regression Report — TaskFlow
+
+        A feature that used to work is now broken.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I can confirm this feature was working in a previous version
+          required: true
+        - label: I have identified the version or commit where it broke (if possible)
+          required: true
+
+  - type: input
+    id: last-working
+    attributes:
+      label: Last Working Version
+      placeholder: e.g., v1.2.0 or commit abc1234
+    validations:
+      required: true
+
+  - type: input
+    id: first-broken
+    attributes:
+      label: First Broken Version
+      placeholder: e.g., v1.3.0 or commit def5678
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Regression Description
+      placeholder: "The alarm sound used to play at full volume. After updating to v1.3.0, the alarm is barely audible even at max volume."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Open TaskFlow v1.3.0
+        2. Set a timer for 1 minute
+        3. Wait for alarm to trigger
+        4. Observe very low volume
+      validations:
+        required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs Actual
+      placeholder: |
+        Expected: Alarm plays at the volume set in preferences
+        Actual: Alarm plays at ~10% of the set volume
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      placeholder: "This might be related to PR #89 which refactored the audio context."

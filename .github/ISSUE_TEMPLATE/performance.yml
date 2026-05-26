@@ -1,0 +1,82 @@
+name: Performance Report
+description: Report performance issues — slow loading, high CPU/memory, lag
+title: "[Perf]: "
+labels: ["performance"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ⚡ Performance Report — TaskFlow
+
+        Help us make TaskFlow faster and more efficient.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I have searched [existing issues](https://github.com/sanot-tech/TaskFlow/issues) and this is not a duplicate
+          required: true
+        - label: I am using the [latest version](https://github.com/sanot-tech/TaskFlow/releases)
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Area
+      options:
+        - Initial load time
+        - Timer / alarm scheduling
+        - UI responsiveness
+        - Memory usage
+        - Animation / transitions
+        - Avatar rendering
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device Class
+      options:
+        - High-end desktop
+        - Mid-range desktop
+        - Low-end / older desktop
+        - High-end mobile
+        - Mid-range mobile
+        - Low-end / older mobile
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Performance Issue
+      placeholder: "The app takes over 8 seconds to load the task list, and switching between tabs is laggy..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Measured Metrics
+      render: shell
+      placeholder: "Load: 8s, Memory: 300MB, CPU: 30% idle"
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Open TaskFlow on a mid-range phone
+        2. Create 50 tasks with alarms
+        3. Navigate between dashboard and guide tabs
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context

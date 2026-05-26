@@ -1,0 +1,88 @@
+name: Security Vulnerability
+description: Report a security vulnerability in TaskFlow (private disclosure)
+title: "[Security]: "
+labels: ["security"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🔒 Security Vulnerability — TaskFlow
+
+        Please report security vulnerabilities responsibly. For critical issues, use private disclosure.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I have read the [Security Policy](https://github.com/sanot-tech/TaskFlow/blob/main/SECURITY.md)
+          required: true
+        - label: I have checked that this vulnerability is not already publicly disclosed
+          required: true
+        - label: This report does NOT contain exploit code in the public description
+          required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity Assessment (CVSS)
+      options:
+        - ⬛ Critical (9.0-10.0)
+        - 🔴 High (7.0-8.9)
+        - 🟡 Medium (4.0-6.9)
+        - 🟢 Low (0.1-3.9)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Vulnerability Type
+      options:
+        - Cross-Site Scripting (XSS)
+        - Cross-Site Request Forgery (CSRF)
+        - Insecure Direct Object Reference (IDOR)
+        - Authentication / Authorization bypass
+        - Data exposure / leak
+        - Dependency vulnerability
+        - Insecure configuration
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Vulnerability Description
+      placeholder: "The local storage data is not encrypted, allowing other apps on the same device to read task data..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Potential Impact
+      placeholder: "An attacker with local access could read all task data including any sensitive information stored in task notes."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction Steps (abridged)
+      placeholder: "1. Install any file explorer on the device\n2. Navigate to local storage for the app\n3. Read task data in plain text"
+    validations:
+      required: true
+
+  - type: textarea
+    id: remediation
+    attributes:
+      label: Suggested Remediation
+      placeholder: "Encrypt sensitive data before storing in localStorage using Web Crypto API."
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        Thank you for helping keep TaskFlow and its users safe!

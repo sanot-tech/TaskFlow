@@ -1,0 +1,80 @@
+name: Refactoring
+description: Code improvements that don't change functionality — better structure, readability, maintainability
+title: "[Refactor]: "
+labels: ["refactoring"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🔧 Refactoring — TaskFlow
+
+        Improving code quality without changing external behavior.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I have verified this does NOT change any user-facing behavior
+          required: true
+        - label: I have searched for related refactoring issues
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Code Area
+      options:
+        - Component structure
+        - State management
+        - Timer / alarm logic
+        - Hooks / utilities
+        - Types / interfaces
+        - Tests
+        - Build / tooling
+        - Routing
+        - Styles / CSS
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: motivation
+    attributes:
+      label: Motivation
+      options:
+        - Reduce duplication (DRY)
+        - Improve type safety
+        - Better separation of concerns
+        - Performance optimization
+        - Readability / maintainability
+        - Testability
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Refactoring Description
+      placeholder: "The alarm scheduling logic is spread across AlarmContext.tsx, Timer.tsx, and useTimer.ts. Consolidate into a single AlarmScheduler class..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      placeholder: |
+        - [ ] All existing tests pass
+        - [ ] TypeScript compiles cleanly
+        - [ ] Manual smoke test: create task, set alarm, verify it fires
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      placeholder: "Consider using the Observer pattern for timer events."

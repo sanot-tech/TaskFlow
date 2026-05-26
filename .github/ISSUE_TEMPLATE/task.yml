@@ -1,0 +1,60 @@
+name: Task / Chore
+description: A specific, well-defined task — refactoring, cleanup, dependency updates
+title: "[Task]: "
+labels: ["task"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ✅ Task / Chore — TaskFlow
+
+        Small, focused tasks that don't fit as bug reports or feature requests.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Task Type
+      options:
+        - Refactoring / code cleanup
+        - Dependency update
+        - Test improvement / coverage
+        - Build / tooling
+        - CI / CD
+        - Accessibility (a11y)
+        - Documentation
+        - Infrastructure / DevOps
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Task Description
+      placeholder: "Update React from 18.2.0 to 18.3.1 and verify all components still work correctly."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      placeholder: |
+        - [ ] Dependencies updated in package.json
+        - [ ] All tests pass
+        - [ ] App builds without warnings
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      placeholder: "See #45 for reasoning."
+
+  - type: input
+    id: effort
+    attributes:
+      label: Estimated Effort
+      placeholder: e.g., 30 minutes, 2 hours

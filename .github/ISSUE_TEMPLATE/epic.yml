@@ -1,0 +1,71 @@
+name: Epic
+description: A large feature or initiative spanning multiple tasks and milestones
+title: "[Epic]: "
+labels: ["epic"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🎯 Epic — TaskFlow
+
+        This issue tracks a large feature or initiative broken down into smaller tasks.
+
+  - type: input
+    id: timeline
+    attributes:
+      label: Target Timeline
+      placeholder: e.g., Q3 2026, Sprint 4, or "No deadline"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - 🔴 High — Core to product vision
+        - 🟡 Medium — Important but not urgent
+        - 🟢 Low — Nice-to-have
+    validations:
+      required: true
+
+  - type: textarea
+    id: overview
+    attributes:
+      label: Epic Overview
+      placeholder: "Implement a cloud sync feature that allows users to back up and restore their tasks, settings, and avatar across devices."
+    validations:
+      required: true
+
+  - type: textarea
+    id: objectives
+    attributes:
+      label: Objectives & Key Results
+      placeholder: |
+        - Objective: Enable cross-device task sync
+          - KR1: Users can register and log in
+          - KR2: Tasks sync within 5 seconds across devices
+          - KR3: No data loss on conflict
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Task Breakdown
+      placeholder: |
+        - [ ] #123 — Authentication system
+        - [ ] #124 — Backend API for task CRUD
+        - [ ] #125 — Sync conflict resolution
+        - [ ] #126 — UI for sync status
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies & Blockers
+      placeholder: "- Requires backend infrastructure (#100)\n- Offline-first architecture decision needed"
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      placeholder: "Consider using CRDT for conflict-free sync."

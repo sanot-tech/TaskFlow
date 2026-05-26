@@ -1,0 +1,54 @@
+name: Question / Support
+description: Ask a question about using TaskFlow or get help with setup
+title: "[Question]: "
+labels: ["question"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ❓ Question / Support — TaskFlow
+
+        Need help? Check [Documentation](https://github.com/sanot-tech/TaskFlow#readme) and [Discussions](https://github.com/sanot-tech/TaskFlow/discussions) first!
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Before Asking
+      options:
+        - label: I have read the [documentation](https://github.com/sanot-tech/TaskFlow#readme)
+          required: true
+        - label: I have searched [Discussions](https://github.com/sanot-tech/TaskFlow/discussions)
+          required: true
+        - label: I have searched [existing issues](https://github.com/sanot-tech/TaskFlow/issues)
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Setup / Installation
+        - Usage / How-to
+        - Timer / alarm configuration
+        - Avatar / profile
+        - Customization / themes
+        - Settings / preferences
+        - Bug or unexpected behavior? → Use Bug Report instead
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      placeholder: "How do I set a different alarm sound for each task? I want a gentle chime for work tasks and a loud siren for critical reminders..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & Details
+      placeholder: "I see there are several alarm sounds available, but I can't figure out how to assign different sounds to individual tasks."
