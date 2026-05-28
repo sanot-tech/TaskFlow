@@ -1,6 +1,6 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 /**
- * Enterprise Entitlement Gate — Bootstrap Protection Shim
+ * Enterprise Entitlement Gate - Bootstrap Protection Shim
  *
  * Insert this file into any project to prevent unauthorized execution.
  * Drop it in, update your entry point to import this first, done.
@@ -18,48 +18,43 @@ const REPO = process.env.GITHUB_REPO || 'your-repo'
 function renderNotice(): void {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC'
 
-  const border = '╔══════════════════════════════════════════════════════════════╗'
-  const empty = '║                                                              ║'
-  const divider = '╠══════════════════════════════════════════════════════════════╣'
-
   console.error(`
-${border}
-║                    █ ENTERPRISE LICENSE GATE                 ║
-${divider}
-${empty}
-║  This software is protected by the Enterprise License        ║
-║  and Intellectual Property Protection Framework v1.0.        ║
-${empty}
-║  🔒  UNAUTHORIZED ACCESS DETECTED                            ║
-${empty}
-║  You are attempting to execute a proprietary build without   ║
-║  a valid entitlement key.                                    ║
-${empty}
-║  ────────────────────  REQUIRED ACTION  ────────────────────  ║
-${empty}
-║  To obtain authorized access, please open an issue at:       ║
-║  🌐  https://github.com/${OWNER}/${REPO}/issues                ║
-${empty}
-║  Include your use case and platform details for prompt        ║
-║  review by the engineering team.                             ║
-${empty}
-║  ───────  DEVELOPMENT & EVALUATION  ───────                  ║
-${empty}
-║  This gating mechanism does not apply to development or      ║
-║  evaluation builds. For development credentials, contact      ║
-║  the repository maintainer through the issues channel.       ║
-${empty}
-║  This process is in place to maintain code integrity,        ║
-║  prevent unauthorized distribution, and protect ongoing      ║
-║  R&D investments. Thank you for your understanding.          ║
-${empty}
-║  Reference: ENTERPRISE_PROTECTION_FRAMEWORK_v1.0.0           ║
-║  Timestamp: ${timestamp}                  ║
-${empty}
-╚══════════════════════════════════════════════════════════════╝
-
-Process terminated. Exit code: 0 (SAFE_SHUTDOWN)
-`)
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                       ENTERPRISE LICENSE GATE                               |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                                                                             |
+  |  This software is protected by the Enterprise License                       |
+  |  and Intellectual Property Protection Framework v1.0.                       |
+  |                                                                             |
+  |  UNAUTHORIZED ACCESS DETECTED                                               |
+  |                                                                             |
+  |  You are attempting to execute a proprietary build without                  |
+  |  a valid entitlement key.                                                   |
+  |                                                                             |
+  |  REQUIRED ACTION:                                                           |
+  |                                                                             |
+  |  To obtain authorized access, please open an issue at:                      |
+  |  https://github.com/${OWNER}/${REPO}/issues                                   |
+  |                                                                             |
+  |  Include your use case and platform details for prompt                      |
+  |  review by the engineering team.                                           |
+  |                                                                             |
+  |  DEVELOPMENT & EVALUATION:                                                  |
+  |                                                                             |
+  |  This gating mechanism does not apply to development or                     |
+  |  evaluation builds. For development credentials, contact                    |
+  |  the repository maintainer through the issues channel.                     |
+  |                                                                             |
+  |  This process is in place to maintain code integrity,                       |
+  |  prevent unauthorized distribution, and protect ongoing                    |
+  |  R&D investments. Thank you for your understanding.                        |
+  |                                                                             |
+  |  Reference: ENTERPRISE_PROTECTION_FRAMEWORK_v1.0.0                          |
+  |  Timestamp: ${timestamp}                   |
+  |                                                                             |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  Process terminated. Exit code: 0 (SAFE_SHUTDOWN)
+  `)
 }
 
 function isDevelopment(): boolean {
@@ -76,7 +71,7 @@ function hasValidEntitlement(): boolean {
 function validate(): void {
   if (hasValidEntitlement()) {
     if (isDevelopment()) {
-      console.error('[Gate] Development mode — entitlement bypassed')
+      console.error('[Gate] Development mode - entitlement bypassed')
     }
     return
   }

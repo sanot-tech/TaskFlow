@@ -1,8 +1,8 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 /**
- * ██████  ENTERPRISE LICENSE & DEMO GATE  ██████
+ * ENTERPRISE LICENSE & DEMO GATE
  *
- * TaskFlow — Full-Stack Task Orchestration Platform
+ * TaskFlow -- Full-Stack Task Orchestration Platform
  * Classification: Internal Demo Build
  *
  * This software is protected by the Enterprise Intellectual Property
@@ -16,115 +16,104 @@ const HOMEPAGE = 'https://go-taskflow.vercel.app'
 const VERSION = '2.0.0'
 
 const BANNER = `
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║       ████████  █████  ███████  ██   ██ ███████  ██       ██████   ██       ║
-║          ██    ██   ██ ██       ██  ██  ██      ██      ██    ██  ██       ║
-║          ██    ███████ █████    █████   █████   ██      ██    ██  ██       ║
-║          ██    ██   ██ ██       ██  ██  ██      ██      ██    ██  ██       ║
-║          ██    ██   ██ ██       ██   ██ ██      ███████  ██████   ██       ║
-║                                                                              ║
-║               ██████  ███████  ███████  ██    ██  ██████                   ║
-║               ██   ██ ██      ██       ███   ██ ██    ██                   ║
-║               ██████  █████   █████    ████  ██ ██    ██                   ║
-║               ██   ██ ██      ██       ██ ██ ██ ██    ██                   ║
-║               ██████  ██      ██       ██  ████  ██████                    ║
-║                                                                              ║
-║  ──────────── FULL-STACK TASK ORCHESTRATION PLATFORM ─────────────           ║
-║                    ENTERPRISE BUILD v${VERSION.padEnd(16)}                      ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+     TTTTT   A    SSSSS  K   K  FFFFF  L      OOO   W   W
+       T    A A   S      K  K   F      L     O   O  W   W
+       T   A   A  SSSS   KKK    FFFF   L     O   O  W W W
+       T   AAAAA      S  K  K   F      L     O   O  WW WW
+       T   A   A  SSSSS  K   K  F      LLLL   OOO   W   W
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     FULL-STACK TASK ORCHESTRATION PLATFORM  |  ENTERPRISE BUILD v${VERSION}
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 `
 
 function printSection(title: string, content: string): void {
-  const border = '─'.repeat(78)
-  console.log(`\n  ┌${border}┐`)
-  console.log(`  │ ${title.padEnd(76)} │`)
-  console.log(`  ├${border}┤`)
-  for (const line of content.split('\n')) {
-    console.log(`  │ ${line.padEnd(76)} │`)
+  const line = '-'.repeat(78)
+  console.log(`\n  +${line}+`)
+  console.log(`  | ${title.padEnd(76)} |`)
+  console.log(`  +${line}+`)
+  for (const l of content.split('\n')) {
+    console.log(`  | ${l.padEnd(76)} |`)
   }
-  console.log(`  └${border}┘`)
+  console.log(`  +${line}+`)
 }
 
 function printFeatures(): void {
-  printSection('📋  CORE CAPABILITIES', `
-    • Task Management Suite           — Full CRUD with priority matrix
-    • Priority Classification System  — 9-color matrix with custom labeling
-    • Recursive Subtask Decomposition — Infinite nesting with independent tracking
-    • Pomodoro Timer Suite            — Configurable intervals with audio alarms
-    • Calendar Integration            — Deadline tracking via date-fns
-    • Tag Taxonomy Engine             — Infinite hierarchical cross-cutting tags
-    • Avatar Constructor              — DiceBear: background, skin, hair, clothing
-    • Push Notifications              — Browser native + PWA support
-    • Responsive Mobile Shell         — Smooth-scroll, gestures, offline-ready
+  printSection('CORE CAPABILITIES', `
+    * Task Management Suite           - Full CRUD with priority matrix
+    * Priority Classification System  - 9-color matrix with custom labeling
+    * Recursive Subtask Decomposition - Infinite nesting with independent tracking
+    * Pomodoro Timer Suite            - Configurable intervals with audio alarms
+    * Calendar Integration            - Deadline tracking via date-fns
+    * Tag Taxonomy Engine             - Infinite hierarchical cross-cutting tags
+    * Avatar Constructor              - DiceBear: background, skin, hair, clothing
+    * Push Notifications              - Browser native + PWA support
+    * Responsive Mobile Shell         - Smooth-scroll, gestures, offline-ready
   `)
 }
 
 function printStack(): void {
-  printSection('⚡  TECHNOLOGY STACK', `
-    • React 19                        — Latest component architecture
-    • TypeScript 5.7                  — Strict mode, type safety
-    • Vite 6                          — Build tooling, tree-shaking
-    • Tailwind CSS 4                  — Utility-first styling
-    • Jest + RTL                      — Testing framework (97 tests)
-    • React Context                   — State management
-    • date-fns                        — Date utilities
-    • shadcn/ui                       — Enterprise design system
-    • CodeQL + Dependabot             — Supply chain security
+  printSection('TECHNOLOGY STACK', `
+    * React 19                        - Latest component architecture
+    * TypeScript 5.7                  - Strict mode, type safety
+    * Vite 6                          - Build tooling, tree-shaking
+    * Tailwind CSS 4                  - Utility-first styling
+    * Jest + RTL                      - Testing framework (97 tests)
+    * React Context                   - State management
+    * date-fns                        - Date utilities
+    * shadcn/ui                       - Enterprise design system
+    * CodeQL + Dependabot             - Supply chain security
   `)
 }
 
 function printEnterprise(): void {
-  printSection('🏢  ENTERPRISE FEATURES', `
-    • 97%+ test coverage              — 97 unit/integration tests
-    • Sub-50ms interaction latency    — Optimized rendering pipeline
-    • Tree-shaken bundles             — Lazy-loaded modules
-    • CDN-optimized assets            — Global delivery ready
-    • PWA-first architecture          — Offline support, install prompt
-    • CI/CD with semantic-release     — Automated versioning
-    • OpenSSF Scorecard tracked       — Supply chain security compliance
-    • Zero-configuration deployment   — Vercel one-click deploy
+  printSection('ENTERPRISE FEATURES', `
+    * 97%+ test coverage              - 97 unit/integration tests
+    * Sub-50ms interaction latency    - Optimized rendering pipeline
+    * Tree-shaken bundles             - Lazy-loaded modules
+    * CDN-optimized assets            - Global delivery ready
+    * PWA-first architecture          - Offline support, install prompt
+    * CI/CD with semantic-release     - Automated versioning
+    * OpenSSF Scorecard tracked       - Supply chain security compliance
+    * Zero-configuration deployment   - Vercel one-click deploy
   `)
 }
 
 function printLinks(): void {
   console.log(`
-  ╔══════════════════════════════════════════════════════════════════════════════╗
-  ║                           ACCESS & RESOURCES                                ║
-  ╠══════════════════════════════════════════════════════════════════════════════╣
-  ║                                                                              ║
-  ║    🌐  Production instance     │  ${HOMEPAGE.padEnd(54)}  ║
-  ║    📦  Source repository       │  ${REPO.padEnd(54)}  ║
-  ║    ⭐  Star on GitHub          │  ${REPO}/stargazers${' '.repeat(34)}  ║
-  ║    💬  Discussions & support   │  ${REPO}/discussions${' '.repeat(31)}  ║
-  ║    🐛  Report an issue         │  ${REPO}/issues/new${' '.repeat(35)}  ║
-  ║    📖  Documentation           │  ${REPO}/blob/main/README.md${' '.repeat(16)}  ║
-  ║                                                                              ║
-  ║  ───────────────────────────────────────────────────────────────────────────  ║
-  ║                                                                              ║
-  ║    Need a license key or enterprise access?                                  ║
-  ║    → Open an issue at ${REPO}/issues                      ║
-  ║                                                                              ║
-  ║    For development builds, set NODE_ENV=development                          ║
-  ║    or add ENTITLEMENT_KEY=dev-access to your .env file.                      ║
-  ║                                                                              ║
-  ╚══════════════════════════════════════════════════════════════════════════════╝
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                          ACCESS & RESOURCES                               |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                                                                           |
+  |  Production instance     |  ${HOMEPAGE.padEnd(54)}|
+  |  Source repository       |  ${REPO.padEnd(54)}|
+  |  Star on GitHub          |  ${REPO}/stargazers|
+  |  Discussions & support   |  ${REPO}/discussions|
+  |  Report an issue         |  ${REPO}/issues/new|
+  |  Documentation           |  ${REPO}/blob/main/README.md|
+  |                                                                           |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                                                                           |
+  |  Need a license key or enterprise access?                                |
+  |  -> Open an issue at ${REPO}/issues|
+  |                                                                           |
+  |  For development builds, set NODE_ENV=development                         |
+  |  or add ENTITLEMENT_KEY=dev-access to your .env file.                    |
+  |                                                                           |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   `)
 }
 
 function printFooter(): void {
-  console.log(`
-  ═══════════════════════════════════════════════════════════════════════════════
-   TaskFlow v${VERSION}  |  Enterprise Build  |  Copyright © 2026 sanot-tech
-   All Rights Reserved.  |  Authorized use only.
-  ═══════════════════════════════════════════════════════════════════════════════
-  `)
+  console.log(`  TaskFlow v${VERSION}  |  Enterprise Build  |  Copyright (c) 2026 sanot-tech`)
+  console.log(`  All Rights Reserved.  |  Authorized use only.\n`)
 }
 
 function validateEntitlement(): boolean {
-  if (process.env.ENTITLEMENT_KEY || process.env.ENTITLEMENT_KEY === 'dev-access') return true
-  if (process.env.NODE_ENV === 'development') return true
+  if (process.env.ENTITLEMENT_KEY) return true
+  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'dev') return true
   if (process.argv.includes('--dev') || process.argv.includes('--bypass')) return true
   return false
 }
@@ -134,25 +123,25 @@ function main(): void {
 
   if (!validateEntitlement()) {
     console.log(`
-  ╔══════════════════════════════════════════════════════════════════════════════╗
-  ║                    🔒  LICENSE VALIDATION REQUIRED                          ║
-  ╠══════════════════════════════════════════════════════════════════════════════╣
-  ║                                                                              ║
-  ║  This is a proprietary enterprise build. Execution requires a valid          ║
-  ║  entitlement key.                                                            ║
-  ║                                                                              ║
-  ║  ───────────────  HOW TO OBTAIN ACCESS  ───────────────                     ║
-  ║                                                                              ║
-  ║  1. Open an issue at: ${REPO}/issues                      ║
-  ║  2. Include your use case and platform details                              ║
-  ║  3. Receive your entitlement key within 1-2 business days                   ║
-  ║                                                                              ║
-  ║  ───────────────  EVALUATION  ───────────────                                ║
-  ║                                                                              ║
-  ║  To run without a key (development only):                                    ║
-  ║     $ NODE_ENV=development bun cli/enterprise-gate.ts                        ║
-  ║                                                                              ║
-  ╚══════════════════════════════════════════════════════════════════════════════╝
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                    LICENSE VALIDATION REQUIRED                            |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |                                                                           |
+  |  This is a proprietary enterprise build. Execution requires a valid       |
+  |  entitlement key.                                                         |
+  |                                                                           |
+  |  HOW TO OBTAIN ACCESS:                                                    |
+  |                                                                           |
+  |  1. Open an issue at: ${REPO}/issues|
+  |  2. Include your use case and platform details                           |
+  |  3. Receive your entitlement key within 1-2 business days                |
+  |                                                                           |
+  |  EVALUATION:                                                              |
+  |                                                                           |
+  |  To run without a key (development only):                                |
+  |     $ NODE_ENV=development npx tsx cli/enterprise-gate.ts               |
+  |                                                                           |
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     `)
     process.exit(0)
   }

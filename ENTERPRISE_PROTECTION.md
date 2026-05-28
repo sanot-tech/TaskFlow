@@ -167,7 +167,7 @@ Process terminated. Exit code: 0 (SAFE_SHUTDOWN)
 For local development and testing, the gating mechanism can be bypassed via one of:
 - Setting `NODE_ENV=development` (automatically bypasses all layers)
 - Creating `.env.local` with `ENTITLEMENT_KEY=dev-access-granted`
-- Running through the test runner (`bun test` skips the gate)
+- Running through the test runner (`npm test` skips the gate)
 
 ### 6.2 Production CI/CD Pipeline
 

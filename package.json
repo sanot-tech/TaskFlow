@@ -15,7 +15,7 @@
     "test:timer": "jest src/__tests__/TimerAllTests.test.tsx",
     "test:all": "jest",
     "demo": "npx tsx cli/enterprise-gate.ts",
-    "gate": "bun cli/enterprise-gate.ts"
+    "gate": "npx tsx cli/entitlement-gate.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
