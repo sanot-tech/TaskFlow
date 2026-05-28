@@ -38,3 +38,6 @@ secrets/
 
 # Vite cache
 .vite/
+
+# Core protection — proprietary engine (local only)
+src/core/
