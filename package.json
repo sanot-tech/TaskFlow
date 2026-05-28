@@ -13,7 +13,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:timer": "jest src/__tests__/TimerAllTests.test.tsx",
-    "test:all": "jest"
+    "test:all": "jest",
+    "demo": "npx tsx cli/enterprise-gate.ts",
+    "gate": "bun cli/enterprise-gate.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
